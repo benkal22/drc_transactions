@@ -7,53 +7,66 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Country(models.Model):
-    city = models.CharField(max_length=100)
-    city_ascii = models.CharField(max_length=100, blank=True)
-    city_alt = models.CharField(max_length=100, blank=True)
-    lat = models.FloatField()
-    lng = models.FloatField()
     country = models.CharField(max_length=100)
     iso2 = models.CharField(max_length=2)
     iso3 = models.CharField(max_length=3)
-    admin_name = models.CharField(max_length=100, blank=True)
-    admin_name_ascii = models.CharField(max_length=100, blank=True)
-    admin_code = models.CharField(max_length=10, blank=True)
-    admin_type = models.CharField(max_length=50, blank=True)
-    capital = models.CharField(max_length=20, blank=True)
-    density = models.IntegerField()
-    population = models.IntegerField()
-    population_proper = models.IntegerField()
-    timezone = models.CharField(max_length=50)
-    ranking = models.IntegerField()
-    same_name = models.BooleanField()
-    id = models.BigIntegerField(primary_key=True)
 
     class Meta:
         verbose_name = "Country"
         verbose_name_plural = "Countries"
 
     def __str__(self):
-        return self.city
+        return self.country
 
-    def __unicode__(self):
-        return self.city
+# class Country(models.Model):
+#     city = models.CharField(max_length=100)
+#     city_ascii = models.CharField(max_length=100, blank=True)
+#     city_alt = models.CharField(max_length=100, blank=True)
+#     lat = models.FloatField()
+#     lng = models.FloatField()
+#     country = models.CharField(max_length=100)
+#     iso2 = models.CharField(max_length=2)
+#     iso3 = models.CharField(max_length=3)
+#     admin_name = models.CharField(max_length=100, blank=True)
+#     admin_name_ascii = models.CharField(max_length=100, blank=True)
+#     admin_code = models.CharField(max_length=10, blank=True)
+#     admin_type = models.CharField(max_length=50, blank=True)
+#     capital = models.CharField(max_length=20, blank=True)
+#     density = models.IntegerField()
+#     population = models.IntegerField()
+#     population_proper = models.IntegerField()
+#     timezone = models.CharField(max_length=50)
+#     ranking = models.IntegerField()
+#     same_name = models.BooleanField()
+#     id = models.BigIntegerField(primary_key=True)
+
+#     class Meta:
+#         verbose_name = "Country"
+#         verbose_name_plural = "Countries"
+
+#     def __str__(self):
+#         return self.city
+
+#     def __unicode__(self):
+#         return self.city
 
 class Province(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    chef_lieu = models.CharField(max_length=100)
-    superficie = models.FloatField()
-    population = models.IntegerField()
-    rank = models.IntegerField()
-
+    name = models.fields.CharField(max_length=150)
+    chef_lieu = models.fields.CharField(null=True, max_length=150)
+    superficie= models.fields.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    population = models.fields.IntegerField(blank=True, null=True) 
+    rank =  models.fields.CharField(max_length=150, blank=True, null=True)
+    def __str__(self) -> str:
+        return f'{self.name}'
+    
     class Meta:
-        verbose_name = "Province"
-        verbose_name_plural = "Provinces"
-
-    def __str__(self):
-        return self.name
-
+        verbose_name = 'Province'
+        verbose_name_plural = 'Provinces'
+    
     def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
         return self.name
 
 class Product(models.Model):

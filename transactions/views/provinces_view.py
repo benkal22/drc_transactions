@@ -2,4 +2,10 @@
 
 from django.shortcuts import render
 
-# Create your views here.
+from rest_framework import viewsets
+from ..models import *
+from ..serializers import *
+
+class ProvinceViewSet(viewsets.ModelViewSet):
+    queryset = Province.objects.all()
+    serializer_class = ProvinceSerializer
