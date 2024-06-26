@@ -1,80 +1,41 @@
 <!-- transactions/templates/transactions/producers/producer_detail.html -->
-
 {% extends 'transactions/producer/producer_base.html' %}
 {% load static %}
 
 {% block content_profile_detail %}
 
- <!-- Profile Overview Tab -->
- <div class="tab-pane fade show active profile-overview" id="profile-overview">
+<div class="tab-pane fade show active profile-overview" id="profile-overview">
     <h2>{{ producer.company_name }}</h2>
 
-    <h5 class="card-title">A propos</h5>
-    <p class="small fst-italic">{{ producer.about }}</p>
+    <!-- Autres détails du profil -->
 
-    <h5 class="card-title">Détails</h5>
+    <form method="post" action="{% url 'update_products' producer.id %}">
+        {% csrf_token %}
+        
+        <label for="id_product">Produits</label>
+        <select id="id_product" name="product" multiple>
+            {% for product in all_products %}
+                <option value="{{ product.id }}" {% if product in selected_products %} selected {% endif %}>
+                    {{ product.product_label }}
+                </option>
+            {% endfor %}
+        </select>
 
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Nom du propriétaire</div>
-        <div class="col-lg-9 col-md-8">{{ producer.manager_name }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Secteur d'activité</div>
-        <div class="col-lg-9 col-md-8">{{ producer.sector_label }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Produits ou Services de l'entreprise</div>
-        <div class="col-lg-9 col-md-8">
-            <div>
-                {% for product in producer.product.all %}
-                    <li>{{ product.product_label }} (Code: {{ product.product_code }})</li>
-                {% empty %}
-                    <li>Aucun produit associé</li>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Province</div>
-        <div class="col-lg-9 col-md-8">{{ producer.province }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Adresse</div>
-        <div class="col-lg-9 col-md-8">{{ producer.address }}</div>
-    </div>
-    
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Numéro Impôt</div>
-        <div class="col-lg-9 col-md-8">{{ producer.tax_code }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">NRC</div>
-        <div class="col-lg-9 col-md-8">{{ producer.nrc }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Identification nationale</div>
-        <div class="col-lg-9 col-md-8">{{ producer.nat_id }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Téléphone</div>
-        <div class="col-lg-9 col-md-8">{{ producer.phone_number }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Email</div>
-        <div class="col-lg-9 col-md-8">{{ producer.email }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-3 col-md-4 label">Nom d'utilisateur</div>
-        <div class="col-lg-9 col-md-8">{{ producer.username }}</div>
-    </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation du sélecteur de produits avec les produits déjà sélectionnés
+    var selectedProducts = JSON.parse('{{ selected_products_json|escapejs }}');
+    var select = document.getElementById('id_product');
+    
+    // Fonction pour mettre à jour la liste des produits sélectionnés
+    select.addEventListener('change', function() {
+        selectedProducts = Array.from(select.selectedOptions, option => option.value);
+    });
+});
+</script>
+
 {% endblock %}

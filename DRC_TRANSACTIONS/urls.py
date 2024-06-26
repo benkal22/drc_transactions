@@ -20,6 +20,9 @@ from django.urls import path, include
 from transactions.views.producers_view import (
     producers_list, add_producer, edit_producer, remove_producer, remove_producer_confirmation
 )
+# from transactions.views.suppliers_view import (
+#     suppliers_list, add_supplier, edit_supplier, remove_supplier, remove_supplier_confirmation
+# )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,6 +41,12 @@ urlpatterns = [
     path('producers/<int:pk>/remove_confirmation', remove_producer_confirmation, name='remove_producer_confirmation'),
     path('producers/<int:pk>/remove', remove_producer, name='remove_producer'),
     
+    #suppliers
+    # path('suppliers', suppliers_list, name='suppliers_list'),
+    # path('suppliers/add', add_supplier, name='add_supplier'),
+    # path('suppliers/<int:pk>/edit', edit_supplier, name='edit_supplier'),
+    # path('suppliers/<int:pk>/remove_confirmation', remove_supplier_confirmation, name='remove_supplier_confirmation'),
+    # path('suppliers/<int:pk>/remove', remove_supplier, name='remove_supplier'),
     
 ]
 
