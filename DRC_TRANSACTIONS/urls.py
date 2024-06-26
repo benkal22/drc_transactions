@@ -32,8 +32,12 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('transactions.urls')),
-
+    
+    #Path Authentication
+    path('accounts/', include('allauth.urls')),
+    
     #Path personnalisés Front
-    path('/', include('transactions.urls')),
+    path('', include('transactions.urls')),
+    
 ]
 

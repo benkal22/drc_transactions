@@ -18,38 +18,6 @@ class Country(models.Model):
     def __str__(self):
         return self.country
 
-# class Country(models.Model):
-#     city = models.CharField(max_length=100)
-#     city_ascii = models.CharField(max_length=100, blank=True)
-#     city_alt = models.CharField(max_length=100, blank=True)
-#     lat = models.FloatField()
-#     lng = models.FloatField()
-#     country = models.CharField(max_length=100)
-#     iso2 = models.CharField(max_length=2)
-#     iso3 = models.CharField(max_length=3)
-#     admin_name = models.CharField(max_length=100, blank=True)
-#     admin_name_ascii = models.CharField(max_length=100, blank=True)
-#     admin_code = models.CharField(max_length=10, blank=True)
-#     admin_type = models.CharField(max_length=50, blank=True)
-#     capital = models.CharField(max_length=20, blank=True)
-#     density = models.IntegerField()
-#     population = models.IntegerField()
-#     population_proper = models.IntegerField()
-#     timezone = models.CharField(max_length=50)
-#     ranking = models.IntegerField()
-#     same_name = models.BooleanField()
-#     id = models.BigIntegerField(primary_key=True)
-
-#     class Meta:
-#         verbose_name = "Country"
-#         verbose_name_plural = "Countries"
-
-#     def __str__(self):
-#         return self.city
-
-#     def __unicode__(self):
-#         return self.city
-
 class Province(models.Model):
     name = models.fields.CharField(max_length=150)
     chef_lieu = models.fields.CharField(null=True, max_length=150)

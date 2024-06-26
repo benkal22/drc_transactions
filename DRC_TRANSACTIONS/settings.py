@@ -37,11 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     #Apps
     'transactions',
-    
+
     #New Externals apps
     'rest_framework',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'django_htmx',
+    'django_tables2',
+    'widget_tweaks',
+    'crispy_forms',
+    # 'crispy_bootstrap4',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #New middleware
+    'allauth.account.middleware.AccountMiddleware', #AllAuth
 ]
 
 ROOT_URLCONF = 'DRC_TRANSACTIONS.urls'
@@ -130,3 +143,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #RESTFRAMEWORK
 
+
+# Spécifiez le backend d'authentification
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+# Configuration de Allauth
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # ou "optional" selon vos besoins
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+
+
+LOGIN_REDIRECT_URL = '/'
+
+# Configurez le backend de console pour les emails
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Les autres paramètres email peuvent rester tels quels
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 1025  # Ce port est pour un serveur local, n'a pas d'importance ici avec le backend de console
