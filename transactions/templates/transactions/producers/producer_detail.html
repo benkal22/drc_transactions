@@ -1,0 +1,80 @@
+<!-- transactions/templates/transactions/producers/producer_detail.html -->
+
+{% extends 'transactions/producer/producer_base.html' %}
+{% load static %}
+
+{% block content_profile_detail %}
+
+ <!-- Profile Overview Tab -->
+ <div class="tab-pane fade show active profile-overview" id="profile-overview">
+    <h2>{{ producer.company_name }}</h2>
+
+    <h5 class="card-title">A propos</h5>
+    <p class="small fst-italic">{{ producer.about }}</p>
+
+    <h5 class="card-title">Détails</h5>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Nom du propriétaire</div>
+        <div class="col-lg-9 col-md-8">{{ producer.manager_name }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Secteur d'activité</div>
+        <div class="col-lg-9 col-md-8">{{ producer.sector_label }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Produits ou Services de l'entreprise</div>
+        <div class="col-lg-9 col-md-8">
+            <div>
+                {% for product in producer.product.all %}
+                    <li>{{ product.product_label }} (Code: {{ product.product_code }})</li>
+                {% empty %}
+                    <li>Aucun produit associé</li>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Province</div>
+        <div class="col-lg-9 col-md-8">{{ producer.province }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Adresse</div>
+        <div class="col-lg-9 col-md-8">{{ producer.address }}</div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Numéro Impôt</div>
+        <div class="col-lg-9 col-md-8">{{ producer.tax_code }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">NRC</div>
+        <div class="col-lg-9 col-md-8">{{ producer.nrc }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Identification nationale</div>
+        <div class="col-lg-9 col-md-8">{{ producer.nat_id }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Téléphone</div>
+        <div class="col-lg-9 col-md-8">{{ producer.phone_number }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Email</div>
+        <div class="col-lg-9 col-md-8">{{ producer.email }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 label">Nom d'utilisateur</div>
+        <div class="col-lg-9 col-md-8">{{ producer.username }}</div>
+    </div>
+</div>
+{% endblock %}

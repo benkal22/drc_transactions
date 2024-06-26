@@ -1,0 +1,28 @@
+<!-- templates/account/password_reset_done.html -->
+{% extends "base.html" %}
+{% load i18n allauth account %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% trans "Réinitialisation du mot de passe" %} - DRC Transactions
+{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="mb-4 text-center">{% trans "Réinitialisation du mot de passe" %}</h1>
+
+                    {% if user.is_authenticated %}
+                        {% include "account/snippets/already_logged_in.html" %}
+                    {% endif %}
+
+                    <p class="mb-4 text-center">
+                        {% blocktrans %}Nous vous avons envoyé un email. Si vous ne l'avez pas reçu, veuillez vérifier votre dossier spam. Sinon, contactez-nous si vous ne le recevez pas dans quelques minutes.{% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

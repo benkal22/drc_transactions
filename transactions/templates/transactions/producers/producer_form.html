@@ -1,0 +1,27 @@
+<!-- transactions/templates/transactions/producers/producer_form.html -->
+
+{% extends 'transactions/base.html' %}
+
+{% block title %}
+{% if producer %}
+Éditer {{ producer.company_name }} - Xchanges DRC App
+{% else %}
+Ajouter un Producteur - Xchanges DRC App
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>{% if producer %}Éditer {{ producer.company_name }}{% else %}Ajouter un Producteur{% endif %}</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

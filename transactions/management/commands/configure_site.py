@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         site, created = Site.objects.get_or_create(id=1)
         site.domain = 'localhost:8000'  # Remplacez par votre domaine local
-        site.name = 'Xchange DRC App'
+        site.name = 'DRC Transactions'
         site.save()
 
         self.stdout.write(self.style.SUCCESS('Site configuré avec succès pour l\'environnement local'))

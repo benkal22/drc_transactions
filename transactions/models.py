@@ -2,10 +2,26 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .managers import CustomUserManager
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)  # Champ email unique
+    
+    # Définir le champ USERNAME_FIELD à 'username' et REQUIRED_FIELDS à ['email']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    objects = CustomUserManager()  # Utilisez le gestionnaire personnalisé
+
+    def __str__(self):
+        return self.username
+    
+    def __unicode__(self):
+        return self.username
+    
 class Country(models.Model):
     country = models.CharField(max_length=100)
     iso2 = models.CharField(max_length=2)
@@ -56,16 +72,28 @@ class Product(models.Model):
     def __unicode__(self):
         return self.product_label
 
+class UniqueProduct(models.Model):
+    sector_code = models.CharField(max_length=50)
+    sector_label = models.CharField(max_length=100)
+    activity_code = models.CharField(max_length=50)
+    activity_label = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('sector_code', 'sector_label', 'activity_code', 'activity_label')
+
+    def __str__(self):
+        return f"{self.sector_label} - {self.activity_label}"
+
 class Producer(models.Model):
     id_producer = models.AutoField(primary_key=True)
-    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
     company_name = models.CharField(max_length=255)
     manager_name = models.CharField(max_length=255, blank=True, null=True)
     tax_code = models.CharField(max_length=100, blank=True, null=True)
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     product = models.ManyToManyField(Product)
-    sector_label = models.CharField(max_length=255)
+    sector_label = models.ForeignKey(UniqueProduct, on_delete=models.CASCADE, null=True)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField()
@@ -83,6 +111,15 @@ class Producer(models.Model):
 
     def __unicode__(self):
         return self.company_name
+    
+    def update_sector_labels(self):
+        sector_labels = Product.objects.values_list('sector_label', flat=True).distinct()
+        self.sector_label = ', '.join(sector_labels)
+        self.save()
+    
+    @property
+    def get_products_by_sector(self):
+        return Product.objects.filter(sector_label=self.sector_label.sector_label)
 
 class Client(models.Model):
     id_client = models.AutoField(primary_key=True)
@@ -189,18 +226,10 @@ class Stock(models.Model):
 
     def __unicode__(self):
         return f'Stock - {self.id_stock}'
-
-class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)  # Champ email unique
     
-    # Définir le champ USERNAME_FIELD à 'username' et REQUIRED_FIELDS à ['email']
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-    objects = CustomUserManager()  # Utilisez le gestionnaire personnalisé
-
-    def __str__(self):
-        return self.username
+@receiver(post_save, sender=CustomUser)
+def create_producer(sender, instance, created, **kwargs):
+    if created and not instance.is_superuser:
+        Producer.objects.create(user=instance, company_name=f"{instance.username}'s Company", email=instance.email, country_id=20, province_id=10)
     
-    def __unicode__(self):
-        return self.username
+        

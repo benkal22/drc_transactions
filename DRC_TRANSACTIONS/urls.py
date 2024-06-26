@@ -14,20 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.urls import path, include
-
-
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     # path('api/', include('transactions.urls')),  
-#     path('api-auth/', include('rest_framework.urls')),  
-# ]
-
 from django.contrib import admin
 from django.urls import path, include
 
+from transactions.views.producers_view import (
+    producers_list, add_producer, edit_producer, remove_producer, remove_producer_confirmation
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,7 +29,15 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     
     #Path personnalisés Front
-    path('', include('transactions.urls')),
+    path('', producers_list, name='home'),
+    
+    #producers
+    path('producers', producers_list, name='producers_list'),
+    path('producers/add', add_producer, name='add_producer'),
+    path('producers/<int:pk>/edit', edit_producer, name='edit_producer'),
+    path('producers/<int:pk>/remove_confirmation', remove_producer_confirmation, name='remove_producer_confirmation'),
+    path('producers/<int:pk>/remove', remove_producer, name='remove_producer'),
+    
     
 ]
 

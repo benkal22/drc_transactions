@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fr\n"
+
+msgid "The username and/or password you specified are not correct."
+msgstr "Le nom d'utilisateur et/ou le mot de passe que vous avez spécifiés sont incorrects."
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Username or email"
+msgstr "Nom d'utilisateur ou email"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+msgid "Remember Me"
+msgstr "Se souvenir de moi"

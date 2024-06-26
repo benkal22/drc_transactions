@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #New Externals apps
     'rest_framework',
     'django.contrib.sites',
+    "django_extensions",
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'widget_tweaks',
     'crispy_forms',
-    # 'crispy_bootstrap4',
+    'crispy_bootstrap4',
+    'bootstrap4',
     'django_filters',
 ]
 
@@ -68,11 +70,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DRC_TRANSACTIONS.urls'
-
+import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'DRC_TRANSACTIONS' / 'templates'],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
@@ -146,23 +149,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Spécifiez le backend d'authentification
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 SITE_ID = 1
 
+
 # Configuration de Allauth
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login'
+
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # ou "optional" selon vos besoins
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
-
-
-LOGIN_REDIRECT_URL = '/'
+# ACCOUNT_LOGIN_TEMPLATE = 'account/login.html'
 
 # Configurez le backend de console pour les emails
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -173,3 +182,24 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 EMAIL_PORT = 1025  # Ce port est pour un serveur local, n'a pas d'importance ici avec le backend de console
+
+# Définir le chemin absolu du répertoire des fichiers statiques
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# URL de base pour les fichiers statiques
+STATIC_URL = '/static/'
+
+# Liste des répertoires où trouver les fichiers statiques
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Définir les fichiers de traduction à utiliser
+LANGUAGES = [
+    ('fr', 'French'),
+]
+
+# Emplacement des fichiers de traduction
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
