@@ -14,7 +14,7 @@ Ajouter un Transaction - DRC Transactions
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h2>{% if transaction %}Éditer {{ transaction.company_name }}{% else %}Ajouter un Transaction{% endif %}</h2>
+            <h2>{% if transaction %}Éditer {{ transaction.type}}{% else %}Ajouter une Transaction{% endif %}</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 

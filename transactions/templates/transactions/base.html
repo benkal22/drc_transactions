@@ -1,3 +1,5 @@
+<!--DRC_TRANSACTIONS/transactions/templates/base.html-->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -24,11 +26,13 @@
     <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.3/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/htmx.org@1.5.0/dist/htmx.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/alpine.min.js" defer></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Tailwind CSS -->
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js" integrity="sha384-Xh+GLLi0SMFPwtHQjT72aPG19QvKB8grnyRbYBNIdHWc2NkCrz65jlU7YrzO6qRp" crossorigin="anonymous"></script>
 
 </head>
 <body x-data="{ sidebarOpen: false }">

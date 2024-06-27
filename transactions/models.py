@@ -30,6 +30,7 @@ class Country(models.Model):
     class Meta:
         verbose_name = "Country"
         verbose_name_plural = "Countries"
+        ordering = ['country']
 
     def __str__(self):
         return self.country
@@ -134,8 +135,8 @@ class Client(models.Model):
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
-    product = models.ManyToManyField(Product)
-    sector_label = models.ForeignKey(UniqueProduct, on_delete=models.CASCADE, null=True)    
+    product = models.ManyToManyField(Product, null=True)
+    sector_label = models.ManyToManyField(UniqueProduct, null=True)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
@@ -146,12 +147,14 @@ class Client(models.Model):
     class Meta:
         verbose_name = "Client"
         verbose_name_plural = "Clients"
-
+    
     def __str__(self):
-        return self.company_name if self.category == 'enterprise' else self.name
+        if self.category == 'enterprise':
+            return self.company_name if self.company_name else "No company name"
+        return self.name if self.name else "No name"
 
-    def __unicode__(self):
-        return self.company_name if self.category == 'enterprise' else self.name
+    # def __unicode__(self):
+    #     return self.company_name if self.category == 'enterprise' else self.name
 
 class Supplier(models.Model):
     id_supplier = models.AutoField(primary_key=True)
@@ -166,8 +169,8 @@ class Supplier(models.Model):
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
-    product = models.ManyToManyField(Product)
-    sector_label = models.ForeignKey(UniqueProduct, on_delete=models.CASCADE, null=True)
+    product = models.ManyToManyField(Product, null=True)
+    sector_label = models.ManyToManyField(UniqueProduct, null=True)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
@@ -180,10 +183,12 @@ class Supplier(models.Model):
         verbose_name_plural = "Suppliers"
 
     def __str__(self):
-        return self.company_name if self.category == 'enterprise' else self.name
+        if self.category == 'enterprise':
+            return self.company_name if self.company_name else "No company name"
+        return self.name if self.name else "No name"
 
-    def __unicode__(self):
-        return self.company_name if self.category == 'enterprise' else self.name
+    # def __unicode__(self):
+    #     return self.company_name if self.category == 'enterprise' else self.company_name
 
 class Transaction(models.Model):
     id_transaction = models.AutoField(primary_key=True)
@@ -201,6 +206,9 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
+    
+    def __str__(self):
+        return f"{self.type} - {self.id_transaction}"
 
     # def __str__(self):
     #     return f"{self.date} - {self.type} - {self.client or 'Unknown'} - {self.supplier or 'Unknown'}"
@@ -208,8 +216,8 @@ class Transaction(models.Model):
     # def __str__(self):
     #     return f'{self.type} - {self.date}'
 
-    def __unicode__(self):
-        return f'{self.type} - {self.date}'
+    # def __unicode__(self):
+    #     return f'{self.type} - {self.date}'
 
 class Stock(models.Model):
     id_stock = models.AutoField(primary_key=True)

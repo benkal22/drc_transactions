@@ -1,21 +1,21 @@
-<!-- transactions/templates/transactions/producers/producer_delete.html -->
+<!-- transactions/templates/transactions/suppliers/supplier_delete.html -->
 
-{% extends 'transactions/producer/producer_base.html' %}
+{% extends 'transactions/supplier/supplier_base.html' %}
 {% load static %}
 {% block content_profile_delete %}
 
-<div class="modal fade" id="deleteProducerModal" tabindex="-1" aria-labelledby="deleteProducerModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteSupplierModal" tabindex="-1" aria-labelledby="deleteSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="deleteProducerModalLabel">Supprimer Producteur</h5>
+            <h5 class="modal-title" id="deleteSupplierModalLabel">Supprimer Fournisseur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer ce producteur ? Cette action est irréversible.</p>
+                <p>Êtes-vous sûr de vouloir supprimer ce fournisseur ? Cette action est irréversible.</p>
             </div>
             <div class="modal-footer">
-                <form method="post" action="{% url 'producer_delete' producer.id %}">
+                <form method="post" action="{% url 'supplier_delete' supplier.id %}">
                     {% csrf_token %}
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                     <button type="submit" class="btn btn-danger">Supprimer</button>

@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 from transactions.views.producers_view import (
     producers_list, add_producer, edit_producer, remove_producer, remove_producer_confirmation
@@ -34,6 +35,12 @@ from transactions.views.stocks_view import (
 )
 from transactions.views.provinces_view import load_provinces
 
+from transactions.views.clients_view import ClientListAPIView
+
+# from transactions.views.clients_view import (
+#     ClientListCreateAPIView, ClientRetrieveUpdateDestroyAPIView
+# )
+    
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('transactions.urls')),
@@ -61,11 +68,14 @@ urlpatterns = [
     path('suppliers/<int:pk>/remove', remove_supplier, name='remove_supplier'),
     
     #clients
-    path('clients/', clients_list, name='clients_list'),
-    path('clients/add', add_client, name='add_client'),
-    path('clients/<int:pk>/edit', edit_client, name='edit_client'),
-    path('clients/<int:pk>/remove_confirmation', remove_client_confirmation, name='remove_client_confirmation'),
-    path('clients/<int:pk>/remove', remove_client, name='remove_client'),
+    path('clients/', TemplateView.as_view(template_name='transactions/clients/clients_list.html'), name='clients_list'),
+    # path('clients_list/', ClientListAPIView.as_view(), name='clients_list'),
+    
+    # path('clients/', clients_list, name='clients_list'),
+    # path('clients/add', add_client, name='add_client'),
+    # path('clients/<int:pk>/edit', edit_client, name='edit_client'),
+    # path('clients/<int:pk>/remove_confirmation', remove_client_confirmation, name='remove_client_confirmation'),
+    # path('clients/<int:pk>/remove', remove_client, name='remove_client'),
     
     #transactions
     path('transactions/', transactions_list, name='transactions_list'),

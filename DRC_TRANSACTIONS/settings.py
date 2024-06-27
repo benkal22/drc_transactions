@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     #New Externals apps
     'rest_framework',
+    'corsheaders',
     'django.contrib.sites',
     "django_extensions",
     'allauth',
@@ -66,8 +67,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #New middleware
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'allauth.account.middleware.AccountMiddleware', #AllAuth
 ]
+#New 
+CORS_ORIGIN_ALLOW_ALL = False
 
 ROOT_URLCONF = 'DRC_TRANSACTIONS.urls'
 import os
@@ -145,7 +150,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #RESTFRAMEWORK
-
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Permettre à tout le monde d'accéder
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Spécifiez le backend d'authentification
 AUTHENTICATION_BACKENDS = (

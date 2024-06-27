@@ -2,7 +2,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from transactions.views.clients_view import ClientViewSet
+from transactions.views.clients_view import ClientViewSet, ClientListAPIView
 from transactions.views.provinces_view import ProvinceViewSet
 from transactions.views.products_view import ProductViewSet
 from transactions.views.producers_view import ProducerViewSet

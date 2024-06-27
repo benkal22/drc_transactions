@@ -11,6 +11,7 @@ from ..forms import SupplierForm
 class SupplierViewSet(viewsets.ModelViewSet):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    
 from django.views.decorators.http import require_POST
 
 def suppliers_list(request):
