@@ -13,6 +13,8 @@ router.register(r'unique-products', views.UniqueProductViewSet)
 router.register(r'countries', views.CountryViewSet)
 router.register(r'custom-users', views.CustomUserViewSet)
 
+app_name = 'api'
+
 urlpatterns = [
     path('', include(router.urls)),
 ]

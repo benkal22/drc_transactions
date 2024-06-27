@@ -175,7 +175,7 @@ SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/api'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email

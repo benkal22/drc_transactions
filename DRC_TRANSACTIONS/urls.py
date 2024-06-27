@@ -37,13 +37,10 @@ from transactions.views.provinces_view import load_provinces
 
 from transactions.views.clients_view import ClientListAPIView
 
-# from transactions.views.clients_view import (
-#     ClientListCreateAPIView, ClientRetrieveUpdateDestroyAPIView
-# )
-    
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('transactions.urls')),
+    # path('api/', include('transactions.urls')),
+    path('api/', include('transactions.api.urls', namespace='api')),
     
     #Path Authentication
     path('accounts/', include('allauth.urls')),
