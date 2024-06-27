@@ -202,8 +202,11 @@ class Transaction(models.Model):
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
 
-    def __str__(self):
-        return f'{self.type} - {self.date}'
+    # def __str__(self):
+    #     return f"{self.date} - {self.type} - {self.client or 'Unknown'} - {self.supplier or 'Unknown'}"
+
+    # def __str__(self):
+    #     return f'{self.type} - {self.date}'
 
     def __unicode__(self):
         return f'{self.type} - {self.date}'

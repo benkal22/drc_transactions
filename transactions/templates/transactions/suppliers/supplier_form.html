@@ -1,12 +1,12 @@
-<!-- transactions/templates/transactions/producers/producer_form.html -->
+<!-- transactions/templates/transactions/suppliers/supplier_form.html -->
 
 {% extends 'transactions/base.html' %}
 
 {% block title %}
-{% if producer %}
-Éditer {{ producer.company_name }} - DRC Transactions
+{% if supplier %}
+Éditer {{ supplier.company_name }} - Xchanges DRC App
 {% else %}
-Ajouter un Producteur - DRC Transactions
+Ajouter un Fournisseur - Xchanges DRC App
 {% endif %}
 {% endblock %}
 
@@ -14,7 +14,7 @@ Ajouter un Producteur - DRC Transactions
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h2>{% if producer %}Éditer {{ producer.company_name }}{% else %}Ajouter un Producteur{% endif %}</h2>
+            <h2>{% if supplier %}Éditer {{ supplier.company_name }}{% else %}Ajouter un Fournisseur{% endif %}</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 

@@ -1,0 +1,48 @@
+
+<!-- transactions/templates/transactions/clients/clients_list.html -->
+
+{% extends 'transactions/base.html' %}
+
+{% block title %}
+Liste des clients - DRC Transactions
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Liste des clients</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom de l'entreprise</th>
+                        <th>Nom du gérant</th>
+                        <th>Adresse</th>
+                        <!-- Ajoutez d'autres colonnes selon vos besoins -->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <td>{{ client.company_name }}</td>
+                        <td>{{ client.manager_name }}</td>
+                        <td>{{ client.address }}</td>
+                        <!-- Ajoutez d'autres colonnes selon vos besoins -->
+                        <td>
+                            <a href="{% url 'edit_client' client.pk %}" class="btn btn-sm btn-primary">Éditer</a>
+                            <a href="{% url 'remove_client_confirmation' client.pk %}" class="btn btn-sm btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Aucun client trouvé.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'add_client' %}" class="btn btn-primary">Ajouter un client</a>
+        </div>
+    </div>
+</div> 
+{% endblock %} 
