@@ -30,9 +30,9 @@ from transactions.views.clients_view import (
 from transactions.views.transactions_view import (
     transactions_list, add_transaction, edit_transaction, remove_transaction, remove_transaction_confirmation
 )
-from transactions.views.stocks_view import (
-    stocks_list
-)
+# from transactions.views.stocks_view import (
+#     stocks_list
+# )
 from transactions.views.provinces_view import load_provinces
 
 from transactions.views.clients_view import ClientListAPIView
@@ -82,7 +82,7 @@ urlpatterns = [
     path('transactions/<int:pk>/remove', remove_transaction, name='remove_transaction'),
     
     #stocks
-    path('stocks/', stocks_list, name='stocks_list'),
+    # path('stocks/', stocks_list, name='stocks_list'),
     # path('stocks/add', add_stock, name='add_stock'),
     # path('stocks/<int:pk>/edit', edit_stock, name='edit_stock'),
     # path('stocks/<int:pk>/remove_confirmation', remove_stock_confirmation, name='remove_stock_confirmation'),

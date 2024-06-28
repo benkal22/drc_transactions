@@ -1,5 +1,6 @@
 from django import forms
-from .models import Supplier, Producer, Client, Transaction, Stock
+from .models import Supplier, Producer, Client, Transaction
+# from .models import Supplier, Producer, Client, Transaction, Stock
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
