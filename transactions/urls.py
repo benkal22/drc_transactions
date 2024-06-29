@@ -1,27 +1,16 @@
 #DRC_TRANSACTIONS/transactions/urls.py
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
-from transactions.views.clients_view import ClientViewSet, ClientListAPIView
-from transactions.views.provinces_view import ProvinceViewSet
-from transactions.views.products_view import ProductViewSet
-from transactions.views.producers_view import ProducerViewSet
-from transactions.views.suppliers_view import SupplierViewSet
-from transactions.views.countries_view import CountryViewSet
-from transactions.views.stocks_view import StockViewSet
-from transactions.views.transactions_view import TransactionViewSet
 
-router = DefaultRouter()
-router.register(r'countries', CountryViewSet)
-router.register(r'provinces', ProvinceViewSet)
-router.register(r'products', ProductViewSet)
-router.register(r'producers', ProducerViewSet)
-router.register(r'clients', ClientViewSet)
-router.register(r'suppliers', SupplierViewSet)
-router.register(r'transactions', TransactionViewSet)
-router.register(r'stocks', StockViewSet)
+app_name = 'transactions'
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('dashboard/', login_required(TemplateView.as_view(template_name='transactions/dashboard.html')), name='dashboard'),
+    path('home_page/', login_required(TemplateView.as_view(template_name='transactions/home_page.html')), name='home_page'),
+    path('profil/', login_required(TemplateView.as_view(template_name='transactions/producers/profil.html')), name='profil'),
+    path('suppliers/', login_required(TemplateView.as_view(template_name='transactions/suppliers/suppliers.html')), name='suppliers'),
+    path('clients/', login_required(TemplateView.as_view(template_name='transactions/clients/clients.html')), name='clients'),
+    path('transactions/', login_required(TemplateView.as_view(template_name='transactions/transactions/transactions.html')), name='transactions'),
 ]
-

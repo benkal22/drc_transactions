@@ -1,31 +1,41 @@
+#DRC_TRANSACTIONS/transactions/api/views.py
+
 from rest_framework import viewsets, status
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Sum, Count, F
-from ..models import ( 
-    CustomUser, 
-    Producer, 
-    Client, 
-    Supplier, 
-    Transaction, 
-    # Stock, 
-    Product, 
-    UniqueSector,
-    Country
-)
+
+from ..models import CustomUser, Producer, Client, Supplier, Transaction, Product, UniqueSector, Country, Province
 from .serializers import (
-    CustomUserSerializer,
-    ProducerSerializer,
-    ClientSerializer,
-    SupplierSerializer,
-    TransactionSerializer,
-    # StockSerializer,
-    ProductSerializer,
-    UniqueSectorSerializer,
-    CountrySerializer
+    CustomUserSerializer, ProducerSerializer, ClientSerializer, SupplierSerializer, TransactionSerializer,
+    ProductSerializer, UniqueSectorSerializer, CountrySerializer, ProvinceSerializer
 )
+
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Product.objects.all().order_by('product_label')
+    serializer_class = ProductSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class UniqueSectorViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = UniqueSector.objects.all().order_by('sector_label')
+    serializer_class = UniqueSectorSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CountryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class ProvinceViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Province.objects.all()
+    serializer_class = ProvinceSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -39,18 +49,10 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return CustomUser.objects.filter(id=self.request.user.id)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
     def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
-
-from rest_framework import viewsets, status
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from django.db.models import Count
-from ..models import Producer, Supplier, Client
+        serializer.save()
 
 class ProducerViewSet(viewsets.ModelViewSet):
     serializer_class = ProducerSerializer
@@ -69,47 +71,12 @@ class ProducerViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
-    @action(detail=False, methods=['get'])
-    def transaction_count(self, request):
-        # Nombre total de transactions effectuées par le producteur connecté
-        transaction_count = Transaction.objects.filter(supplier__user=request.user).count()
-        return Response({'transaction_count': transaction_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def supplier_count(self, request):
-        # Nombre total de fournisseurs du producteur connecté
-        supplier_count = Supplier.objects.filter(user=request.user).count()
-        return Response({'supplier_count': supplier_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def enterprise_supplier_count(self, request):
-        # Nombre de fournisseurs de type enterprise du producteur connecté
-        enterprise_supplier_count = Supplier.objects.filter(user=request.user, category='enterprise').count()
-        return Response({'enterprise_supplier_count': enterprise_supplier_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def individual_supplier_count(self, request):
-        # Nombre de fournisseurs de type individual du producteur connecté
-        individual_supplier_count = Supplier.objects.filter(user=request.user, category='individual').count()
-        return Response({'individual_supplier_count': individual_supplier_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def client_count(self, request):
-        # Nombre total de clients du producteur connecté
-        client_count = Client.objects.filter(country__country='Congo (Kinshasa)').count()
-        return Response({'client_count': client_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def enterprise_client_count(self, request):
-        # Nombre de clients de type enterprise du producteur connecté
-        enterprise_client_count = Client.objects.filter(category='enterprise', country__country='Congo (Kinshasa)').count()
-        return Response({'enterprise_client_count': enterprise_client_count}, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['get'])
-    def individual_client_count(self, request):
-        # Nombre de clients de type individual du producteur connecté
-        individual_client_count = Client.objects.filter(category='individual', country__country='Congo (Kinshasa)').count()
-        return Response({'individual_client_count': individual_client_count}, status=status.HTTP_200_OK)
+    @action(detail=True, methods=['get'])
+    def transactions(self, request, pk=None):
+        producer = self.get_object()
+        transactions = Transaction.objects.filter(producer=producer)
+        serializer = TransactionSerializer(transactions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
@@ -142,30 +109,43 @@ class SupplierViewSet(viewsets.ModelViewSet):
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        producer = Producer.objects.filter(user=self.request.user).first()
+        if self.request.user.is_superuser:
+            return Transaction.objects.all()
+        elif producer:
+            return Transaction.objects.filter(producer=producer)
+        elif hasattr(self.request.user, 'supplier'):
+            supplier = Supplier.objects.filter(user=self.request.user).first()
+            return Transaction.objects.filter(supplier=supplier)
+        elif hasattr(self.request.user, 'client'):
+            client = Client.objects.filter(user=self.request.user).first()
+            return Transaction.objects.filter(client=client)
+        return Transaction.objects.none()
 
     @action(detail=False, methods=['get'])
     def sales_summary(self, request):
-        # Obtenir le résumé des ventes
         sales_summary = Transaction.objects.filter(type='sale').aggregate(
             total_sales=Sum('price'),
             total_quantity=Sum('quantity'),
-            total_value=Sum('total_price')
+            total_value=Sum('price') * F('quantity')
         )
         return Response(sales_summary, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
     def purchase_summary(self, request):
-        # Obtenir le résumé des achats
         purchase_summary = Transaction.objects.filter(type='purchase').aggregate(
             total_purchases=Sum('price'),
             total_quantity=Sum('quantity'),
-            total_value=Sum('total_price')
+            total_value=Sum('price') * F('quantity')
         )
         return Response(purchase_summary, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
     def product_sales_ranking(self, request):
-        # Classement des produits par ventes
         product_sales_ranking = Transaction.objects.filter(type='sale').values('product').annotate(
             total_sales=Sum('price'),
             total_quantity=Sum('quantity')
@@ -174,7 +154,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def product_purchase_ranking(self, request):
-        # Classement des produits par achats
         product_purchase_ranking = Transaction.objects.filter(type='purchase').values('product').annotate(
             total_purchases=Sum('price'),
             total_quantity=Sum('quantity')
@@ -183,7 +162,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def client_sales_distribution(self, request):
-        # Distribution des ventes par client
         client_sales_distribution = Transaction.objects.filter(type='sale').values('client').annotate(
             total_sales=Sum('price'),
             total_quantity=Sum('quantity')
@@ -192,27 +170,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def supplier_purchase_distribution(self, request):
-        # Distribution des achats par fournisseur
         supplier_purchase_distribution = Transaction.objects.filter(type='purchase').values('supplier').annotate(
             total_purchases=Sum('price'),
             total_quantity=Sum('quantity')
         ).order_by('-total_purchases')
         return Response(supplier_purchase_distribution, status=status.HTTP_200_OK)
-
-class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.all().order_by('product_label')
-    serializer_class = ProductSerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
-class UniqueSectorViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = UniqueSector.objects.all().order_by('sector_label')
-    serializer_class = UniqueSectorSerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
-class CountryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]

@@ -1,0 +1,32 @@
+{
+  "name": "htmx",
+  "version": "0.0.2",
+  "description": "Use Javascript in place of PHP",
+  "homepage": "https://gist.github.com/godDLL/f31224df756fff2623290e331b40b1fe",
+  "scripts": {
+    "build": "build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gist.github.com/godDLL/f31224df756fff2623290e331b40b1fe.git"
+  },
+  "author": "Yuli Che. <god.DLL@iCloud.com>",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "keywords": [
+    "php",
+    "web"
+  ],
+  "main": "htmx.js",
+  "bin": "htmx.js",
+  "files": [
+    "TODO.md",
+    "htmx.js",
+    "cli.js",
+    "preprocess.js",
+    "watch.js"
+  ]
+}
+
+

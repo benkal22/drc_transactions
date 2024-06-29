@@ -71,8 +71,16 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'allauth.account.middleware.AccountMiddleware', #AllAuth
 ]
+
 #New 
+# Configuration de CORS
 CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "https://api.getgeoapi.com",
+    # Ajoutez ici les autres domaines autorisés
+]
 
 ROOT_URLCONF = 'DRC_TRANSACTIONS.urls'
 import os
@@ -106,7 +114,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -152,7 +159,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #RESTFRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # Permettre à tout le monde d'accéder
+        # 'rest_framework.permissions.AllowAny',  # Permettre à tout le monde d'accéder
+        'rest_framework.permissions.IsAuthenticated',  # Changer AllowAny à IsAuthenticated
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -170,12 +178,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 SITE_ID = 1
 
+#URL de demarrage
+LOGIN_URL = '/accounts/login/'
 
 # Configuration de Allauth
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
-LOGIN_REDIRECT_URL = '/api'
+LOGIN_REDIRECT_URL = 'transactions:dashboard'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email
@@ -205,6 +215,7 @@ STATIC_URL = '/static/'
 # Liste des répertoires où trouver les fichiers statiques
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    # BASE_DIR / 'static',   
 ]
 
 # Définir les fichiers de traduction à utiliser
@@ -216,3 +227,8 @@ LANGUAGES = [
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+#API DE CONVERSION MONNAIE
+# API Configuration
+GETGEOAPI_BASE_URL ="https://api.getgeoapi.com/v2/currency/convert"
+GETGEOAPI_KEY = "7a6f676a70c80aa92e0430280d197409aedb985e"

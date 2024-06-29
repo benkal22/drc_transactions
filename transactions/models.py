@@ -7,6 +7,8 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.exceptions import ValidationError
 
+from django.utils.translation import gettext_lazy as _
+
 # Modèle personnalisé pour les utilisateurs
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)  # Champ email unique
@@ -105,14 +107,20 @@ class Producer(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, default=1, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    # country = models.ForeignKey(Country, default=1, on_delete=models.CASCADE)
+    # province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT, limit_choices_to={'country': 'Congo (Kinshasa)'})
+    province = models.ForeignKey('Province', on_delete=models.PROTECT, null=False, blank=False)
     is_approved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Producer"
         verbose_name_plural = "Producers"
 
+    def clean(self):
+        if self.country.country == 'Congo (Kinshasa)' and not self.province:
+            raise ValidationError("Province field is required for Congo (Kinshasa) country.")
+        
     def __unicode__(self):
         return self.company_name
 
@@ -144,15 +152,17 @@ class Client(models.Model):
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
-    product = models.ManyToManyField(Product)
-    sector_label = models.ManyToManyField(UniqueSector)
+    product = models.ManyToManyField(Product, blank=True, null=True)
+    sector_label = models.ManyToManyField(UniqueSector, blank=True, null=True)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
-
+    # country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    # province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
+    
     class Meta:
         verbose_name = "Client"
         verbose_name_plural = "Clients"
@@ -164,6 +174,10 @@ class Client(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+    
+    def clean(self):
+        if self.country.country == 'Congo (Kinshasa)' and not self.province:
+            raise ValidationError("Province field is required for Congo (Kinshasa) country.")
 
 # Modèle pour les fournisseurs
 class Supplier(models.Model):
@@ -179,14 +193,16 @@ class Supplier(models.Model):
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
-    product = models.ManyToManyField(Product)
-    sector_label = models.ManyToManyField(UniqueSector)
+    product = models.ManyToManyField(Product,  blank=True, null=True)
+    sector_label = models.ManyToManyField(UniqueSector,  blank=True, null=True)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    # country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    # province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
 
     class Meta:
         verbose_name = "Supplier"
@@ -199,20 +215,32 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+    
+    def clean(self):
+        if self.country.country == 'Congo (Kinshasa)' and not self.province:
+            raise ValidationError("Province field is required for Congo (Kinshasa) country.")
 
 # Modèle pour les transactions
 class Transaction(models.Model):
     id_transaction = models.AutoField(primary_key=True)
+    producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     TRANSACTION_TYPE_CHOICES = [
         ('purchase', 'Purchase'),
         ('sale', 'Sale')
     ]
+    CURRENCY_CHOICES = [
+        ('USD', 'US Dollar'),
+        ('CDF', 'Congolese Franc'),
+        ('EUR', 'Euro')
+    ]
     type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()  # Utilisation de PositiveIntegerField pour garantir une valeur positive
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='CDF')
+    # exchange_rate = models.DecimalField(max_digits=10, decimal_places=4, default=1.00)
     date = models.DateTimeField()
 
     class Meta:
@@ -224,18 +252,39 @@ class Transaction(models.Model):
 
     def clean(self):
         # Validation des transactions
-        if self.type == 'sale' and self.client is None:
-            raise ValidationError("Client must be specified for sales transactions.")
-        if self.type == 'purchase' and self.supplier is None:
-            raise ValidationError("Supplier must be specified for purchase transactions.")
-        producer_products = self.supplier.product.all() if self.supplier else []
+        if self.type == 'sale':
+            if self.client is None:
+                raise ValidationError(_("Client must be specified for sales transactions."))
+            if self.supplier is not None:
+                raise ValidationError(_("Supplier must be null for sales transactions."))
+        elif self.type == 'purchase':
+            if self.supplier is None:
+                raise ValidationError(_("Supplier must be specified for purchase transactions."))
+            if self.client is not None:
+                raise ValidationError(_("Client must be null for purchase transactions."))
+
+        # Validation du produit par rapport au producteur
+        producer_products = self.producer.product.all() if self.producer else []
         if self.product not in producer_products:
-            raise ValidationError("The product is not listed in the producer's profile.")
+            raise ValidationError(_("The product is not listed in the producer's profile."))
+
+        # Validation de la quantité
+        if self.quantity <= 0:
+            raise ValidationError(_("Quantity must be a positive integer."))
+
+        # Validation du prix
+        if self.price <= 0:
+            raise ValidationError(_("Price must be a positive value."))
+
 
     @property
     def total_price(self):
         return self.price * self.quantity
 
+    @property
+    def total_price_cdf(self):
+        return self.total_price * self.exchange_rate
+    
 # Signal pour créer automatiquement un producteur pour chaque nouvel utilisateur
 @receiver(post_save, sender=CustomUser)
 def create_producer(sender, instance, created, **kwargs):

@@ -1,1 +1,4 @@
 staticfiles
+node_modules
+photos
+static/vendor

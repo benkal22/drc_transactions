@@ -1,17 +1,29 @@
+#DRC_TRANSACTIONS/transactions/api/urls.py
+
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from . import views
+from transactions.api.views import (
+    CustomUserViewSet,
+    ProducerViewSet,
+    SupplierViewSet,
+    ClientViewSet,
+    TransactionViewSet,
+    ProductViewSet,
+    UniqueSectorViewSet,
+    CountryViewSet,
+    ProvinceViewSet,
+)
 
 router = DefaultRouter()
-router.register(r'producers', views.ProducerViewSet)
-router.register(r'clients', views.ClientViewSet)
-router.register(r'suppliers', views.SupplierViewSet)
-router.register(r'transactions', views.TransactionViewSet)
-# router.register(r'stocks', views.StockViewSet)
-router.register(r'products', views.ProductViewSet)
-router.register(r'unique-products', views.UniqueSectorViewSet)
-router.register(r'countries', views.CountryViewSet)
-router.register(r'custom-users', views.CustomUserViewSet)
+router.register(r'producers', ProducerViewSet, basename='producers')
+router.register(r'clients', ClientViewSet)
+router.register(r'suppliers', SupplierViewSet)
+router.register(r'transactions', TransactionViewSet)
+router.register(r'products', ProductViewSet)
+router.register(r'unique-sectors', UniqueSectorViewSet)
+router.register(r'countries', CountryViewSet)
+router.register(r'provinces', ProvinceViewSet)
+router.register(r'custom-users', CustomUserViewSet)
 
 app_name = 'api'
 

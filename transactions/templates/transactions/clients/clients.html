@@ -1,0 +1,335 @@
+<!-- DRC_TRANSACTIONS/transactions/templates/transactions/clients/clients.html -->
+
+{% extends 'transactions/base.html' %}
+
+{% block title %}
+Gestion des Clients - DRC Transactions
+{% endblock %}
+
+{% block content %}
+<div x-data="{
+    clients: [],
+    client: {
+        id_client: null,
+        sector_label: 'ACTIVITES  IMMOBILIERES',
+        product: null,
+        country: 'Congo (Kinshasa)',
+        selectedCountry: 'Congo (Kinshasa)',  // Nouvelle variable pour gérer la sélection du pays
+        province: 'Kinshasa',
+        category: 'enterprise',
+        company_name: '',
+        manager_name: '',
+        tax_code: '',
+        nrc: '',
+        nat_id: '',
+        name: '',
+        photo: null,
+        address: '',
+        email: '',
+        phone_number: '',
+        selectedProducts: [],
+    },
+    countries: [],
+    provinces: [],
+    products: [],
+    unique_sectors: [],
+    showAdditionalInfo: false,
+    async fetchClients() {
+        await fetch('/api/clients/')
+            .then(response => response.json())
+            .then(clients => this.clients = clients)
+            .catch(error => console.error('Error fetching clients:', error));
+    },
+    async fetchCountries() {
+        await fetch('/api/countries/')
+            .then(response => response.json())
+            .then(countries => this.countries = countries)
+            .catch(error => console.error('Error fetching countries:', error));
+    },
+    async fetchProvinces() {
+        await fetch('/api/provinces/')
+            .then(response => response.json())
+            .then(provinces => this.provinces = provinces)
+            .catch(error => console.error('Error fetching provinces:', error));
+    },
+    async fetchProducts() {
+        await fetch('/api/products/')
+            .then(response => response.json())
+            .then(products => this.products = products)
+            .catch(error => console.error('Error fetching products:', error));
+    },
+    async fetchUniqueSectors() {
+        await fetch('/api/unique-sectors/')
+            .then(response => response.json())
+            .then(unique_sectors => this.unique_sectors = unique_sectors)
+            .catch(error => console.error('Error fetching unique sectors:', error));
+    },
+    async addClient() {
+        let formData = new FormData();
+        formData.append('category', this.client.category);
+        formData.append('company_name', this.client.company_name);
+        formData.append('manager_name', this.client.manager_name);
+        formData.append('tax_code', this.client.tax_code);
+        formData.append('nrc', this.client.nrc);
+        formData.append('nat_id', this.client.nat_id);
+        formData.append('name', this.client.name);
+        formData.append('photo', this.client.photo);
+        formData.append('address', this.client.address);
+        formData.append('email', this.client.email);
+        formData.append('phone_number', this.client.phone_number);
+        formData.append('sector_label', this.client.sector_label);
+        formData.append('country', this.client.selectedCountry); // Utilisez selectedCountry ici
+        formData.append('province', this.client.province);
+        formData.append('products', JSON.stringify(this.client.products));
+
+        await fetch('/api/clients/', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(newClient => {
+            this.clients.push(newClient);
+            this.resetClient();
+            alert('Client ajouté avec succès.');
+        })
+        .catch(error => console.error('Error adding client:', error));
+    },
+    async deleteClient(id) {
+        await fetch(`/api/clients/${id}/`, {
+            method: 'DELETE',
+        })
+        .then(() => {
+            this.clients = this.clients.filter(client => client.id_client !== id);
+            alert('Client supprimé avec succès.');
+        })
+        .catch(error => console.error('Error deleting client:', error));
+    },
+    async updateClient() {
+        let formData = new FormData();
+        formData.append('id_client', this.client.id_client);
+        formData.append('category', this.client.category);
+        formData.append('company_name', this.client.company_name);
+        formData.append('manager_name', this.client.manager_name);
+        formData.append('tax_code', this.client.tax_code);
+        formData.append('nrc', this.client.nrc);
+        formData.append('nat_id', this.client.nat_id);
+        formData.append('name', this.client.name);
+        formData.append('photo', this.client.photo);
+        formData.append('address', this.client.address);
+        formData.append('email', this.client.email);
+        formData.append('phone_number', this.client.phone_number);
+        formData.append('sector_label', this.client.sector_label);
+        formData.append('country', this.client.selectedCountry); // Utilisez selectedCountry ici
+        formData.append('province', this.client.province);
+        formData.append('products', JSON.stringify(this.client.products));
+
+        await fetch(`/api/clients/${this.client.id_client}/`, {
+            method: 'PUT',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(updatedClient => {
+            this.clients = this.clients.map(client => {
+                if (client.id_client === updatedClient.id_client) {
+                    return updatedClient;
+                }
+                return client;
+            });
+            this.resetClient();
+            alert('Client mis à jour avec succès.');
+        })
+        .catch(error => console.error('Error updating client:', error));
+    },
+    async editClient(client) {
+        // Charger les détails du client à éditer
+        await fetch(`/api/clients/${client.id_client}/`)
+            .then(response => response.json())
+            .then(data => {
+                this.client = data;
+            })
+            .catch(error => console.error('Error loading client details:', error));
+    },
+    resetClient() {
+        this.client = {
+            id_client: null,
+            sector_label: null,
+            product: null,
+            country: 'Congo (Kinshasa)',  // Définissez le pays par défaut ici
+            selectedCountry: 'Congo (Kinshasa)',  // Remettez à jour selectedCountry ici
+            province: null,
+            category: 'enterprise',
+            company_name: '',
+            manager_name: '',
+            tax_code: '',
+            nrc: '',
+            nat_id: '',
+            name: '',
+            photo: null,
+            address: '',
+            email: '',
+            phone_number: '',
+            selectedProducts: []
+        };
+    },
+    get filteredProducts() {
+            // Filtrer les produits par sector_label (ex. Agriculture, Sylviculture, Pêche)
+            if (!this.client.sector_label) return this.products; // Retourne tous les produits si aucun secteur n'est sélectionné
+            return this.products.filter(product => product.sector_label === this.client.sector_label);
+    },
+    init() {
+        this.fetchClients();
+        this.fetchCountries();
+        this.fetchProvinces();
+        this.fetchProducts();
+        this.fetchUniqueSectors();
+    }
+}" x-init="init">
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-6">Gestion des Clients</h1>
+
+        <!-- Formulaire pour ajouter ou éditer un client -->
+        <form @submit.prevent="client.id_client ? updateClient() : addClient()" enctype="multipart/form-data" class="border p-4 mb-6">
+            <div class="mb-3">
+                <label for="category" class="form-label">Catégorie :</label>
+                <select id="category" x-model="client.category" class="form-select">
+                    <option value="enterprise">Entreprise</option>
+                    <option value="individual">Individuel</option>
+                </select>
+            </div>
+
+            <!-- Noms de l'entreprise -->
+            <div class="mb-3" x-show="client.category === 'enterprise'">
+                <label for="company_name" class="form-label">Nom de l'entreprise :</label>
+                <input type="text" id="company_name" x-model="client.company_name" class="form-control">
+            </div>
+
+            <!-- Noms du Client -->
+            <div class="mb-3" x-show="client.category === 'individual'">
+                <label for="name" class="form-label">Noms du Client:</label>
+                <input type="text" id="name" x-model="client.name" class="form-control">
+            </div>
+
+            <!-- Secteur d'activité -->
+            <div class="mb-3">
+                <label for="sector_label" class="form-label">Secteur d'activité :</label>
+                <select id="sector_label" x-model="client.sector_label" class="form-select">
+                    <template x-for="unique_sector in unique_sectors" :key="unique_sector.id">
+                        <option :value="unique_sector.sector_label" x-text="unique_sector.sector_label"></option>
+                    </template>
+                </select>
+            </div>
+
+            <!-- Produits -->
+            <div class="mb-3">
+                <label class="form-label">Ses Produits ou Services :</label>
+                <div class="grid grid-cols-3 gap-4">
+                    <template x-for="product in filteredProducts" :key="product.id_product">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" :value="product.id_product" x-model="client.selectedProducts">
+                            <span x-text="product.product_label"></span>
+                        </label>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Pays Selection : Congo ou Autre Pays -->
+            <div class="mb-3">
+                <label class="form-label">Pays :</label>
+                <div>
+                    <label>
+                        <input type="radio" value="Congo (Kinshasa)" x-model="client.selectedCountry" checked>
+                        <span class="ml-2">Congo (Kinshasa)</span>
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" value="Autre pays" x-model="client.selectedCountry">
+                        <span class="ml-2">Autre pays</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Liste Pays All if Autre Pays sélectionné -->
+            <div class="mb-3" x-show="client.selectedCountry === 'Autre pays'">
+                <label for="pays" class="form-label">Pays :</label>
+                <select id="pays" x-model="client.country" class="form-select">
+                    <template x-for="country in countries" :key="country.id">
+                        <option :value="country.country" x-text="country.country"></option>
+                    </template>
+                </select>
+            </div>
+
+            <!-- Province -->
+            <div class="mb-3" x-show="client.selectedCountry === 'Congo (Kinshasa)'">
+                <label for="province" class="form-label">Province :</label>
+                <select id="province" x-model="client.province" class="form-select">
+                    <template x-for="province in provinces" :key="province.id">
+                        <option :value="province.name" x-text="province.name"></option>
+                    </template>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Adresse :</label>
+                <input type="text" id="address" x-model="client.address" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" x-model="client.email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Numéro de téléphone:</label>
+                <input type="text" id="phone_number" x-model="client.phone_number" class="form-control">
+            </div>
+            
+            <!-- Autres informations de l'entreprise -->
+            <div class="mb-3" x-show="client.category === 'enterprise'">
+                <a href="#" @click="showAdditionalInfo = !showAdditionalInfo">Compléter Autres informations de l'entreprise</a>
+            </div>
+
+            <div x-show="showAdditionalInfo && client.category === 'enterprise'">
+                <h2 class="text-xl font-bold mb-3">Autres informations de l'entreprise</h2>
+
+                <!-- Groupe des autres informations de l'entreprise -->
+                <div class="border p-3 mb-3">
+                    <div class="mb-3">
+                        <label for="manager_name" class="form-label">Nom du gestionnaire:</label>
+                        <input type="text" id="manager_name" x-model="client.manager_name" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tax_code" class="form-label">Code fiscal:</label>
+                        <input type="text" id="tax_code" x-model="client.tax_code" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nrc" class="form-label">NRC:</label>
+                        <input type="text" id="nrc" x-model="client.nrc" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nat_id" class="form-label">ID national:</label>
+                        <input type="text" id="nat_id" x-model="client.nat_id" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" x-text="client.id_client ? 'Mettre à jour' : 'Ajouter'"></button>
+        </form>
+
+        <hr class="my-6">
+
+        <!-- Liste des clients -->
+        <ul class="list-group">
+            <template x-for="client in clients" :key="client.id_client">
+                <li class="list-group-item mb-3">
+                    <span x-text="client.company_name ? client.company_name : client.name"></span>
+                    <button @click="editClient(client)" class="btn btn-secondary ms-2">Éditer</button>
+                    <button @click="deleteClient(client.id_client)" class="btn btn-danger ms-2">Supprimer</button>
+                </li>
+            </template>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

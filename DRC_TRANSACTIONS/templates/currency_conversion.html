@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script>
+        function fetchConversion(fromCurrency, toCurrency, amount) {
+            return fetch(`/convert/?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`)
+                .then(response => response.json())
+                .then(data => data.rates[toCurrency].rate_for_amount);
+        }
+    </script>
+</head>
+<body>
+    <div x-data="{
+        fromCurrency: '',
+        toCurrency: '',
+        amount: 0,
+        result: null,
+        convert() {
+            fetchConversion(this.fromCurrency, this.toCurrency, this.amount)
+                .then(rate => {
+                    this.result = rate;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }">
+        <div>
+            <label for="fromCurrency">From Currency:</label>
+            <input id="fromCurrency" type="text" x-model="fromCurrency">
+        </div>
+        <div>
+            <label for="toCurrency">To Currency:</label>
+            <input id="toCurrency" type="text" x-model="toCurrency">
+        </div>
+        <div>
+            <label for="amount">Amount:</label>
+            <input id="amount" type="number" x-model="amount">
+        </div>
+        <button @click="convert">Convert</button>
+        <div x-show="result !== null">
+            <h2>Conversion Result: <span x-text="result"></span></h2>
+        </div>
+    </div>
+</body>
+</html>
