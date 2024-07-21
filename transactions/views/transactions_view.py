@@ -42,10 +42,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
 @login_required
 def transaction_statistics(request):
-    transaction_filter = TransactionFilter(
-        request.GET,
-        queryset=Transaction.objects.filter()
-    )
+    if request.user.is_superuser:
+        queryset = Transaction.objects.all()
+    else:
+        queryset = Transaction.objects.filter(user=request.user)
+        
+    transaction_filter = TransactionFilter(request.GET, queryset=queryset)
     
     filtered_transactions = transaction_filter.qs
 
@@ -87,10 +89,12 @@ def transaction_statistics(request):
 
 @login_required
 def transactions_list(request):
-    transaction_filter = TransactionFilter(
-        request.GET,
-        queryset=Transaction.objects.filter()
-    )
+    if request.user.is_superuser:
+        queryset = Transaction.objects.all()
+    else:
+        queryset = Transaction.objects.filter(user=request.user)
+        
+    transaction_filter = TransactionFilter(request.GET, queryset=queryset)
     
     filtered_transactions = transaction_filter.qs
 
@@ -132,7 +136,11 @@ def transactions_list(request):
 
 @login_required
 def transaction_detail(request, pk):
-    transaction = get_object_or_404(Transaction, pk=pk)
+    if request.user.is_superuser:
+        transaction = get_object_or_404(Transaction, pk=pk)
+    else:
+        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+        
     transaction_details = transaction.get_details()
 
     context = {
@@ -165,7 +173,11 @@ def create_transaction_view(request):
 
 @login_required
 def update_transaction(request, pk):
-    transaction = get_object_or_404(Transaction, pk=pk)
+    if request.user.is_superuser:
+        transaction = get_object_or_404(Transaction, pk=pk)
+    else:
+        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+        
     if request.method == 'POST':
         form = TransactionForm(request.POST, instance=transaction)
         if form.is_valid():
@@ -189,7 +201,10 @@ def update_transaction(request, pk):
 @login_required
 @require_http_methods(["DELETE"])
 def delete_transaction(request, pk):
-    transaction = get_object_or_404(Transaction, pk=pk)
+    if request.user.is_superuser:
+        transaction = get_object_or_404(Transaction, pk=pk)
+    else:
+        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
     transaction.delete()
     context = {
         'message': f"Transaction of {transaction.total_price_cdf()} on {transaction.date} was deleted successfully!"

@@ -10,12 +10,15 @@ from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 # Modèle personnalisé pour les utilisateurs
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True)
+    # groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True)
+    # user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
     objects = CustomUserManager()
@@ -30,8 +33,13 @@ class Country(models.Model):
     country = models.CharField(max_length=100)
     iso2 = models.CharField(max_length=2)
     iso3 = models.CharField(max_length=3)
-    flag = models.CharField(max_length=10)
-
+    # flag = models.CharField(max_length=10)
+    flag = models.ImageField(
+        upload_to="img/countries/",
+        blank=True,
+        null=True,
+    )
+    
     class Meta:
         verbose_name = "Country"
         verbose_name_plural = "Countries"
@@ -39,6 +47,24 @@ class Country(models.Model):
 
     def __str__(self):
         return self.country
+    
+    # def save(self, *args, **kwargs):
+    #     if self.flag:
+    #         # Ouvrir l'image avec Pillow
+    #         image = Image.open(self.flag)
+    #         output = BytesIO()
+            
+    #         # Redimensionner l'image si nécessaire
+    #         image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+    #         # Sauvegarder l'image dans le format souhaité
+    #         image.save(output, format='JPEG', quality=85)
+    #         output.seek(0)
+            
+    #         # Créer un nouveau fichier ContentFile
+    #         self.flag.save(self.flag.name, ContentFile(output.getvalue()), save=False)
+        
+    #     super().save(*args, **kwargs)
 
 # Modèle pour les provinces
 class Province(models.Model):
@@ -69,9 +95,11 @@ class Product(models.Model):
     activity_label = models.CharField(max_length=255)
     product_code = models.CharField(max_length=100)
     product_label = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to='photos/products/', blank=True, null=True)
-    
-
+    photo =  models.ImageField(
+        upload_to="img/products/",
+        blank=True,
+        null=True,
+    )
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
@@ -82,12 +110,34 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.product_label
+    
+    def save(self, *args, **kwargs):
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+        
+        super().save(*args, **kwargs)
 
 # Modèle pour les secteurs uniques
 class UniqueSector(models.Model):
     sector_code = models.CharField(max_length=50, unique=True)
     sector_label = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='photos/uniquesectors/', blank=True, null=True)
+    photo =  models.ImageField(
+        upload_to="img/sectors/",
+        blank=True,
+        null=True,
+    )
     
     class Meta:
         verbose_name = "Sector"
@@ -97,6 +147,24 @@ class UniqueSector(models.Model):
 
     def __str__(self):
         return f"{self.sector_label} - {self.sector_code }"
+    
+    def save(self, *args, **kwargs):
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+        
+        super().save(*args, **kwargs)
 
 # Modèle pour les producteurs
 class Producer(models.Model):
@@ -108,18 +176,22 @@ class Producer(models.Model):
     nat_id = models.CharField(max_length=100, blank=True, null=True)
     product = models.ManyToManyField(Product)
     sector_label = models.ForeignKey(UniqueSector, on_delete=models.CASCADE, null=True)
-    photo = models.ImageField(upload_to='photos/producers/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.PROTECT, limit_choices_to={'country': 'Congo (Kinshasa)'})
-    province = models.ForeignKey('Province', on_delete=models.PROTECT, null=False, blank=False)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, limit_choices_to={'country': 'Congo (Kinshasa)'})
+    province = models.ForeignKey('Province', on_delete=models.CASCADE, null=False, blank=False)
     is_approved = models.BooleanField(default=False)
     initial_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
     current_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
     # Relations ManyToMany avec les fournisseurs et clients à travers les modèles intermédiaires
     suppliers = models.ManyToManyField('Supplier', through='ProducerSupplier', related_name='suppliers')
     clients = models.ManyToManyField('Client', through='ProducerClient', related_name='clients')
+    photo =  models.ImageField(
+        upload_to="img/producers/",
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Producer"
@@ -138,6 +210,22 @@ class Producer(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:  # Si c'est une nouvelle instance
             self.current_balance = self.initial_balance
+        
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+        
         super().save(*args, **kwargs)
 
     def update_sector_labels(self):
@@ -170,13 +258,17 @@ class Client(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     product = models.ManyToManyField(Product, blank=True, null=True)
     sector_label = models.ManyToManyField(UniqueSector, blank=True, null=True)
-    photo = models.ImageField(upload_to='photos/clients/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.PROTECT)
-    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
     total_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    photo =  models.ImageField(
+        upload_to="img/clients/",
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Client"
@@ -188,6 +280,22 @@ class Client(models.Model):
             self.tax_code = None
             self.nrc = None
             self.nat_id = None
+        
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+        
         super().save(*args, **kwargs)
 
     def __unicode__(self):
@@ -238,13 +346,18 @@ class Supplier(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     product = models.ManyToManyField(Product,  blank=True, null=True)
     sector_label = models.ManyToManyField(UniqueSector,  blank=True, null=True)
-    photo = models.ImageField(upload_to='photos/suppliers/', blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.PROTECT)
-    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
     total_purchases = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    photo =  models.ImageField(
+        upload_to="img/suppliers/",
+        blank=True,
+        null=True,
+    )
+    
 
     class Meta:
         verbose_name = "Supplier"
@@ -266,6 +379,22 @@ class Supplier(models.Model):
             self.tax_code = None
             self.nrc = None
             self.nat_id = None
+        
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+        
         super().save(*args, **kwargs)
         
     def update_total_purchases(self):
@@ -384,12 +513,16 @@ class Transaction(models.Model):
     quantity = models.PositiveIntegerField()  # Utilisation de PositiveIntegerField pour garantir une valeur positive
     unit_of_measure = models.CharField(max_length=10, choices=UNIT_OF_MEASURE_CHOICES, default='unit')
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='CDF')
-    photo = models.ImageField(upload_to='photos/transactions/', blank=True, null=True)
     # exchange_rate = models.DecimalField(max_digits=10, decimal_places=4, default=1.00)
     date = models.DateTimeField(auto_now_add=True) 
     tva_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0.16)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     amount_with_tva = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    photo =  models.ImageField(
+        upload_to="img/transactions/",
+        blank=True,
+        null=True,
+    )
     
     objects = TransactionQuerySet.as_manager()
     
@@ -458,6 +591,21 @@ class Transaction(models.Model):
                 if self.client:
                     self.client.total_sales += self.amount_with_tva
                     self.client.save()
+        
+        if self.photo:
+            # Ouvrir l'image avec Pillow
+            image = Image.open(self.photo)
+            output = BytesIO()
+            
+            # Redimensionner l'image si nécessaire
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            
+            # Sauvegarder l'image dans le format souhaité
+            image.save(output, format='JPEG', quality=85)
+            output.seek(0)
+            
+            # Créer un nouveau fichier ContentFile
+            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
 
         super().save(*args, **kwargs)
 

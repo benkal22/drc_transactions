@@ -207,8 +207,11 @@ LOGIN_URL = '/accounts/login/'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
-LOGIN_REDIRECT_URL = 'transactions:dashboard'
-LOGOUT_REDIRECT_URL = '/accounts/login'
+# LOGIN_REDIRECT_URL = 'transactions:dashboard'
+
+LOGIN_REDIRECT_URL = '/redirect/'  # Mettez à jour cela pour qu'il pointe vers la vue de redirection
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # ou "optional" selon vos besoins

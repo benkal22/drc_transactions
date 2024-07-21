@@ -15,8 +15,12 @@ from transactions.filters import ProducerFilter
 
 @login_required
 def producer_statistics(request):
-    # Appliquer le filtre des producteurs
-    producer_filter = ProducerFilter(request.GET, queryset=Producer.objects.all())
+    if request.user.is_superuser:
+        queryset = Producer.objects.all()
+    else:
+        queryset = Producer.objects.filter(user=request.user)
+        
+    producer_filter = ProducerFilter(request.GET, queryset=queryset)
     filtered_producers = producer_filter.qs
 
     # Calculer le total des ventes pour tous les clients associés aux producteurs filtrés
@@ -52,11 +56,12 @@ def producer_statistics(request):
     }
 @login_required
 def producers_list(request):
-    producer_filter = ProducerFilter(
-        request.GET,
-        queryset=Producer.objects.all()
-    )
-    
+    if request.user.is_superuser:
+        queryset = Producer.objects.all()
+    else:
+        queryset = Producer.objects.filter(user=request.user)
+        
+    producer_filter = ProducerFilter(request.GET, queryset=queryset)
     filtered_producers = producer_filter.qs
 
     paginator = Paginator(filtered_producers, 10)
@@ -73,6 +78,10 @@ def producers_list(request):
     
     # Obtenez les statistiques en appelant la fonction producer_statistics
     stats = producer_statistics(request)
+    
+    welcome = ''
+    if request.user.last_login is None or request.user.last_login == request.user.date_joined:   
+        welcome = f"Bienvenue ! Compléter votre profile"
 
     context = {
         'filter': producer_filter,
@@ -82,7 +91,8 @@ def producers_list(request):
         'total_purchases': stats['total_purchases'],
         'total_producers': stats['total_producers'],
         'total_approved_producers': stats['total_approved_producers'],
-        'total_unapproved_producers': stats['total_unapproved_producers']
+        'total_unapproved_producers': stats['total_unapproved_producers'],
+        'welcome': welcome
     }
     
     if request.htmx:
@@ -91,9 +101,11 @@ def producers_list(request):
     return render(request, 'transactions/producers/producers-list.html', context)
 
 def producer_detail(request, pk):
-    # Récupérer le producteur avec l'ID donné
-    producer = get_object_or_404(Producer, pk=pk)
-    
+    if request.user.is_superuser:
+        producer = get_object_or_404(Producer, pk=pk)
+    else:
+        producer = get_object_or_404(Producer, pk=pk, user=request.user)
+        
     stats = producer_statistics(request)
 
     context = {
@@ -124,11 +136,16 @@ def create_producer_view(request):
             return retarget(response, '#producer-block')
         
     context = {'form': ProducerForm()}
-    return render(request, 'transactions/producers/partials/producer-create.html', context)
+    if request.user.is_superuser:
+        return render(request, 'transactions/producers/partials/producer-create.html', context)     
 
 @login_required
-def update_producer(request, pk):
-    producer = get_object_or_404(Producer, pk=pk)
+def producer_update(request, pk):
+    if request.user.is_superuser:
+        producer = get_object_or_404(Producer, pk=pk)
+    else:
+        producer = get_object_or_404(Producer, pk=pk, user=request.user)
+        
     if request.method == 'POST':
         form = ProducerForm(request.POST, instance=producer)
         if form.is_valid():
@@ -152,7 +169,11 @@ def update_producer(request, pk):
 @login_required
 @require_http_methods(["DELETE"])
 def delete_producer(request, pk):
-    producer = get_object_or_404(Producer, pk=pk)
+    if request.user.is_superuser:
+        producer = get_object_or_404(Producer, pk=pk)
+    else:
+        producer = get_object_or_404(Producer, pk=pk, user=request.user)
+        
     producer.delete()
     messages.success(request, f"Producteur '{producer}' supprimé avec succès.")
-    return redirect('producers_list')
+    return redirect('transactions:producers_list')

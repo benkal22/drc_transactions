@@ -15,7 +15,14 @@ from transactions.filters import ClientFilter
 @login_required
 def client_statistics(request):
     # Appliquer le filtre des clients
-    client_filter = ClientFilter(request.GET, queryset=Client.objects.all())
+    if request.user.is_superuser:
+        queryset = Client.objects.all()
+    else:
+        queryset = Client.objects.filter(user=request.user)
+        
+    client_filter =ClientFilter(request.GET, queryset=queryset)
+    
+    # client_filter = ClientFilter(request.GET, queryset=Client.objects.all())
     filtered_clients = client_filter.qs
 
     # Montant général de toutes les ventes
@@ -58,10 +65,12 @@ def client_statistics(request):
 
 @login_required
 def clients_list(request):
-    client_filter = ClientFilter(
-        request.GET,
-        queryset=Client.objects.all()
-    )
+    if request.user.is_superuser:
+        queryset = Client.objects.all()
+    else:
+        queryset = Client.objects.filter(user=request.user)
+        
+    client_filter =ClientFilter(request.GET, queryset=queryset)
     
     filtered_clients = client_filter.qs
 
@@ -101,7 +110,10 @@ def clients_list(request):
 
 def client_detail(request, pk):
     # Récupérer le client avec l'ID donné
-    client = get_object_or_404(Client, pk=pk)
+    if request.user.is_superuser:
+        client = get_object_or_404(Client, pk=pk)
+    else:
+        client = get_object_or_404(Client, pk=pk, user=request.user)
     
     stats = client_statistics(request)
 
@@ -140,7 +152,11 @@ def create_client_view(request):
 
 @login_required
 def update_client(request, pk):
-    client = get_object_or_404(Client, pk=pk)
+    if request.user.is_superuser:
+        client = get_object_or_404(Client, pk=pk)
+    else:
+        client = get_object_or_404(Client, pk=pk, user=request.user)
+        
     if request.method == 'POST':
         form = ClientForm(request.POST, instance=client)
         if form.is_valid():
@@ -164,7 +180,11 @@ def update_client(request, pk):
 @login_required
 @require_http_methods(["DELETE"])
 def delete_client(request, pk):
-    client = get_object_or_404(Client, pk=pk)
+    if request.user.is_superuser:
+        client = get_object_or_404(Client, pk=pk)
+    else:
+        client = get_object_or_404(Client, pk=pk, user=request.user)
+     
     client.delete()
     messages.success(request, f"Client '{client}' supprimé avec succès.")
     return redirect('clients_list')

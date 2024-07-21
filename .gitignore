@@ -1,7 +1,7 @@
 staticfiles
 node_modules
 photos
-static/vendor
+# static/vendor
 db.sqlite3
 DRC_TRANSACTIONS/__pycache__
 transactions/__pycache__

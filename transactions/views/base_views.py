@@ -28,28 +28,24 @@ def get_products(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Récupérer les identifiants de sector_labels de la requête GET
         sector_ids = request.GET.getlist('sector_labels[]')
-        print(f"Received sector_ids: {sector_ids}")  # Log the received sector_ids
-        
-        products = Product.objects.filter().distinct()
-        
-        # print(f"List of products : {products}")  # Log the received sector_ids
+        # print(f"Received sector_ids: {sector_ids}")  # Log the received sector_ids
         
         if not sector_ids:
-            print("No sector_is provided")  # Log the lack of sector_ids    
+            # print("No sector_is provided")  # Log the lack of sector_ids    
             return JsonResponse({'products': [], 'message': 'Aucun éléments'}, status=200)
         
         try:
             # Récupérer les sector_labels correspondants aux sector_ids
             sector_labels = UniqueSector.objects.filter(id__in=sector_ids).values_list('sector_label', flat=True)
-            print(f"Corresponding sector_labels: {list(sector_labels)}")  # Log the corresponding sector_labels
+            # print(f"Corresponding sector_labels: {list(sector_labels)}")  # Log the corresponding sector_labels
             
             # Filtrer les produits par sector_label
             products = Product.objects.filter(sector_label__in=sector_labels).distinct()
             products_data = [{'id': product.id, 'product_label': product.product_label, 'sector_label': product.sector_label} for product in products]
-            print(f"Filtered products: {products_data}")  # Log the filtered products
+            # print(f"Filtered products: {products_data}")  # Log the filtered products
             return JsonResponse({'products': products_data})
         except Exception as e:
-            print(f"Error while fetching products: {e}")  # Log any errors
+            # print(f"Error while fetching products: {e}")  # Log any errors
             return JsonResponse({'error': str(e)}, status=500)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)

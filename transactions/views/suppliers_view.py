@@ -25,7 +25,13 @@ class SupplierViewSet(viewsets.ModelViewSet):
 @login_required
 def supplier_statistics(request):
     # Appliquer le filtre des fournisseurs
-    supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
+    if request.user.is_superuser:
+        queryset = Supplier.objects.all()
+    else:
+        queryset = Supplier.objects.filter(user=request.user)
+        
+    supplier_filter = SupplierFilter(request.GET, queryset=queryset)
+    # supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
     filtered_suppliers = supplier_filter.qs
 
     # Montant général de tous les achats effectués par le producer aux suppliers en CDF
@@ -68,10 +74,12 @@ def supplier_statistics(request):
 
 @login_required
 def suppliers_list(request):
-    supplier_filter = SupplierFilter(
-        request.GET,
-        queryset=Supplier.objects.all()
-    )
+    if request.user.is_superuser:
+        queryset = Supplier.objects.all()
+    else:
+        queryset = Supplier.objects.filter(user=request.user)
+        
+    supplier_filter = SupplierFilter(request.GET, queryset=queryset)
     
     filtered_suppliers = supplier_filter.qs
 
@@ -110,8 +118,10 @@ def suppliers_list(request):
     return render(request, 'transactions/suppliers/suppliers-list.html', context)
 
 def supplier_detail(request, pk):
-    # Récupérer le fournisseur avec l'ID donné
-    supplier = get_object_or_404(Supplier, pk=pk)
+    if request.user.is_superuser:
+        supplier = get_object_or_404(Supplier, pk=pk)
+    else:
+        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
     
     stats = supplier_statistics(request)
 
@@ -150,7 +160,10 @@ def create_supplier_view(request):
 
 @login_required
 def update_supplier(request, pk):
-    supplier = get_object_or_404(Supplier, pk=pk)
+    if request.user.is_superuser:
+        supplier = get_object_or_404(Supplier, pk=pk)
+    else:
+        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
     if request.method == 'POST':
         form = SupplierForm(request.POST, instance=supplier)
         if form.is_valid():
@@ -175,7 +188,11 @@ def update_supplier(request, pk):
 @login_required
 @require_http_methods(["DELETE"])
 def delete_supplier(request, pk):
-    supplier = get_object_or_404(Supplier, pk=pk)
+    if request.user.is_superuser:
+        supplier = get_object_or_404(Supplier, pk=pk)
+    else:
+        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
+        
     supplier.delete()
     # messages.success(request, f"Fournisseur '{supplier}' supprimé avec succès.")
     return redirect('suppliers_list')

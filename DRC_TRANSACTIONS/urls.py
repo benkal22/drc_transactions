@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import CurrencyConversionView, home_redirect
+from .views import CurrencyConversionView, home_redirect, redirect_view
 from transactions.views.dashboard_view import CorrelationMatrixView, EconomicsPredictionView
 
 from django.conf import settings
@@ -27,8 +27,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
     path('admin_tools/', include('admin_tools.urls')),
+    path('redirect/', redirect_view, name='redirect_view'),
         
     #Path Authentication
     path('accounts/', include('allauth.urls')),
