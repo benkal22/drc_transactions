@@ -1,0 +1,87 @@
+<!-- analysis/pivot_table.html -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau Croisé Dynamique des Transactions</title>
+</head>
+<body>
+    <h1>Tableau Croisé Dynamique des Transactions</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Achat</th>
+                <th>Total Vente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in pivot_table_data %}
+                <tr>
+                    <td>{{ row.date }}</td>
+                    <td>
+                        {% for producer_data in row.producers %}
+                            {% if forloop.first %}
+                                {{ producer_data.total_achat }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for producer_data in row.producers %}
+                            {% if forloop.first %}
+                                {{ producer_data.total_vente }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total général</td>
+                <td>
+                    {% for row in pivot_table_data %}
+                        {% if row.date == 'Total général' %}
+                            {{ row.producers.0.total_achat }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for row in pivot_table_data %}
+                        {% if row.date == 'Total général' %}
+                            {{ row.producers.0.total_vente }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <h1>Liste des Transactions</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Producteur</th>
+                <th>Type</th>
+                <th>Prix Total (CDF)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.id }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.producer }}</td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.total_price_cdf }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

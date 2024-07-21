@@ -1,0 +1,58 @@
+<!-- transactions/transactions/partials/transaction-detail.html -->
+{% load widget_tweaks %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+<div class="mt-4 mb-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div class="mb-4">
+        <h2 class="flex text-xl items-center text-sm text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
+            <span class="mr-2">📦 </span> <strong class="mr-1">Product:</strong> {{ transaction_details.product }}
+            <span class="mr-2">_ID_{{ transaction_details.id }}</span>
+        </h2>
+        <hr class="my-2 border-gray-300 dark:border-gray-600">
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
+            <span class="mr-2">👤</span> <strong class="mr-1">Producer:</strong> {{ transaction_details.producer }}
+        </p>
+        
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-yellow-100 dark:bg-yellow-900 rounded p-2">
+            <span class="mr-2">🔄</span> <strong class="mr-1">Transaction Type:</strong> {{ transaction_details.transaction_type }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-red-100 dark:bg-red-900 rounded p-2">
+            <span class="mr-2">💲</span> <strong class="mr-1">Price:</strong> CDF {{ transaction_details.price|floatformat:2|intcomma }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-purple-100 dark:bg-purple-900 rounded p-2">
+            <span class="mr-2">🔢</span> <strong class="mr-1">Quantity:</strong> {{ transaction_details.quantity }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-pink-100 dark:bg-pink-900 rounded p-2">
+            <span class="mr-2">⚖️</span> <strong class="mr-1">Unit of Measure:</strong> {{ transaction_details.unit_of_measure }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-teal-100 dark:bg-teal-900 rounded p-2">
+            <span class="mr-2">💵</span> <strong class="mr-1">Currency:</strong> {{ transaction_details.currency }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-indigo-100 dark:bg-indigo-900 rounded p-2">
+            <span class="mr-2">📅</span> <strong class="mr-1">Date:</strong> {{ transaction_details.date }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-orange-100 dark:bg-orange-900 rounded p-2">
+            <span class="mr-2">📍</span> <strong class="mr-1">Producer Province:</strong> {{ transaction_details.producer_province }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-lime-100 dark:bg-lime-900 rounded p-2">
+            <span class="mr-2">📍</span> <strong class="mr-1">Supplier Province:</strong> {{ transaction_details.supplier_province }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-cyan-100 dark:bg-cyan-900 rounded p-2">
+            <span class="mr-2">📍</span> <strong class="mr-1">Client Province:</strong> {{ transaction_details.client_province }}
+        </p>
+        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-rose-100 dark:bg-rose-900 rounded p-2">
+            <span class="mr-2">💰</span> <strong class="mr-1">Total Price (CDF):</strong> CDF {{ transaction_details.total_price_cdf|floatformat:2|intcomma }}
+        </p>
+        {% if transaction.type == 'sale' %}
+            <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded p-2">
+                <span class="mr-2">👔</span> <strong class="mr-1">Client:</strong> {{ transaction_details.client }}
+            </p>
+        {% elif transaction.type == 'purchase' %}
+            <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded p-2">
+                <span class="mr-2">🚚</span> <strong class="mr-1">Supplier:</strong> {{ transaction_details.supplier }}
+            </p>
+        {% endif %}
+    </div>
+</div>

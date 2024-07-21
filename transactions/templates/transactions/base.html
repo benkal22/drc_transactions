@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="fr">
+  <head>
+    {% block metas %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% endblock %}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.output.css'%}" />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    {% comment %} <script src="{% static  'assets/js/init-alpine.js' %}"></script> {% endcomment %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+      defer
+    ></script>
+
+    <!-- tailwind css-->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Assets statics -->
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.output.css' %}" />
+    <script src="{% static 'assets/js/init-alpine.js' %}"></script>
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    
+    <!-- Flowbite -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+
+    <!-- Alpine.js -->
+    {% comment %} <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {% endcomment %}
+
+    <!-- Htmx -->
+    <script src="https://unpkg.com/htmx.org@2.0.1/dist/htmx.js" integrity="sha384-gpIh5aLQ0qmX8kZdyhsd6jA24uKLkqIr1WAGtantR4KsS97l/NRBvh8/8OYGThAf" crossorigin="anonymous"></script>
+    
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script src="{% static 'assets/js/charts-lines.js' %}" defer></script>
+    <script src="{% static 'assets/js/charts-pie.js'  %}" defer></script>
+
+    <title>{% block title %}DRC Transactions{% endblock %}</title>
+
+    {% block css %}
+    <!-- Additional CSS files if needed -->
+    {% endblock %}
+    <script>
+      document.addEventListener('htmx:configRequest', (event) => {
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          event.detail.headers['X-CSRFToken'] = csrfToken;
+      });
+    </script>
+    
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  </head>
+  <body>
+    <div
+      class="flex h-screen bg-gray-50 dark:bg-gray-900"
+      :class="{ 'overflow-hidden': isSideMenuOpen }"
+    >
+        <!-- Desktop sidebar -->
+        {% include 'transactions/components/aside_desktop.html' %}    
+
+        <!-- Mobile sidebar -->
+        <!-- Backdrop -->
+        <div
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+        @click="closeSideMenu"
+      ></div>
+        {% include 'transactions/components/aside_mobile.html' %}    
+
+        <div class="flex flex-col flex-1 w-full">
+        <!-- Header -->
+        {% include 'transactions/components/header.html' %}    
+
+        <!-- Main -->
+        {% block content %}
+
+        {% endblock %}
+        </div>
+            
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    {% comment %} <script src="./assets/js/init-alpine.js"></script> {% endcomment %}
+    
+    <!-- Your custom JS if any -->
+    {% block js %}
+    <!-- Additional JS scripts if needed -->
+    {% endblock %}
+    {% comment %} <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script> {% endcomment %}
+    
+</body>
+
+</html> 

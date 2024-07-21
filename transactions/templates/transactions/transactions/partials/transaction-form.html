@@ -1,0 +1,50 @@
+<!-- transactions/transactions/partials/transaction-form.html -->
+{% load widget_tweaks %}
+    {% csrf_token %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %} 
+    <div>
+        <label for="id_producer">Producer</label>
+        {% render_field form.producer %}
+    </div>
+    <div>
+        <label for="id_product">Product</label>
+        {% render_field form.product %}
+    </div>
+    <div>
+        <label for="id_type">Transaction Type</label>
+        {% render_field form.type %}
+    </div>
+    <div id="supplier-field" class="hidden">
+        <label for="id_supplier">Supplier</label>
+        {% render_field form.supplier %}
+    </div>
+    <div id="client-field" class="hidden">
+        <label for="id_client">Client</label>
+        {% render_field form.client %}
+    </div>
+    <div>
+        <label for="id_price">Price</label>
+        {% render_field form.price %}
+    </div>
+    <div>
+        <label for="id_quantity">Quantity</label>
+        {% render_field form.quantity %}
+    </div>
+    <div>
+        <label for="id_unit_of_measure">Unit of Measure</label>
+        {% render_field form.unit_of_measure %}
+    </div>
+    <div>
+        <label for="id_currency">Currency</label>
+        {% render_field form.currency %}
+    </div>
+
+{% include 'transactions/transactions/partials/script-form.html' %}

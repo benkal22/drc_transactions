@@ -1,0 +1,37 @@
+<div class="flex flex-col flex-wrap mb-4 space-y-4 md:flex-row md:items-end md:space-x-4">
+  <div x-data="{ activeButton: localStorage.getItem('activeButton') }">
+      <button
+          x-on:click="activeButton = 'dashboard'; localStorage.setItem('activeButton', 'dashboard'); window.location.href = '{% url 'transactions:dashboard' %}'"
+          :class="{ 'bg-purple-600 text-white': activeButton === 'dashboard', 'bg-white text-purple-600': activeButton !== 'dashboard' }"
+          @keydown.escape="activeButton = null"
+          @click.away="activeButton = null"
+          class="px-10 py-4 font-medium leading-5 transition-colors duration-150 border rounded-lg border-transparent active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+      >
+          Tableau de bord principal
+      </button>
+  </div>
+
+  <div x-data="{ activeButton: localStorage.getItem('activeButton') }">
+      <button
+          x-on:click="activeButton = 'correlation_matrix'; localStorage.setItem('activeButton', 'correlation_matrix'); window.location.href = '{% url 'correlation_matrix' %}'"
+          :class="{ 'bg-purple-600 text-white': activeButton === 'correlation_matrix', 'bg-white text-purple-600': activeButton !== 'correlation_matrix' }"
+          @keydown.escape="activeButton = null"
+          @click.away="activeButton = null"
+          class="px-10 py-4 font-medium leading-5 transition-colors duration-150 border rounded-lg border-transparent active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+      >
+          Echanges entre provinces
+      </button>
+  </div>
+
+  <div x-data="{ activeButton: localStorage.getItem('activeButton') }">
+      <button
+          x-on:click="activeButton = 'economic_prediction'; localStorage.setItem('activeButton', 'economic_prediction'); window.location.href = '{% url 'economic_prediction' %}'"
+          :class="{ 'bg-purple-600 text-white': activeButton === 'economic_prediction', 'bg-white text-purple-600': activeButton !== 'economic_prediction' }"
+          @keydown.escape="activeButton = null"
+          @click.away="activeButton = null"
+          class="px-10 py-4 font-medium leading-5 transition-colors duration-150 border rounded-lg border-transparent active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+      >
+          Prédictions économiques
+      </button>
+  </div>
+</div>

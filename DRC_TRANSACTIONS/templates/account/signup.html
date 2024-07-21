@@ -1,0 +1,44 @@
+<!-- templates/account/signup.html -->
+{% extends "base.html" %}
+{% load allauth i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% trans "Inscription" %} - DRC Transactions
+{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="mb-4 text-center">{% trans "Inscription" %}</h1>
+
+                    {% if user.is_authenticated %}
+                        {% include "account/snippets/already_logged_in.html" %}
+                    {% else %}
+                        <p class="mb-4 text-center">
+                            {% blocktrans %}Vous avez déjà un compte ? Alors veuillez <a href="{{ login_url }}">vous connecter</a>.{% endblocktrans %}
+                        </p>
+                        
+                        {% if not SOCIALACCOUNT_ONLY %}
+                            {% url 'account_signup' as action_url %}
+                            <form method="post" action="{{ action_url }}" class="entrance signup">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                {{ redirect_field }}
+                                <button type="submit" class="btn btn-primary btn-block w-100 mt-4">
+                                    {% trans "S'inscrire" %}
+                                </button>
+                            </form>
+                        {% endif %}
+                        
+                        {% if SOCIALACCOUNT_ENABLED %}
+                            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

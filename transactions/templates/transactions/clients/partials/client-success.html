@@ -1,0 +1,73 @@
+<!-- transactions/clients/partials/client-success.html -->
+
+{% include 'transactions/clients/clients-list.html' %}
+
+<div x-data="{ modalOpen2: true }">
+    <!-- Modal -->
+    <div x-show="modalOpen2" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">
+            <div x-cloak @click="modalOpen2 = false" x-show="modalOpen2"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0" 
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100" 
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-40" aria-hidden="true"
+            ></div>
+
+            <div x-cloak x-show="modalOpen2"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="inline-block w-full max-w-xl p-8 my-20 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl"
+            >
+                <div class="flex items-center justify-between space-x-4">
+                    <h1 class="text-xl font-medium text-gray-800 ">Message</h1>
+                    <button 
+                        hx-get="{% url 'transactions:clients_list' %}"
+                        hx-target="#client-block"
+                        @click="modalOpen2 = false" 
+                        class="text-gray-600 focus:outline-none hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Contenu du modal -->
+                <div role="alert" class="alert alert-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{{ message }}</span>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center space-x-4">
+                    <a 
+                        hx-get="{% url 'transactions:client_create' %}"
+                        hx-target="#client-block"
+                        @click="modalOpen2 = false" 
+
+                        class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400"
+                    >
+                        <span class="mr-2">Nouveau client</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                        </svg>
+                    </a>
+                    
+                    <button 
+                        hx-get="{% url 'transactions:clients_list' %}"
+                        hx-target="#client-block"
+                        @click="modalOpen2 = false" 
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    >
+                        Voir les clients
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

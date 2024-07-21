@@ -1,0 +1,480 @@
+<!-- transactions/clients/partials/client-container.html -->
+
+{% load widget_tweaks %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+<!-- Define Grid container div -->
+<div id="client-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
+
+<!-- Cards Stats -->
+<div class="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
+  <!-- Card Total Achats -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Achats</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases }}</p>
+    </div>
+  </div>
+  
+  <!-- Card Total Clients -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Clients</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_clients }}</p>
+    </div>
+  </div>
+  
+  <!-- Card Clients Entreprises -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Clients Entreprises</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_enterprise_clients }}</p>
+    </div>
+  </div>
+
+  <!-- Card Clients Individuels -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-yellow-500 bg-yellow-100 rounded-full dark:text-yellow-100 dark:bg-yellow-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Clients Individuels</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_individual_clients }}</p>
+    </div>
+  </div>
+  
+  <!-- Card Achats Entreprises -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Achats Entreprises</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases_enterprises }}</p>
+    </div>
+  </div>
+  
+  <!-- Card Achats Individuels -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-pink-500 bg-pink-100 rounded-full dark:text-pink-100 dark:bg-pink-500">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Achats Individuels</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases_individuals }}</p>
+    </div>
+  </div>
+  
+  <!-- Card Revenu Net Entreprises -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-green-600 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-600">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Revenu Net Entreprises</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ net_income_enterprises }}</p>
+    </div>
+  </div>
+
+  <!-- Card Revenu Net Individuels -->
+  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
+    <div class="p-2 mr-3 text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Revenu Net Individuels</p>
+      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ net_income_individuals }}</p>
+    </div>
+  </div>
+</div>
+
+    <!-- Nouveau Client -->
+    <div class="flex justify-between items-center mt-4 mb-6">
+      <a 
+        @click="$dispatch('open-modal1')" 
+        hx-get="{% url 'transactions:client_create' %}" 
+        hx-target="#client-block"
+        class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400"
+      >
+          <span class="mr-2">
+              Nouveau client
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+          </svg>
+      </a>
+    </div>
+    
+    <!-- Formulaire de filtrage -->
+    {% comment %} <div x-data="{ isOpen: false }">
+      <h4
+          @click="isOpen = !isOpen"
+          class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 cursor-pointer"
+          x-text="isOpen ? 'Cacher les options du Filtre ▲' : 'Afficher les options du Filtre ▼'"
+      >
+      </h4>
+      <div
+          x-show="isOpen"
+          x-transition
+          class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+      >
+          <form id="filter-form" method="get">
+              <div class="grid gap-4 md:grid-cols-3">
+                  <div>
+                      {{ filter.form.sector|as_crispy_field }}
+                  </div>
+                  <div>
+                      {{ filter.form.products|as_crispy_field }}
+                  </div>
+                  <div>
+                      {{ filter.form.category|as_crispy_field }}
+                  </div>
+                  <div>
+                      {{ filter.form.client_province|as_crispy_field }}
+                  </div>
+              </div>
+              <div class="mt-4 flex justify-left space-x-2">
+                  <button type="button" 
+                          hx-get="{% url 'transactions:clients_list' %}"
+                          hx-include="#filter-form"
+                          hx-target="#client-container"
+                          hx-push-url="true"
+                          class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                          >
+                      <span class="ml-2" aria-hidden="true">
+                          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4M16 3v4m0 0v4m0-4h4m-8 4V3"></path>
+                          </svg>
+                      </span>
+                      Filtrer
+                  </button>
+                  <button type="button" 
+                          hx-get="{% url 'transactions:clients_list' %}?reset=1"
+                          hx-target="#client-container"
+                          hx-push-url="true"
+                          class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      Réinitialiser
+                  </button>
+              </div>
+          </form>
+      </div>
+    </div> {% endcomment %}
+
+    <!-- Table of clients -->
+    <div>
+      {% if filter.qs %}
+      <!-- List of clients -->
+      <div class="w-full overflow-hidden rounded-lg shadow-xs">
+          <!-- Table of clients -->
+          <div class="w-full overflow-x-auto">
+              <table class="w-full whitespace-no-wrap">
+                  <thead>
+                      <tr
+                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                      >
+                          <th class="px-4 py-3">#</th>
+                          <th class="px-4 py-3">Client</th>
+                          <th class="px-4 py-3">Secteur</th>
+                          <th class="px-4 py-3">Produits/Services</th>
+                          <th class="px-4 py-3">Province</th>
+                          <th class="px-4 py-3">Montant total</th>
+                          <th class="px-4 py-3">Catégorie</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody
+                      class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                  >
+                  {% for client in clients %}
+                  <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3 text-sm">
+                          {{ client.id}}
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        {{ client.name}}
+                      </td>
+                      <td class="px-4 py-3 text-sm whitespace-normal">
+                        {% for sector in client.sector_label.all %}
+                            <div class="text-xs">{{ sector }}{% if not forloop.last %}<br>{% endif %}</div>
+                        {% endfor %}
+                      </td>
+                      <td class="px-4 py-3 text-sm whitespace-normal">
+                          {% for product in client.product.all %}
+                              <div class="text-xs">{{ product }}{% if not forloop.last %}<br>{% endif %}</div>
+                          {% endfor %}
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        {{ client.province }}
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                          CDF {{ client.total_price_cdf |floatformat:2|intcomma }}
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight rounded-full 
+                                 {% if client.category == 'enterprise' %}
+                                 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100
+                                 {% elif client.category == 'individual' %}
+                                 text-orange-700 bg-orange-100 dark:bg-orange-700 dark:text-orange-100
+                                 {% endif %}
+                          ">
+                          {{ client.category }}
+                        </span>
+                      </td>
+                      
+                      <td class="flex items-center space-x-2">
+                          <!-- Edit and Delete buttons -->
+                          <a hx-get="{% url 'transactions:client_update' client.pk %}"
+                              hx-push-url="true"
+                              hx-target="#client-block"
+                              class="cursor-pointer">
+                              <div>
+                                  <button
+                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                    aria-label="Edit"
+                                  >
+                                    <svg
+                                      class="w-5 h-5"
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path
+                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                      ></path>
+                                    </svg>
+                                  </button>
+                                </div>
+                          </a>
+
+                          <a hx-delete="{% url 'transactions:client_delete' client.pk %}"
+                            hx-target="#client-block" 
+                            hx-push-url="true"
+                            class="cursor-pointer"
+                            hx-confirm="Etes-vous sûr de supprimer ce client ?"
+                          >
+                            <div>
+                              <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </a>    
+                          
+                          <div>
+                            <button
+                              @click="openModal"
+                              hx-get="{% url 'transactions:client_detail' pk=client.pk %}"
+                              hx-target="#modal" 
+                              hx-trigger="click" 
+                              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            >
+                              Voir
+                            </button>
+                          </div>
+                      </td> 
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal Detail Transaction -->
+        <div
+          x-init=""
+          x-show="isModalOpen"
+          x-transition:enter="transition ease-out duration-150"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-150"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+        >
+          <!-- Modal -->
+          <div
+            x-show="isModalOpen"
+            x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 transform translate-y-1/2"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0  transform translate-y-1/2"
+            @click.away="closeModal"
+            @keydown.escape="closeModal"
+            class="w-full max-w-5xl px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4"
+            role="dialog"
+          >
+            <!-- Remove header if you don't want a close icon. Use modal body to place modal title. -->
+            <header class="flex justify-end">
+              <button
+                class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover:text-gray-700"
+                aria-label="close"
+                @click="closeModal"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  role="img"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </header>
+            <!-- Modal body -->
+            <div class="mt-4 mb-6 overflow-y-auto max-h-96">
+              <!-- Modal title -->
+              <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+                Détails de la client
+              </p>
+              <!-- Modal description -->
+
+              <div id="modal" x-html="dataDetail">
+                <!-- Content goes here -->
+              </div>
+            </div>
+            <footer
+              class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800"
+            >
+              <button
+                @click="closeModal"
+                class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              >
+                Quitter
+              </button>
+            </footer>
+          </div>
+        </div>
+        <!-- End of modal Transaction Detail -->
+
+        <!-- Pagination -->
+        <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+            <span class="flex items-center col-span-3">
+                AFFICHAGE {{ clients.start_index }}-{{ clients.end_index }} DE {{ clients.paginator.count }}
+            </span>
+            <span class="col-span-2"></span>
+            <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                <nav aria-label="Table navigation">
+                    <ul class="inline-flex items-center">
+                        {% if clients.has_previous %}
+                        <li>
+                            <a hx-get="?page=1"
+                               hx-push-url="true"
+                               hx-target="#client-block"
+                               hx-trigger="click"
+                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Début">
+                                Début
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if clients.has_previous %}
+                        <li>
+                            <a hx-get="?page={{ clients.previous_page_number }}"
+                               hx-push-url="true"
+                               hx-target="#client-block"
+                               hx-trigger="click"
+                               class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Précédent">
+                                <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                    <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in clients.paginator.page_range %}
+                        {% if clients.number == num %}
+                        <li>
+                            <span class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer">
+                                {{ num }}
+                            </span>
+                        </li>
+                        {% elif num > clients.number|add:'-3' and num < clients.number|add:'3' %}
+                        <li>
+                            <a hx-get="?page={{ num }}"
+                               hx-push-url="true"
+                               hx-target="#client-block"
+                               hx-trigger="click"
+                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100">
+                                {{ num }}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if clients.has_next %}
+                        <li>
+                            <a hx-get="?page={{ clients.next_page_number }}"
+                               hx-push-url="true"
+                               hx-target="#client-block"
+                               hx-trigger="click"
+                               class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Suivant">
+                                <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                                    <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if clients.has_next %}
+                        <li>
+                            <a hx-get="?page={{ clients.paginator.num_pages }}"
+                               hx-push-url="true"
+                               hx-target="#client-block"
+                               hx-trigger="click"
+                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Fin">
+                                Fin
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </span>
+        </div>
+
+      </div>
+      
+
+      {% else %}
+      <h2
+        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+      >
+        No clients found
+      </h2>
+      {% endif %}
+    </div>
+</div>
+
+

@@ -1,0 +1,69 @@
+<script>
+    $(document).ready(function() {
+        $(".select2").select2();
+    
+        function toggleFieldsBasedOnType() {
+            const transactionType = $('#id_type').val();
+    
+            if (transactionType === 'purchase') {
+                $('#client-field').addClass('hidden');
+                $('#supplier-field').removeClass('hidden');
+            } else if (transactionType === 'sale') {
+                $('#supplier-field').addClass('hidden');
+                $('#client-field').removeClass('hidden');
+            } else {
+                $('#supplier-field').removeClass('hidden');
+                $('#client-field').removeClass('hidden');
+            }
+        }
+    
+        toggleFieldsBasedOnType();
+        $('#id_type').on('change', toggleFieldsBasedOnType);
+    
+        function toggleDateField() {
+            const dateOption = $('input[name="date_option"]:checked').val();
+            if (dateOption === 'manual') {
+                $('#date-manual-field').removeClass('hidden');
+            } else {
+                $('#date-manual-field').addClass('hidden');
+            }
+        }
+    
+        toggleDateField();
+        $('input[name="date_option"]').on('change', toggleDateField);
+    
+        $('#id_producer').on('change', function() {
+            const producer_id = $(this).val();
+    
+            $('#id_product, #id_supplier, #id_client').empty();
+    
+            $.ajax({
+                url: '/filter-producer-details/',
+                data: { 'producer_id': producer_id },
+                dataType: 'json',
+                success: function(data) {
+                    data.products.forEach(product => {
+                        $('#id_product').append(`<option value="${product.id}">${product.product_label}</option>`);
+                    });
+                    $('#id_product').trigger('change.select2');
+    
+                    data.suppliers.forEach(supplier => {
+                        const name = supplier.company_name ? supplier.company_name : supplier.name;
+                        $('#id_supplier').append(`<option value="${supplier.id}">${name}</option>`);
+                    });
+                    $('#id_supplier').trigger('change.select2');
+    
+                    data.clients.forEach(client => {
+                        const name = client.company_name ? client.company_name : client.name;
+                        $('#id_client').append(`<option value="${client.id}">${name}</option>`);
+                    });
+                    $('#id_client').trigger('change.select2');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+    
+</script>

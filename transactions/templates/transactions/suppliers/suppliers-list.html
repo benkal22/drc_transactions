@@ -1,0 +1,26 @@
+<!-- transactions/suppliers/suppliers-list.html -->
+
+{% extends 'transactions/base.html' %}
+
+{% block head_title %}
+    Transactions List
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container px-6 mx-auto grid" id="supplier-block">
+
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Gestion des fournisseurs
+    </h2>
+    
+    {% include 'transactions/suppliers/partials/suppliers-container.html' %}
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,127 @@
+<!-- transactions/templates/transactions/reports/provinces.html -->
+
+{% extends 'transactions/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Résumé des Transactions d'Achat Producteur-Fournisseur{% endblock %}
+
+{% block content %}
+{% include 'transactions/reports/nav.html' %}    
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Résumé des Transactions d'Achat Producteur-Fournisseur</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get" hx-get=".table-responsive" hx-target=".table-responsive">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="provinceFilter">Province</label>
+                                <select id="provinceFilter" name="province" class="form-control" hx-boost="true">
+                                    <option value="">Toutes les provinces</option>
+                                    {% for province in provinces %}
+                                        <option value="{{ province }}" {% if province == selected_province %}selected{% endif %}>{{ province }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="productFilter">Produit</label>
+                                <select id="productFilter" name="product" class="form-control" hx-boost="true">
+                                    <option value="">Tous les produits</option>
+                                    {% for product in products %}
+                                        <option value="{{ product }}" {% if product == selected_product %}selected{% endif %}>{{ product }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="sectorFilter">Secteur Unique</label>
+                                <select id="sectorFilter" name="sector" class="form-control" hx-boost="true">
+                                    <option value="">Tous les secteurs</option>
+                                    {% for sector in sectors %}
+                                        <option value="{{ sector }}" {% if sector == selected_sector %}selected{% endif %}>{{ sector }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="submit" class="btn btn-primary mt-4">Filtrer</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive" hx-target=".table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Province</th>
+                                    <th>Produit</th>
+                                    <th>Secteur Unique</th>
+                                    <th>Quantité Totale</th>
+                                    <th>Prix Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for summary in page_obj %}
+                                    <tr>
+                                        <td>{{ summary.producer__province__name }}</td>
+                                        <td>{{ summary.product__product_label }}</td>
+                                        <td>{{ summary.producer__sector_label__sector_label }}</td>
+                                        <td>{{ summary.total_quantity }}</td>
+                                        <td>{{ summary.total_price }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5">Aucun résultat trouvé.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if selected_province %}&province={{ selected_province }}{% endif %}{% if selected_product %}&product={{ selected_product }}{% endif %}{% if selected_sector %}&sector={{ selected_sector }}{% endif %}">Première</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_province %}&province={{ selected_province }}{% endif %}{% if selected_product %}&product={{ selected_product }}{% endif %}{% if selected_sector %}&sector={{ selected_sector }}{% endif %}">Précédente</a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}{% if selected_province %}&province={{ selected_province }}{% endif %}{% if selected_product %}&product={{ selected_product }}{% endif %}{% if selected_sector %}&sector={{ selected_sector }}{% endif %}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_province %}&province={{ selected_province }}{% endif %}{% if selected_product %}&product={{ selected_product }}{% endif %}{% if selected_sector %}&sector={{ selected_sector }}{% endif %}">Suivante</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if selected_province %}&province={{ selected_province }}{% endif %}{% if selected_product %}&product={{ selected_product }}{% endif %}{% if selected_sector %}&sector={{ selected_sector }}{% endif %}">Dernière</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

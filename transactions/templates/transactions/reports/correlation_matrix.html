@@ -1,0 +1,96 @@
+<!-- transactions/templates/transactions/reports/correlation_matrix.html -->
+
+{% extends 'transactions/base.html' %}
+
+{% block title %}Matrice de Corrélation - DRC Transactions{% endblock %}
+{% block content %}
+{% include 'transactions/reports/nav.html' %}    
+
+<div class="container-fluid mt-4">
+    <h1 class="mb-4 text-center">Matrice de Corrélation des Échanges de Transactions par Province</h1>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-10">
+            <form method="get" class="form-inline mb-4">
+                {{ product_filter_form.as_p }}
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+            </form>
+            <h2 class="text-center">Statistiques des Transactions</h2>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">Quantité totale achetée : {{ total_quantity_purchased }}</li>
+                <li class="list-group-item">Quantité totale vendue : {{ total_quantity_sold }}</li>
+                <li class="list-group-item">Quantité totale importée : {{ total_quantity_imported }}</li>
+                <li class="list-group-item">Quantité totale exportée : {{ total_quantity_exported }}</li>
+                <li class="list-group-item">Prix total des achats : {{ total_price_purchased }}</li>
+                <li class="list-group-item">Prix total des ventes : {{ total_price_sold }}</li>
+            </ul>
+            <h2 class="text-center">Matrix</h2>
+
+            <div x-data="{ matrixData: null }" x-init="fetchMatrixData()">
+                <canvas id="matrixChart"></canvas>
+            </div>
+            
+            <h2 class="text-center">Province du Producteur et Province des Fournisseurs</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    {{ correlation_matrix_producer_supplier|safe }}
+                </table>
+            </div>
+            <h2 class="text-center mt-5">Province du Producteur et Province des Clients</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    {{ correlation_matrix_producer_client|safe }}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fetchMatrixData() {
+        fetch('/api/producer-client-correlation/')
+            .then(response => response.json())
+            .then(data => {
+                // Manipuler les données pour les adapter au format requis par Chart.js matrix
+                let matrixData = processDataForChart(data);
+                drawMatrixChart(matrixData);
+            })
+            .catch(error => console.error('Error fetching matrix data:', error));
+    }
+
+    function processDataForChart(data) {
+        // Process data here if needed to fit Chart.js matrix format
+        return data;
+    }
+
+    function drawMatrixChart(matrixData) {
+        const ctx = document.getElementById('matrixChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'matrix',
+            data: {
+                datasets: [{
+                    label: 'Matrix Chart',
+                    data: matrixData,
+                    backgroundColor: '#FF5733' // Example color
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Fournisseurs'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Clients'
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,283 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    {% endblock %}
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Nunito|Poppins" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Htmx -->
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    {% block css %}
+    <!-- Additional CSS files if needed -->
+    {% endblock %}
+</head>
+
+<body x-data="{ sidebarOpen: false }">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+                <img src="{% static 'img/logo.png' %}" alt="">
+                <span class="d-none d-lg-block">DRC Transactions</span>
+            </a>
+            <i @click="sidebarOpen = !sidebarOpen" class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Rechercher" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle" href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            Vous avez 4 nouvelles notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Voir tout</span></a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <!-- Notification Items -->
+                        <template x-for="n in 4" :key="n">
+                            <li class="notification-item">
+                                <i class="bi bi-exclamation-circle text-warning"></i>
+                                <div>
+                                    <h4>Notification {{ n }}</h4>
+                                    <p>Message de notification</p>
+                                    <p>{{ n }} min. ago</p>
+                                </div>
+                            </li>
+                        </template>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="dropdown-footer">
+                            <a href="#">Montrer toutes les notifications</a>
+                        </li>
+                    </ul><!-- End Notification Dropdown Items -->
+                </li><!-- End Notification Nav -->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a><!-- End Messages Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            Vous avez 3 nouveaux messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Voir tout</span></a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <!-- Message Items -->
+                        <template x-for="m in 3" :key="m">
+                            <li class="message-item">
+                                <a href="#">
+                                    <img src="{% static 'img/messages-1.jpg' %}" alt="" class="rounded-circle">
+                                    <div>
+                                        <h4>Maria Hudson</h4>
+                                        <p>Message contenu...</p>
+                                        <p>4 hrs. ago</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </template>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="dropdown-footer">
+                            <a href="#">Montrer tous les messages</a>
+                        </li>
+                    </ul><!-- End Messages Dropdown Items -->
+                </li><!-- End Messages Nav -->
+
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.user.username }}</span>
+                    </a><!-- End Profile Image Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{ request.user.username }}</h6>
+                            <span>{{ producer.company_name }}</span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'transactions:profile' %}">
+                                <i class="bi bi-person"></i>
+                                <span>Mon Profil</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'account_logout' %}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Se Déconnecter</span>
+                            </a>
+                        </li>
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar" x-bind:class="{'toggle-sidebar': sidebarOpen}">
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'transactions:dashboard' %}">
+                    <i class="bi bi-grid"></i>
+                    <span>Tableau de bord</span>
+                </a>
+                
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#fournisseurs-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Mes fournisseurs</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="fournisseurs-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{% url 'manage_suppliers' %}">
+                            <i class="bi bi-circle"></i><span>Fournisseurs</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Fournisseurs Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#clients-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people"></i><span>Mes clients</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="clients-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{% url 'transactions:clients' %}">
+                            <i class="bi bi-circle"></i><span>Clients Business</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'transactions:clients' %}">
+                            <i class="bi bi-circle"></i><span>Clients personnels</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Clients Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#transactions-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Mes transactions</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="transactions-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{% url 'transactions:transactions' %}">
+                            <i class="bi bi-circle"></i><span>Transactions en cours</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'transactions:transactions' %}">
+                            <i class="bi bi-circle"></i><span>Transactions terminées</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Transactions Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'transactions:contact' %}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </li><!-- End Contact Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'transactions:about' %}">
+                    <i class="bi bi-info-circle"></i>
+                    <span>À propos</span>
+                </a>
+            </li><!-- End About Nav -->
+
+        </ul>
+    </aside><!-- End Sidebar-->
+
+    <!-- ======= Main ======= -->
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>{% block page_title %}{% endblock %}</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'transactions:home_page' %}">Accueil</a></li>
+                    <li class="breadcrumb-item active">{% block breadcrumb %}{% endblock %}</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            {% block content %}
+                
+
+            {% endblock %}
+        </section>
+    </main><!-- End #main -->
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Your custom JS if any -->
+    {% block js %}
+    <!-- Additional JS scripts if needed -->
+    {% endblock %}
+
+</body>
+
+</html>

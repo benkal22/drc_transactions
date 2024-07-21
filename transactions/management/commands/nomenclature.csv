@@ -1,0 +1,723 @@
+sector_code;sector_label;activity_code;activity_label;product_code;product_label
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010101;Blé  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010102;Maïs 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010103;Riz paddy  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010104;Mil   
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010105;Sorgho  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010106;orge
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010101;Cultures de céréales  ;A01010107;Autres céréales n.c.a.  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010201;Pommes de terre
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010202;Igname  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010203;Manioc   
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010204;Taro et macabo   
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010205;Patates douces  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010206;Autres racines et tubercules à amidon  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010207;Haricots secs  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010208;Pois de terre  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010102;Culture de tubercules et de légumes à cosse secs ;A01010209;Autres légumes à cosse secs  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010301;Arachides 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010302;Noix de palme et amandes de palmiste 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010303;Noix et amandes de karité 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010304;Soja 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010305;Coprah 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010103;Culture de plantes oléagineuses ;A01010306;Autres produits de plantes oléagineuses n.c.a. 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010104;Culture du coton  ;A01010400;Coton graine 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010105;Égrenage du coton ;A01010501;Coton fibre 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010105;Égrenage du coton ;A01010502;Graines de coton  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010601;Canne à sucre 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010602;Tabac brut 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010603;Latex 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010604;Urena et punga
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010605;Rauwolfia
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010606;Papaïne
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010607;Quinquina
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010106;Autres cultures n.c.a  ;A01010608;Produits végétaux cultivés n.c.a. 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010201; Culture de légumes  ;A01020100;Légumes frais 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010202;"Reproduction des plantes (pépinières); horticulture ";A01020200;Plantes et fleurs
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010301;Culture du cacao  ;A01030100;Cacao en fèves 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010302;Culture du café   ;A01030200;Café  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010303;Culture du thé   ;A01030300;Thé brut 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010304; Culture de la banane  ;A01030401;Bananes plantains 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010304; Culture de la banane  ;A01030402;Bananes douces 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010305; Culture de l'ananas  ;A01030500;Ananas 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030601;Mangoustan
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030602;Oranges
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030603;Fraises
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030604;Mandarines
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030605;Raisins
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030606;Pamplemousses
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030607;Maracouja
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030608;Citrons
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030609;Pommes
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030610;Goyaves
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030611;Prunes
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030612;Mangues
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030613;Coco
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030614;Avocats
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030615;Papaye
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030616;Safou
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010306;Culture d'autres fruits  0;A01030617; Autres fruits n.c.a. 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010307;Culture de plantes à épices ;A01030701;Vanille 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010307;Culture de plantes à épices ;A01030702;Autres épices 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010401;Élevage de bovins ;A01040101;Bovins sur pied 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010401;Élevage de bovins ;A01040102;Lait de vache, brut 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010402;Élevage chevaux et autres équidés ;A01040201;Chevaux sur pied 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010402;Élevage chevaux et autres équidés ;A01040202;Autres produits de l'élevage d'équidés 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010403; Élevage de camélidés  ;A01040301;Camélidés sur pied 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010403; Élevage de camélidés  ;A01040302;Lait de chamelle 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010404;Élevage d'ovins   ;A01040401;Ovins sur pied 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010404;Élevage d'ovins   ;A01040402;Lait brut  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010404;Élevage d'ovins   ;A01040403;Laine et poils bruts
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010405; Élevage de caprins  ;A01040501;Caprins sur pied  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010405; Élevage de caprins  ;A01040502;Lait de chèvre brut   
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010406; Élevage de porcins  ;A01040600;Porcins sur pied  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010407; Élevage de volailles  ;A01040701;Volailles  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010407; Élevage de volailles  ;A01040702;Œufs  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010408;Élevage d'animaux n.c.a.  ;A01040801;Animaux d’élevage vivants n.c.a.  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010408;Élevage d'animaux n.c.a.  ;A01040802;Miel  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010408;Élevage d'animaux n.c.a.  ;A01040803;Produits divers d’origine animale n.c.a.  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010600;Activités de soutien à la culture et à l'élevage ;A01060001;Services de soutien à la culture  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010600;Activités de soutien à la culture et à l'élevage ;A01060002;Services de soutien à l’élevage  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010700;Chasse et activités annexes ;A01070001;Viandes de chasse  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010700;Chasse et activités annexes ;A01070002;Autres prélèvements sur la nature 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A010700;Chasse et activités annexes ;A01070003;Services annexes à la chasse  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020101; Sylviculture ;A02010100;Bois sur pied  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020102; Exploitation forestière  ;A02010201;Grumes 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020102; Exploitation forestière  ;A02010202;Bois de chauffe 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020103;Production de charbon de bois ;A02010300;Charbon de bois   
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020200;Cueillette   ;A02020001;Gommes naturelles  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020200;Cueillette   ;A02020002;Autres produits forestiers et de cueillette  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A020300;Activités forestières de soutien ;A02030000;Services forestiers de soutien 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A030000;Pêche, pisciculture, aquaculture ;A03000001;Poissons  
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A030000;Pêche, pisciculture, aquaculture ;A03000002;Crustacés et mollusques 
+A;AGRICULTURE, SYLVICULTURE, PÊCHE;A030000;Pêche, pisciculture, aquaculture ;A03000003;Autres produits de la pêche, de la pisciculture ou de l’aquaculture 
+B;EXTRACTIVES ;B050000;Extraction de charbon et de lignite  ;B05000001;Charbon  
+B;EXTRACTIVES ;B050000;Extraction de charbon et de lignite  ;B05000002;Lignite  
+B;EXTRACTIVES ;B060001;Extraction de pétrole brut  ;B06000100;Pétrole brut  
+B;EXTRACTIVES ;B060002; Extraction de gaz naturel  ;B06000200;Gaz naturel  
+B;EXTRACTIVES ;B070100;Extraction de minerais de fer ;B07010000;Minerais de fer  
+B;EXTRACTIVES ;B070201;Extraction de minerais d'uranium ;B07020100;Minerais d'uranium  
+B;EXTRACTIVES ;B070202;Extraction de minerais de métaux précieux ;B07020201;Minerais d'or  
+B;EXTRACTIVES ;B070202;Extraction de minerais de métaux précieux ;B07020202;Minerais d'argent  
+B;EXTRACTIVES ;B070202;Extraction de minerais de métaux précieux ;B07020203;Autres minerais de métaux précieux  
+B;EXTRACTIVES ;B070203; Extraction de bauxite  ;B07020300;Bauxite (minerais d'aluminium)  
+B;EXTRACTIVES ;B070204;Extraction de minerais de cuivre ;B07020400;Minerais de cuivre 
+B;EXTRACTIVES ;B070205;Extraction de minerais de manganèse;B07020500;Minerais de manganèse  
+B;EXTRACTIVES ;B070206;Extraction d'autres minerais métalliques n.c.a. ;B07020600;Autres minerais métalliques n.c.a.  
+B;EXTRACTIVES ;B080100;Extraction de pierres, de sables et d'argiles ;B08010001;Pierres pour la construction et l’industrie  
+B;EXTRACTIVES ;B080100;Extraction de pierres, de sables et d'argiles ;B08010002;Sables et argiles  
+B;EXTRACTIVES ;B080201;Extraction de phosphates et sels de potassium, naturels ;B08020101;Phosphates naturels  
+B;EXTRACTIVES ;B080201;Extraction de phosphates et sels de potassium, naturels ;B08020102;Sels naturels de potassium  
+B;EXTRACTIVES ;B080202;Extractions de minéraux pour l'industrie chimique ;B08020200;Minéraux pour l’industrie chimique  
+B;EXTRACTIVES ;B080203;Extraction ou production de sel et de natron;B08020300;Sel et natron  
+B;EXTRACTIVES ;B080204;Extraction de diamants et d'autres pierres précieuses ;B08020401;Diamants bruts  
+B;EXTRACTIVES ;B080204;Extraction de diamants et d'autres pierres précieuses ;B08020402;Autres pierres précieuses  
+B;EXTRACTIVES ;B080205;Autres extractions  ;B08020500;Minéraux divers n.c.a.  
+B;EXTRACTIVES ;B090000;Activités de soutien aux industries extractives ;B09000000;Services de soutien aux industries extractives   
+C;ACTIVITES DE FABRICATION ;C100100;Abattage, transformation et conservation des viandes ;C10010001;Viandes de boucherie  
+C;ACTIVITES DE FABRICATION ;C100100;Abattage, transformation et conservation des viandes ;C10010002;Viandes de volailles  
+C;ACTIVITES DE FABRICATION ;C100100;Abattage, transformation et conservation des viandes ;C10010003;Autres viandes 
+C;ACTIVITES DE FABRICATION ;C100100;Abattage, transformation et conservation des viandes ;C10010004;Préparations et conserves à base de viandes  
+C;ACTIVITES DE FABRICATION ;C100100;Abattage, transformation et conservation des viandes ;C10010005;Peaux brutes et autres produits de l’abattage 
+C;ACTIVITES DE FABRICATION ;C100201;Congélation de poissons, crustacés et mollusques ;C10020101;Poissons, congelés ou surgelés 
+C;ACTIVITES DE FABRICATION ;C100201;Congélation de poissons, crustacés et mollusques ;C10020102;Crustacés et mollusques, congelés ou surgelés 
+C;ACTIVITES DE FABRICATION ;C100202;Séchage, salage ou fumage du poisson ;C10020201;Poissons séchés ou salés  
+C;ACTIVITES DE FABRICATION ;C100202;Séchage, salage ou fumage du poisson ;C10020202;Poissons fumés 
+C;ACTIVITES DE FABRICATION ;C100203;Autres transformations et conservations des poissons, crustacés et mollusques ;C10020301;Préparations et conserves à base de poissons  
+C;ACTIVITES DE FABRICATION ;C100203;Autres transformations et conservations des poissons, crustacés et mollusques ;C10020302;Coquillages, crustacés et mollusques en conserve  
+C;ACTIVITES DE FABRICATION ;C100203;Autres transformations et conservations des poissons, crustacés et mollusques ;C10020303;"Farines de poissons ; déchets  "
+C;ACTIVITES DE FABRICATION ;C100300;Transformation et conservation des fruits et légumes ;C10030001;Conserves appertisées de légumes 
+C;ACTIVITES DE FABRICATION ;C100300;Transformation et conservation des fruits et légumes ;C10030002;Conserves de fruits  
+C;ACTIVITES DE FABRICATION ;C100300;Transformation et conservation des fruits et légumes ;C10030003;Jus de fruits et légumes  
+C;ACTIVITES DE FABRICATION ;C100300;Transformation et conservation des fruits et légumes ;C10030004;Pâte d'arachide  
+C;ACTIVITES DE FABRICATION ;C100300;Transformation et conservation des fruits et légumes ;C10030005;Autres produits à base de fruits et légumes  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040001;Huile brute de palme ou de palmiste  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040002;Huile brute d’arachide  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040003;Huile brute de coton  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040004;Autres huiles brutes  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040005;Huile raffinée de palme ou de palmiste  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040006;Huile raffinée d’arachide  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040007;Huile raffinée de coton  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040008;Autres huiles raffinées  
+C;ACTIVITES DE FABRICATION ;C100400;Fabrication de corps gras d'origine animale et végétale ;C10040009;Autres corps gras, graisses et tourteaux  
+C;ACTIVITES DE FABRICATION ;C100500;Fabrication de produits laitiers et de glaces ;C10050001;"Laits liquides ; laits concentrés  "
+C;ACTIVITES DE FABRICATION ;C100500;Fabrication de produits laitiers et de glaces ;C10050002;Laits en poudre  
+C;ACTIVITES DE FABRICATION ;C100500;Fabrication de produits laitiers et de glaces ;C10050003;Beurre, fromages, yaourts et crème de lait  
+C;ACTIVITES DE FABRICATION ;C100500;Fabrication de produits laitiers et de glaces ;C10050004;Crèmes glacées et sorbets 
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060101;Riz décortiqué  
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060102;Farine de blé  
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060103;Farines d'autres céréales  
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060104;Autres farines  
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060105;Céréales transformées  
+C;ACTIVITES DE FABRICATION ;C100601; Travail des grains   ;C10060106;Sons et résidus de meunerie  
+C;ACTIVITES DE FABRICATION ;C100602;Fabrication de produits amylacés ;C10060200;Huile de maïs et autres produits amylacés  
+C;ACTIVITES DE FABRICATION ;C100701;Fabrication de pain et de pâtisseries fraîches ;C10070100;Pain et  pâtisseries fraîches  
+C;ACTIVITES DE FABRICATION ;C100702;Biscuiterie et pâtisserie de conservation;C10070200;Biscuits et pâtisseries de conservation  
+C;ACTIVITES DE FABRICATION ;C100703;Fabrication de pâtes alimentaires, de couscous et de produits farineux similaires ;C10070301;Pâtes alimentaires  
+C;ACTIVITES DE FABRICATION ;C100703;Fabrication de pâtes alimentaires, de couscous et de produits farineux similaires ;C10070302;Couscous et produits farineux similaires 
+C;ACTIVITES DE FABRICATION ;C100800;Fabrication d'aliments pour animaux ;C10080000;Aliments préparés pour animaux  
+C;ACTIVITES DE FABRICATION ;C100901;Fabrication de sucre ;C10090101;Sucre  
+C;ACTIVITES DE FABRICATION ;C100901;Fabrication de sucre ;C10090102;Mélasses  
+C;ACTIVITES DE FABRICATION ;C100902;" Chocolaterie ; confiserie  ";C10090201;Cacao en masse  
+C;ACTIVITES DE FABRICATION ;C100902;" Chocolaterie ; confiserie  ";C10090202;Beurre de cacao  
+C;ACTIVITES DE FABRICATION ;C100902;" Chocolaterie ; confiserie  ";C10090203;Cacao en poudre  
+C;ACTIVITES DE FABRICATION ;C100902;" Chocolaterie ; confiserie  ";C10090204;"Chocolat ; préparations à base de chocolat  "
+C;ACTIVITES DE FABRICATION ;C100902;" Chocolaterie ; confiserie  ";C10090205;Confiseries  
+C;ACTIVITES DE FABRICATION ;C100903;Transformation du café, du thé ;C10090301;"Café torréfié ; produits dérivés du café  "
+C;ACTIVITES DE FABRICATION ;C100903;Transformation du café, du thé ;C10090302;"Thé conditionné ; infusions  "
+C;ACTIVITES DE FABRICATION ;C100904;Fabrication de condiments et assaisonnements ;C10090400;Condiments et assaisonnements 
+C;ACTIVITES DE FABRICATION ;C100905;Fabrication de denrées diverses n.c.a  et Opérations sous-traitées intervenant dans la fabrication de produits alimentaires ;C10090501;Denrées diverses n.c.a  
+C;ACTIVITES DE FABRICATION ;C100905;Fabrication de denrées diverses n.c.a  et Opérations sous-traitées intervenant dans la fabrication de produits alimentaires ;C10090502;Opérations sous-traitées intervenant dans la fabrication de produits alimentaires 
+C;ACTIVITES DE FABRICATION ;C110001;Fabrication de boissons alcoolisées ;C11000101;Boissons alcoolisées distillées  
+C;ACTIVITES DE FABRICATION ;C110001;Fabrication de boissons alcoolisées ;C11000102;Bière de malt et malt  
+C;ACTIVITES DE FABRICATION ;C110001;Fabrication de boissons alcoolisées ;C11000103;Autres bières  
+C;ACTIVITES DE FABRICATION ;C110001;Fabrication de boissons alcoolisées ;C11000104;Vins et autres alcools
+C;ACTIVITES DE FABRICATION ;C110002;Production d'eaux de table et de boissons non alcoolisées ;C11000201;Eaux de table 
+C;ACTIVITES DE FABRICATION ;C110002;Production d'eaux de table et de boissons non alcoolisées ;C11000202;Boissons non alcoolisées diverses  
+C;ACTIVITES DE FABRICATION ;C110002;Production d'eaux de table et de boissons non alcoolisées ;C11000203;Opérations sous-traitées intervenant dans la fabrication de boissons 
+C;ACTIVITES DE FABRICATION ;C120000;Fabrication de produits à base de tabac ;C12000001;Cigares et cigarettes  
+C;ACTIVITES DE FABRICATION ;C120000;Fabrication de produits à base de tabac ;C12000002;Autres tabacs manufacturés  
+C;ACTIVITES DE FABRICATION ;C120000;Fabrication de produits à base de tabac ;C12000003;Déchets de tabac 
+C;ACTIVITES DE FABRICATION ;C130100;Filature, tissage et ennoblissement textile ;C13010001;Fils de coton  
+C;ACTIVITES DE FABRICATION ;C130100;Filature, tissage et ennoblissement textile ;C13010002;Autres fils
+C;ACTIVITES DE FABRICATION ;C130100;Filature, tissage et ennoblissement textile ;C13010003;Tissus de coton  
+C;ACTIVITES DE FABRICATION ;C130100;Filature, tissage et ennoblissement textile ;C13010004;Autres tissus  
+C;ACTIVITES DE FABRICATION ;C130100;Filature, tissage et ennoblissement textile ;C13010005;Services d'ennoblissement textile
+C;ACTIVITES DE FABRICATION ;C130201;Fabrication de tapis et carpettes ;C13020100;Tapis et carpettes  
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020201;Étoffes à maille  
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020202;Linge de maison  
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020203;Ficelles, cordes et cordages
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020204;Filets à maille  
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020205;Articles textiles divers n.c.a. 
+C;ACTIVITES DE FABRICATION ;C130202;Fabrication d'étoffes à mailles et d'articles textiles non vestimentaires n.c.a ;C13020206;Opérations sous-traitées intervenant dans la fabrication de produits textiles
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000000;Opérations sous-traitées intervenant dans la fabrication d'articles d'habillement 
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000001;Vêtements en cuir
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000002;Vêtements de dessus  
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000003;Vêtements de dessous  
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000004;Tee-shirts et maillots de corps 
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000005;Vêtements divers et accessoires du vêtement  
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000006;Fripes 
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000007;Pelleteries et fourrures 
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000008;Étoffes à maille  
+C;ACTIVITES DE FABRICATION ;C140000;Fabrication d'articles d'habillement  ;C14000009;Pull-overs et articles similaires 
+C;ACTIVITES DE FABRICATION ;C140001;Fabrication d'articles d'habillement  ;C14000100;Opérations sous-traitées intervenant dans la fabrication d'articles d'habillement 
+C;ACTIVITES DE FABRICATION ;C150101;Apprêt, tannage des cuirs et fourrures ;C15010101;Peaux et cuirs de bovins et équidés 
+C;ACTIVITES DE FABRICATION ;C150101;Apprêt, tannage des cuirs et fourrures ;C15010102;Peaux et cuirs d’ovins et de caprins  
+C;ACTIVITES DE FABRICATION ;C150101;Apprêt, tannage des cuirs et fourrures ;C15010103;Autres peaux et cuirs travaillés, déchets de cuir  
+C;ACTIVITES DE FABRICATION ;C150102;Fabrication d'articles de voyage, de maroquinerie, de sellerie et de bourrellerie ;C15010200;Articles de voyage, de maroquinerie, produits de sellerie et de bourrellerie 
+C;ACTIVITES DE FABRICATION ;C150200;Fabrication de chaussures ;C15020001;Chaussures 
+C;ACTIVITES DE FABRICATION ;C150200;Fabrication de chaussures ;C15020002;Opérations sous-traitées intervenant dans la fabrication de 
+C;ACTIVITES DE FABRICATION ;C160100;Sciage et rabotage du bois ;C16010001;Bois sciés 
+C;ACTIVITES DE FABRICATION ;C160100;Sciage et rabotage du bois ;C16010002;Autres produits du sciage, du profilage et du rabotage 
+C;ACTIVITES DE FABRICATION ;C160201;Fabrication de feuilles de placage, de contreplaqués et de panneaux ;C16020101;Feuilles de placage
+C;ACTIVITES DE FABRICATION ;C160201;Fabrication de feuilles de placage, de contreplaqués et de panneaux ;C16020102;Contreplaqués  
+C;ACTIVITES DE FABRICATION ;C160201;Fabrication de feuilles de placage, de contreplaqués et de panneaux ;C16020103;Panneaux à base de bois  
+C;ACTIVITES DE FABRICATION ;C160202;Fabrication d'ouvrages de charpente, de menuiseries et d'emballages en bois  ;C16020201;Ouvrages de charpente et de menuiserie, en bois   
+C;ACTIVITES DE FABRICATION ;C160202;Fabrication d'ouvrages de charpente, de menuiseries et d'emballages en bois  ;C16020202;Emballages en bois  
+C;ACTIVITES DE FABRICATION ;C160203;Fabrication d'articles divers en bois,  liège, vannerie ou sparterie ;C16020301;Articles divers en bois  
+C;ACTIVITES DE FABRICATION ;C160203;Fabrication d'articles divers en bois,  liège, vannerie ou sparterie ;C16020302;Articles en liège, vannerie ou sparterie 
+C;ACTIVITES DE FABRICATION ;C160203;Fabrication d'articles divers en bois,  liège, vannerie ou sparterie ;C16020303;Opérations sous-traitées intervenant dans le travail du bois et la fabrication d'articles en bois 
+C;ACTIVITES DE FABRICATION ;C170001;Fabrication de pâte à papier, de papier et de carton ;C17000101;Pâte à papier  
+C;ACTIVITES DE FABRICATION ;C170001;Fabrication de pâte à papier, de papier et de carton ;C17000102;Papiers et cartons en l’état 
+C;ACTIVITES DE FABRICATION ;C170002;Fabrication de carton ondulé et d'emballages en papier ou en carton ;C17000200;Carton ondulé, emballages en papier ou en carton  
+C;ACTIVITES DE FABRICATION ;C170003;Fabrication d'articles en papier ou en carton ;C17000301;Articles en papier à usage sanitaire ou domestique  
+C;ACTIVITES DE FABRICATION ;C170003;Fabrication d'articles en papier ou en carton ;C17000302;Articles de papeterie  
+C;ACTIVITES DE FABRICATION ;C170003;Fabrication d'articles en papier ou en carton ;C17000303;Autres articles en papier ou en carton  
+C;ACTIVITES DE FABRICATION ;C180100;Imprimerie et activités connexes ;C18010001;Impression de journaux 
+C;ACTIVITES DE FABRICATION ;C180100;Imprimerie et activités connexes ;C18010002;Autres travaux d'impression 
+C;ACTIVITES DE FABRICATION ;C180200;Reproduction d'enregistrements ;C18020001;Reproduction d'enregistrements sonores  
+C;ACTIVITES DE FABRICATION ;C180200;Reproduction d'enregistrements ;C18020002;Reproduction d'enregistrements vidéo  
+C;ACTIVITES DE FABRICATION ;C180200;Reproduction d'enregistrements ;C18020003;Reproduction d'enregistrements informatiques  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010001;Essences  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010002;Carburéacteurs et kérosène  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010003;Gazoles  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010004;Fiouls lourds  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010005;Huiles de pétrole  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010006;Butane et propane  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010007;Autres produits pétroliers raffinés gazeux  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010008;Produits pétroliers raffinés solides ou pâteux  
+C;ACTIVITES DE FABRICATION ;C190100;Raffinage pétrolier;C19010009;Processing (raffinage à façon)  
+C;ACTIVITES DE FABRICATION ;C190200;Cokéfaction ;C19020000;Produits de la cokéfaction 
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010100;Produits azotés et engrais  
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010101;Gaz industriels 
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010102;Colorants, pigments et agents tannants  
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010103;Autres produits chimiques inorganiques de base 
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010104;Autres produits chimiques organiques de base  
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010105;Matières plastiques de base  
+C;ACTIVITES DE FABRICATION ;C200101;Fabrication de produits azotés et d'engrais ;C20010106;Caoutchouc synthétique  
+C;ACTIVITES DE FABRICATION ;C200201;Fabrication de savons, détergents et produits d'entretien ;C20020101;Savons et produits de nettoyage  
+C;ACTIVITES DE FABRICATION ;C200201;Fabrication de savons, détergents et produits d'entretien ;C20020102;"Glycérine ; agents tensioactifs  "
+C;ACTIVITES DE FABRICATION ;C200201;Fabrication de savons, détergents et produits d'entretien ;C20020103;Produits d’entretien ménager  
+C;ACTIVITES DE FABRICATION ;C200202;Fabrication de parfums et de produits de toilette ;C20020201;Parfums et eaux de toilette  
+C;ACTIVITES DE FABRICATION ;C200202;Fabrication de parfums et de produits de toilette ;C20020202;Produits de beauté et de maquillage 
+C;ACTIVITES DE FABRICATION ;C200202;Fabrication de parfums et de produits de toilette ;C20020203;Produits et préparations capillaires  
+C;ACTIVITES DE FABRICATION ;C200202;Fabrication de parfums et de produits de toilette ;C20020204;Autres produits de toilette et d’hygiène  
+C;ACTIVITES DE FABRICATION ;C200203;Fabrication de produits agrochimiques ;C20020301;Insecticides 
+C;ACTIVITES DE FABRICATION ;C200203;Fabrication de produits agrochimiques ;C20020302;Herbicides  
+C;ACTIVITES DE FABRICATION ;C200203;Fabrication de produits agrochimiques ;C20020303;Autres produits agrochimiques  
+C;ACTIVITES DE FABRICATION ;C200204;Fabrication de peintures et vernis, adjuvants et encres d'imprimerie ;C20020400;Peintures, vernis, adjuvants et encres d'imprimerie 
+C;ACTIVITES DE FABRICATION ;C200205;Fabrication de fibres artificielles ou  synthétiques ;C20020500;Fibres artificielles  ou synthétiques   
+C;ACTIVITES DE FABRICATION ;C200206;Fabrication d'autres produits chimiques ;C20020601;Explosifs et allumettes 
+C;ACTIVITES DE FABRICATION ;C200206;Fabrication d'autres produits chimiques ;C20020602;Colles   
+C;ACTIVITES DE FABRICATION ;C200206;Fabrication d'autres produits chimiques ;C20020603;Huiles essentielles  
+C;ACTIVITES DE FABRICATION ;C200206;Fabrication d'autres produits chimiques ;C20020604;Produits chimiques pour la photographie  
+C;ACTIVITES DE FABRICATION ;C200206;Fabrication d'autres produits chimiques ;C20020605;Produits chimiques à usage spécifique 
+C;ACTIVITES DE FABRICATION ;C210001;Industrie pharmaceutique ;C21000101;Produits pharmaceutiques de base  
+C;ACTIVITES DE FABRICATION ;C210001;Industrie pharmaceutique ;C21000102;Médicaments
+C;ACTIVITES DE FABRICATION ;C210001;Industrie pharmaceutique ;C21000103;Produits pharmaceutiques divers 
+C;ACTIVITES DE FABRICATION ;C210002;Fabrication de médicaments traditionnels ;C21000200;Médicaments traditionnels   
+C;ACTIVITES DE FABRICATION ;C220101;Fabrication et rechapage de pneumatiques  ;C22010101;Pneumatiques neufs pour voitures, cycles et motocycles  
+C;ACTIVITES DE FABRICATION ;C220101;Fabrication et rechapage de pneumatiques  ;C22010102;Autres pneumatiques neufs 
+C;ACTIVITES DE FABRICATION ;C220101;Fabrication et rechapage de pneumatiques  ;C22010103;Chambres à air et bandages  
+C;ACTIVITES DE FABRICATION ;C220101;Fabrication et rechapage de pneumatiques  ;C22010104;Profilés pour le rechapage  
+C;ACTIVITES DE FABRICATION ;C220101;Fabrication et rechapage de pneumatiques  ;C22010105;Pneumatiques rechapés  
+C;ACTIVITES DE FABRICATION ;C220102;Fabrication d'autres ouvrages en caoutchouc ;C22010200;Autres ouvrages en caoutchouc  
+C;ACTIVITES DE FABRICATION ;C220200;Travail du  plastique ;C22020001;Demi-produits, tuyaux et éléments pour la construction, en matières plastiques 
+C;ACTIVITES DE FABRICATION ;C220200;Travail du  plastique ;C22020002;Emballages en matières plastiques 
+C;ACTIVITES DE FABRICATION ;C220200;Travail du  plastique ;C22020003;Articles ménagers en matières plastiques 
+C;ACTIVITES DE FABRICATION ;C220200;Travail du  plastique ;C22020004;Autres produits du travail du plastique  
+C;ACTIVITES DE FABRICATION ;C220200;Travail du  plastique ;C22020005;Opérations sous-traitées intervenant dans le travail  du caoutchouc et du plastique 
+C;ACTIVITES DE FABRICATION ;C230100;Fabrication de verre et d'articles en verre ;C23010001;Verre plat  
+C;ACTIVITES DE FABRICATION ;C230100;Fabrication de verre et d'articles en verre ;C23010002;Verre creux  
+C;ACTIVITES DE FABRICATION ;C230100;Fabrication de verre et d'articles en verre ;C23010003;"Fibres de verre ; articles techniques en verre  "
+C;ACTIVITES DE FABRICATION ;C230201;Fabrication de carreaux en céramique ;C23020100;Carreaux en céramique  
+C;ACTIVITES DE FABRICATION ;C230202;Fabrication de tuiles et briques  ;C23020200;Tuiles et briques en terre  
+C;ACTIVITES DE FABRICATION ;C230203;Fabrication d'autres produits céramiques ;C23020301;Articles céramiques à usage domestique ou ornemental 
+C;ACTIVITES DE FABRICATION ;C230203;Fabrication d'autres produits céramiques ;C23020302;Appareils sanitaires en céramique  
+C;ACTIVITES DE FABRICATION ;C230203;Fabrication d'autres produits céramiques ;C23020303;Autres produits céramiques n.c.a.  
+C;ACTIVITES DE FABRICATION ;C230301;Fabrication de ciment, chaux et plâtre;C23030101;Clinkers  
+C;ACTIVITES DE FABRICATION ;C230301;Fabrication de ciment, chaux et plâtre;C23030102;Ciment   
+C;ACTIVITES DE FABRICATION ;C230301;Fabrication de ciment, chaux et plâtre;C23030103;Chaux, plâtre  
+C;ACTIVITES DE FABRICATION ;C230302;"Fabrication de matériaux et d'ouvrages en ciment, en béton ou en plâtre ; travail de la pierre ";C23030201;Matériaux et ouvrages en ciment, en béton ou en plâtre   
+C;ACTIVITES DE FABRICATION ;C230302;"Fabrication de matériaux et d'ouvrages en ciment, en béton ou en plâtre ; travail de la pierre ";C23030202;Travail de la pierre   
+C;ACTIVITES DE FABRICATION ;C230303;Fabrication de produits minéraux non métalliques n.c.a. ;C23030301;Produits abrasifs  
+C;ACTIVITES DE FABRICATION ;C230303;Fabrication de produits minéraux non métalliques n.c.a. ;C23030302;Autres produits minéraux non métalliques n.c.a. 
+C;ACTIVITES DE FABRICATION ;C230303;Fabrication de produits minéraux non métalliques n.c.a. ;C23030303;Opérations sous-traitées intervenant dans la fabrication de matériaux minéraux 
+C;ACTIVITES DE FABRICATION ;C240100;Sidérurgie et première transformation de l'acier;C24010001;Produits de la sidérurgie  
+C;ACTIVITES DE FABRICATION ;C240100;Sidérurgie et première transformation de l'acier;C24010002;Tubes et tuyaux en acier 
+C;ACTIVITES DE FABRICATION ;C240100;Sidérurgie et première transformation de l'acier;C24010003;Autres produits de la première transformation de l’acier  
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020001;Argent  
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020002;Or  
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020003;Platine  
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020004;Demi-produits en métaux précieux  
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020005;Alumine 
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020006;"Aluminium ; demi-produits en aluminium "
+C;ACTIVITES DE FABRICATION ;C240200;Métallurgie et première transformation des métaux non ferreux;C24020007;Produits n.c.a. de la première transformation des métaux non ferreux  
+C;ACTIVITES DE FABRICATION ;C240300;Fonderie ;C24030001;Tubes et tuyaux en fonte  
+C;ACTIVITES DE FABRICATION ;C240300;Fonderie ;C24030002;Travaux de fonderie pour des tiers 
+C;ACTIVITES DE FABRICATION ;C250100;Fabrication de structures métalliques, citernes et ouvrages chaudronnés ;C25010001;Structures métalliques   
+C;ACTIVITES DE FABRICATION ;C250100;Fabrication de structures métalliques, citernes et ouvrages chaudronnés ;C25010002;"Réservoirs ; chaudières  "
+C;ACTIVITES DE FABRICATION ;C250100;Fabrication de structures métalliques, citernes et ouvrages chaudronnés ;C25010003;Générateurs de vapeur   
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020001;Outillage et articles de coutellerie  
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020002;Serrures et ferrures  
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020003;Vis, boulons, chaînes et ressorts  
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020004;Ouvrages divers en métaux  
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020005;Armes et munitions  
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020006;Travail des métaux et mécanique générale 
+C;ACTIVITES DE FABRICATION ;C250200;Fabrication d'autres ouvrages en métaux ;C25020007;Opérations sous-traitées intervenant dans la fabrication des ouvrages en métaux 
+C;ACTIVITES DE FABRICATION ;C260101;Fabrication de composants, cartes électroniques et supports magnétiques ;C26010101;Composants électroniques 
+C;ACTIVITES DE FABRICATION ;C260101;Fabrication de composants, cartes électroniques et supports magnétiques ;C26010102;Cartes électroniques  
+C;ACTIVITES DE FABRICATION ;C260101;Fabrication de composants, cartes électroniques et supports magnétiques ;C26010103;Supports magnétiques et optiques 
+C;ACTIVITES DE FABRICATION ;C260102;Fabrication d'ordinateurs et d'équipements périphériques ;C26010201;Ordinateurs   
+C;ACTIVITES DE FABRICATION ;C260102;Fabrication d'ordinateurs et d'équipements périphériques ;C26010202;Equipements périphériques   
+C;ACTIVITES DE FABRICATION ;C260201;Fabrication d'équipements de communication;C26020101;Matériel professionnel d'émission de l'image et du son 
+C;ACTIVITES DE FABRICATION ;C260201;Fabrication d'équipements de communication;C26020102;Postes téléphoniques d'usagers et téléphones cellulaires  
+C;ACTIVITES DE FABRICATION ;C260201;Fabrication d'équipements de communication;C26020103;Antennes, paraboles et parties d'appareils de communication 
+C;ACTIVITES DE FABRICATION ;C260201;Fabrication d'équipements de communication;C26020104;Autres équipements de communication 
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020201;Récepteurs radio et autoradios  
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020202;Récepteurs de télévision 
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020203;Appareils d'enregistrement ou de reproduction du son ou des images 
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020204;Microphones, haut-parleurs et similaires  
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020205;Parties d'appareils de réception, enregistrement ou reproduction du son et des images 
+C;ACTIVITES DE FABRICATION ;C260202;Fabrication de produits électroniques grand public ;C26020206;Consoles de jeux vidéo et manettes 
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030001;Équipements électro-médicaux   
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030002;Matériel optique et photographique   
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030003;Instruments d'aide à la navigation et de mesures météorologiques, géophysiques et similaires 
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030004;"Balances de précision ; instruments de dessin, calcul et mesure des longueurs "
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030005;Instruments  et appareils de mesure, de contrôle et d’essai  
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030006;Articles d'horlogerie 
+C;ACTIVITES DE FABRICATION ;C260300;Fabrication d'équipements d'imagerie médicale, de précision, d'optique et d'horlogerie ;C26030006;Opérations sous-traitées intervenant dans la fabrication de produits électroniques et informatiques 
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010001;Moteurs à courant continu ou alternatif
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010002;Groupes électrogènes et convertisseurs rotatifs   
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010003;Lampes et appareils d'éclairage électriques  
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010004;Transformateurs électriques, ballasts et réactances 
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010005;Matériel de distribution et de commande électrique 
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010006;Piles et accumulateurs électriques 
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010007;Fils, câbles et matériel d'installation électrique 
+C;ACTIVITES DE FABRICATION ;C270100;Fabrication de machines et matériels électrotechniques ;C27010008;Autres fournitures électriques  
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020001;Réfrigérateurs et congélateurs domestiques 
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020002;Autre électroménager blanc  
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020003;Fers à repasser et sèche-cheveux 
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020004;Autres appareils domestiques électriques 
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020005;Parties d’appareils domestiques divers 
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020006;Cuisinières et autres appareils ménagers non électriques 
+C;ACTIVITES DE FABRICATION ;C270200;Fabrication d'appareils domestiques ;C27020007;Opérations sous-traitées intervenant dans la fabrication des équipements électriques 
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010001;Moteurs thermiques et turbines  
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010002;Pompes, compresseurs et systèmes hydrauliques  
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010003;Articles de robinetterie
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010004;Engrenages et organes mécaniques de transmission
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010005;Fours et brûleurs  
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010006;Matériel de levage et de manutention  
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010007;Équipements aérauliques et frigorifiques industriels 
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010008;Machines et équipements de bureau  
+C;ACTIVITES DE FABRICATION ;C280100;Fabrication de machines d'usage général;C28010009;Autres machines d’usage général  
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020001;Tracteurs, machines agricoles et forestières
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020002;Machines de formage des métaux et machines-outils 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020003;Machines pour l’extraction ou la construction 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020004;Machines pour la métallurgie 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020005;Machines pour l'industrie agro-alimentaire 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020006;Machines pour les industries textiles 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020007;Machines pour les industries du papier et du carton 
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020008;Machines pour le travail du caoutchouc ou des plastiques  
+C;ACTIVITES DE FABRICATION ;C280200;Fabrication de machines d'usage spécifique ;C28020009;Autres machines spécialisées diverses  
+C;ACTIVITES DE FABRICATION ;C280201;Fabrication de machines d'usage spécifique ;C28020100;Opérations sous-traitées intervenant dans la fabrication des machines et équipements n.c.a.  
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000001;Moteurs pour véhicules automobiles
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000002;Voitures particulières 
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000003;Autobus et autocars  
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000004;Véhicules utilitaires spécifiques 
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000005;Carrosseries et remorques 
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000006;Pièces et accessoires automobiles n.c.a. 
+C;ACTIVITES DE FABRICATION ;C290000;Construction de véhicules automobiles ;C29000007;Opérations sous-traitées intervenant dans la fabrication de véhicules automobiles  
+C;ACTIVITES DE FABRICATION ;C300101;Construction navale  ;C30010101;Pirogues et pinasses  
+C;ACTIVITES DE FABRICATION ;C300101;Construction navale  ;C30010102;Autres navires marchands  
+C;ACTIVITES DE FABRICATION ;C300101;Construction navale  ;C30010103;Bateaux de pêche  
+C;ACTIVITES DE FABRICATION ;C300101;Construction navale  ;C30010104;Bateaux de plaisance 
+C;ACTIVITES DE FABRICATION ;C300101;Construction navale  ;C30010105;Autres produits de la construction navale 
+C;ACTIVITES DE FABRICATION ;C300102;Construction aéronautique ;C30010200;Produits de la construction aéronautique  
+C;ACTIVITES DE FABRICATION ;C300103;Construction de matériels ferroviaires roulants ;C30010300;Matériels ferroviaires roulants  
+C;ACTIVITES DE FABRICATION ;C300104;Construction de véhicules militaires de combat ;C30010400;Véhicules militaires de combat  
+C;ACTIVITES DE FABRICATION ;C300200;Fabrication d'autres équipements de transport ;C30020001;Motocycles, moteurs et équipements pour motocycles 
+C;ACTIVITES DE FABRICATION ;C300200;Fabrication d'autres équipements de transport ;C30020002;Cycles et équipements pour cycles  
+C;ACTIVITES DE FABRICATION ;C300200;Fabrication d'autres équipements de transport ;C30020003;Véhicules pour invalides  
+C;ACTIVITES DE FABRICATION ;C300200;Fabrication d'autres équipements de transport ;C30020004;Matériels de transport n.c.a. 
+C;ACTIVITES DE FABRICATION ;C300200;Fabrication d'autres équipements de transport ;C30020005;Opérations sous-traitées intervenant dans la fabrication d'autres matériels de transport 
+C;ACTIVITES DE FABRICATION ;C310001;Fabrication de matelas et sommiers ;C31000100;Matelas et sommiers  
+C;ACTIVITES DE FABRICATION ;C310002;Fabrication de meubles divers ;C31000201;Sièges et leurs parties 
+C;ACTIVITES DE FABRICATION ;C310002;Fabrication de meubles divers ;C31000202;Autres meubles   
+C;ACTIVITES DE FABRICATION ;C310002;Fabrication de meubles divers ;C31000203;Opérations sous-traitées intervenant dans la fabrication de meubles et matelas 
+C;ACTIVITES DE FABRICATION ;C320001;Fabrication d'articles de bijouterie ;C32000101;Pierres précieuses travaillées et parures  
+C;ACTIVITES DE FABRICATION ;C320001;Fabrication d'articles de bijouterie ;C32000102;Articles de joaillerie et bijouterie 
+C;ACTIVITES DE FABRICATION ;C320001;Fabrication d'articles de bijouterie ;C32000103;Bijouterie fantaisie et articles similaires  
+C;ACTIVITES DE FABRICATION ;C320001;Fabrication d'articles de bijouterie ;C32000104;Monnaies  
+C;ACTIVITES DE FABRICATION ;C320002;Fabrication d'instruments de musique ;C32000200;Instruments de musique 
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000301;Articles de sport 
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000302;Jeux et jouets  
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000303;Articles de brosserie  
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000304;Articles d’écriture et de bureau 
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000305;Postiches et perruques  
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000306;Lunettes, verres et montures  
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000307;Matériel médicochirurgical et d’orthopédie 
+C;ACTIVITES DE FABRICATION ;C320003;Activités manufacturières n.c.a. ;C32000308;Produits divers manufacturés non compris ailleurs 
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010001;Réparation et entretien d'ouvrages métalliques 
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010002;Réparation et entretien de machines et équipements mécaniques d'usage général 
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010003;Réparation et entretien de machines et équipements mécaniques d'usage spécifique 
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010004;Réparation et entretien de matériels électroniques et optiques professionnels 
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010005;Réparation et entretien d'équipements électriques  
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010006;Réparation navale et maintenance navale  
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010007;Réparation et maintenance de matériel ferroviaire   
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010008;Réparation et maintenance d'aéronefs   
+C;ACTIVITES DE FABRICATION ;C330100;Réparation de machines et d'équipements professionnels ;C33010009;Réparation et entretien d'autres équipements professionnels  
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020001;Installation d'ouvrages métalliques 
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020002;Installation de machines d'usage général  
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020003;Installation de machines d'usage spécifique 
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020004;Installation de matériels électroniques et optiques 
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020005;Installation d'équipements électriques   
+C;ACTIVITES DE FABRICATION ;C330200;Installation de machines et d'équipements professionnels;C33020006;Installation d'équipements de contrôle automatique de processus industriels  
+D;PRODUCTION ET DISTRIBUTION D'ÉLECTRICITÉ ET DE DE GAZ  ;D350100;Production, transport et distribution d'électricité ;D35010000;Électricité  
+D;PRODUCTION ET DISTRIBUTION D'ÉLECTRICITÉ ET DE DE GAZ  ;D350200;Production et distribution de combustibles gazeux et de glace ;D35020001;Gaz distribué  
+D;PRODUCTION ET DISTRIBUTION D'ÉLECTRICITÉ ET DE DE GAZ  ;D350200;Production et distribution de combustibles gazeux et de glace ;D35020002;Glace hydrique et autres supports énergétiques   
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E360000;Captage, traitement et distribution d'eau ;E36000001;Eau captée  
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E360000;Captage, traitement et distribution d'eau ;E36000002;Eau distribuée  
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E370000;Collecte et traitement des eaux usées;E37000000;Eaux usées collectées traitées et boues 
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E380001;Collecte, traitement et élimination des déchets ;E38000101;Déchets collectés 
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E380001;Collecte, traitement et élimination des déchets ;E38000102;Déchets traités et éliminés  
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E380002;Récupération des déchets ;E38000200;Matériaux de récupération
+E;PRODUCTION ET DISTRIBUTION D'EAU, ASSAINISSEMENT, TRAITEMENT DES  DECHETS ET DEPOLLUTION ;E390000;Dépollution et autres activités de gestion des déchets ;E39000000;Dépollution et autres services de gestion des déchets  
+F;CONSTRUCTION ;F410101; Promotion immobilière  ;F41010100;Bâtiments complets  
+F;CONSTRUCTION ;F410200;Construction de bâtiments complets ;F41020000;Travaux de construction de bâtiments complets 
+F;CONSTRUCTION ;F420000;Génie civil  ;F42000001;Travaux de construction d’ouvrages d’art et de réseaux 
+F;CONSTRUCTION ;F420000;Génie civil  ;F42000002;Travaux de construction de chaussées  
+F;CONSTRUCTION ;F420000;Génie civil  ;F42000003;Autres travaux de génie civil et autres ouvrages 
+F;CONSTRUCTION ;F430001;Démolition et préparation des sites ;F43000101;Travaux de démolition 
+F;CONSTRUCTION ;F430001;Démolition et préparation des sites ;F43000102;Travaux de préparation de sites 
+F;CONSTRUCTION ;F430002;Travaux d'installation ;F43000201;Travaux d’installation électrique 
+F;CONSTRUCTION ;F430002;Travaux d'installation ;F43000202;Travaux de plomberie et de climatisation  
+F;CONSTRUCTION ;F430002;Travaux d'installation ;F43000203;Autres travaux d’installation  
+F;CONSTRUCTION ;F430003;  Travaux de finition  ;F43000301;Travaux de plâtrerie, revêtement des sols et des murs 
+F;CONSTRUCTION ;F430003;  Travaux de finition  ;F43000302;Travaux de menuiserie et de vitrerie 
+F;CONSTRUCTION ;F430003;  Travaux de finition  ;F43000303;Travaux de peinture en bâtiment  
+F;CONSTRUCTION ;F430004;Autres travaux spécialisés de construction ;F43000400;Autres travaux spécialisés de construction 
+G;COMMERCE   ;G450100;Commerce de véhicules automobiles ;G45010000;Vente de véhicules automobiles  
+G;COMMERCE   ;G450200;Entretien et réparation de véhicules automobiles ;G45020000;Services d'entretien et de réparation de véhicules automobiles 
+G;COMMERCE   ;G450300;Commerce de pièces détachées et d'accessoires automobiles ;G45030001;Vente de pièces détachées et d'accessoires automobiles  
+G;COMMERCE   ;G450300;Commerce de pièces détachées et d'accessoires automobiles ;G45030002;Vente de pneumatiques
+G;COMMERCE   ;G450400;Commerce et réparation de motocycles ;G45040001;Vente  de motocycles et accessoires  
+G;COMMERCE   ;G450400;Commerce et réparation de motocycles ;G45040002;Services de réparation de motocycles  
+G;COMMERCE   ;G460100;Activités des Intermédiaires du commerce de gros ;G46010000;Services des intermédiaires du commerce de gros  
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020101;Vente en gros de céréales 
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020102;Vente en gros d’oléagineux
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020103;Vente en gros de café, thé, cacao et épices  
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020104;Vente en gros de fruits et légumes frais  
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020105;Vente en gros d’aliments pour animaux  
+G;COMMERCE   ;G460201;Commerce de gros de produits agricoles bruts et d'aliments pour animaux ;G46020106;Vente en gros d’autres produits agricoles bruts 
+G;COMMERCE   ;G460202;Commerce de gros d'animaux vivants, de peaux et cuirs ;G46020201;Vente en gros d’animaux vivants  
+G;COMMERCE   ;G460202;Commerce de gros d'animaux vivants, de peaux et cuirs ;G46020202;Vente en gros de peaux et cuirs  
+G;COMMERCE   ;G460203;Commerce de gros de produits alimentaires, boissons et tabacs manufacturés ;G46020300;Vente en gros de produits alimentaires, boissons et tabacs manufacturés 
+G;COMMERCE   ;G460301;Commerce de gros de textiles, habillement et chaussures ;G46030100;Vente en gros de textiles, habillement et chaussures  
+G;COMMERCE   ;G460302;Commerce de gros de produits pharmaceutiques et médicaux ;G46030200;Vente en gros de produits pharmaceutiques et médicaux  
+G;COMMERCE   ;G460303;Commerce de gros de biens de consommation non alimentaires n. c. a. ;G46030300;Vente en gros de biens de consommation non alimentaires n.c.a. 51330 
+G;COMMERCE   ;G460401;Commerce de gros de carburants et combustibles ;G46040101;Vente en gros de carburants 
+G;COMMERCE   ;G460401;Commerce de gros de carburants et combustibles ;G46040102;Vente en gros d'autres combustibles
+G;COMMERCE   ;G460402;Commerce de gros de bois ;G46040200;Vente en gros de bois  
+G;COMMERCE   ;G460403;Commerce de gros de matériaux de construction, quincaillerie et fournitures pour plomberie ;G46040300;Vente en gros de matériaux de construction, quincaillerie et fournitures pour plomberie 
+G;COMMERCE   ;G460404;Commerce de gros de produits intermédiaires non agricoles divers ;G46040401;Vente en gros de produits chimiques  
+G;COMMERCE   ;G460404;Commerce de gros de produits intermédiaires non agricoles divers ;G46040402;Vente de diamant et autres pierres précieuses 
+G;COMMERCE   ;G460404;Commerce de gros de produits intermédiaires non agricoles divers ;G46040403;Vente de l'or
+G;COMMERCE   ;G460404;Commerce de gros de produits intermédiaires non agricoles divers ;G46040404;Vente en gros d’autres produits intermédiaires non agricoles n.c.a. 
+G;COMMERCE   ;G460501;Commerce de gros  d'équipements pour l'informatique et la communication ;G46050101;Vente en gros d'ordinateurs, périphériques et logiciels 
+G;COMMERCE   ;G460501;Commerce de gros  d'équipements pour l'informatique et la communication ;G46050102;Vente en gros de composants et équipements électroniques et de télécommunication 
+G;COMMERCE   ;G460502;Commerce de gros d'autres équipements industriels et fournitures diverses ;G46050201;Vente en gros  matériels électriques, d'instruments et d'appareils de mesure
+G;COMMERCE   ;G460502;Commerce de gros d'autres équipements industriels et fournitures diverses ;G46050202;Vente en gros de machines et de matériel agricoles
+G;COMMERCE   ;G460502;Commerce de gros d'autres équipements industriels et fournitures diverses ;G46050203;"Vente en gros de machines pour  la construction et le génie
+civil
+"
+G;COMMERCE   ;G460502;Commerce de gros d'autres équipements industriels et fournitures diverses ;G46050204;"Vente en  gros de machines et d'équipements de bureau, hors ordinateurs
+"
+G;COMMERCE   ;G460502;Commerce de gros d'autres équipements industriels et fournitures diverses ;G46050205;"Vente en gros d’autres machines et équipements
+"
+G;COMMERCE   ;G470100;Commerce de détail en magasin non spécialisé ;G47010001;Vente au détail en magasin non spécialisé à prédominance alimentaire 
+G;COMMERCE   ;G470100;Commerce de détail en magasin non spécialisé ;G47010002;Vente au détail en magasin non spécialisé sans prédominance alimentaire 
+G;COMMERCE   ;G470201;Commerce  de détail en magasin spécialisé de produits alimentaires, boissons et tabacs manufacturés ;G47020100;Vente au détail en magasin spécialisé de produits alimentaires, boissons et tabacs manufacturés 
+G;COMMERCE   ;G470202;Commerce de détail en magasin spécialisé de produits pharmaceutiques et médicaux, de parfumerie et de produits de beauté ;G47020201;Vente au détail en magasin spécialisé de produits pharmaceutiques et médicaux 
+G;COMMERCE   ;G470202;Commerce de détail en magasin spécialisé de produits pharmaceutiques et médicaux, de parfumerie et de produits de beauté ;G47020202;Vente au détail en magasin spécialisé de parfums et de produits de beauté 
+G;COMMERCE   ;G470203;Commerce de détail en magasin spécialisé de textiles, habillement, chaussures et articles en cuir ;G47020300;Vente au détail en magasin spécialisé de textiles, habillement, chaussures et articles en cuir 
+G;COMMERCE   ;G470204;Commerce de détail en magasin spécialisé d'articles et appareils d'équipement domestique ;G47020400;Vente au détail en magasin spécialisé d'articles et d'appareils d'équipement domestique 
+G;COMMERCE   ;G470205;Commerce de détail en magasin spécialisé de quincaillerie, peintures, verre, tapis et revêtement de sols et murs  ;G47020501;Vente au détail en magasin spécialisé de quincaillerie, peintures, verre, tapis et revêtement de sols et murs  
+G;COMMERCE   ;G470205;Commerce de détail en magasin spécialisé de quincaillerie, peintures, verre, tapis et revêtement de sols et murs  ;G47020502;Vente au détail en magasin spécialisé de ciment
+G;COMMERCE   ;G470206;Commerce de détail en magasin spécialisé de livres, journaux et articles de sport et de loisirs ;G47020601;"Vente au détail en magasin spécialisé de livres, de journaux et papeterie
+"
+G;COMMERCE   ;G470206;Commerce de détail en magasin spécialisé de livres, journaux et articles de sport et de loisirs ;G47020602;"Vente au détail en magasin spécialisé d'articles de sport et de loisirs
+"
+G;COMMERCE   ;G470207;Commerce de détail en magasin spécialisé d'équipements informatiques  et de matériels de télécommunication, audio ou vidéo;G47020700;Vente au détail en magasin spécialisé d'équipements informatiques  et de matériels de télécommunication, audio ou vidée 
+G;COMMERCE   ;G470208;Commerce de détail  en magasin spécialisé de carburants automobiles ;G47020800;Vente au détail en magasin spécialisé de carburants automobiles 
+G;COMMERCE   ;G470209;Commerce de détail en magasin spécialisé d'autres produits n.c.a. ;G47020900;Vente au détail en magasin spécialisé d'autres produits n.c.a. 
+G;COMMERCE   ;G470301;Commerce de détail sur éventaires et marchés de viandes et poissons ;G47030100;Vente au détail sur éventaires et marchés de viandes et poissons 
+G;COMMERCE   ;G470302;Commerce de détail sur éventaires et marchés de fruits et légumes frais ;G47030200;Vente au détail sur éventaires et marchés de fruits et légumes frais 
+G;COMMERCE   ;G470303;Commerce de détail sur éventaires et marchés de céréales, tubercules et d'autres produits alimentaires, boissons et tabacs manufacturés ;G47030300;Commerce de détail sur éventaires et marchés de céréales, tubercules et d'autres produits alimentaires, boissons et tabacs manufacturés 
+G;COMMERCE   ;G470304;Commerce de détail sur éventaires et marchés de textiles, habillement, chaussures et articles en cuir ;G47030400;Vente au détail sur éventaires et marchés de textiles, habillement, chaussures et articles en cuir 
+G;COMMERCE   ;G470305;Commerce de détail sur éventaires et marchés d'articles non alimentaires divers ;G47030501;Vente au détail sur éventaires et marchés de livres, journaux et articles de papeterie 
+G;COMMERCE   ;G470305;Commerce de détail sur éventaires et marchés d'articles non alimentaires divers ;G47030502;Vente au détail sur éventaires et marchés d'articles de maison divers 
+G;COMMERCE   ;G470305;Commerce de détail sur éventaires et marchés d'articles non alimentaires divers ;G47030503;Vente au détail sur éventaires et marchés d'articles personnels divers 
+G;COMMERCE   ;G470306;Autres commerces de détail hors magasin ;G47030600;Autres ventes de détail hors magasin  
+H;TRANSPORTS ET ENTREPOSAGE ;H490100;Transports ferroviaires ;H49010001;Services de transports ferroviaires de passagers  
+H;TRANSPORTS ET ENTREPOSAGE ;H490100;Transports ferroviaires ;H49010002;Services de transports ferroviaires de marchandises  
+H;TRANSPORTS ET ENTREPOSAGE ;H490201;Transports routiers de passagers ;H49020101;Services de transports urbains de passagers 
+H;TRANSPORTS ET ENTREPOSAGE ;H490201;Transports routiers de passagers ;H49020102;Services de transports routiers interurbains de passagers  
+H;TRANSPORTS ET ENTREPOSAGE ;H490201;Transports routiers de passagers ;H49020103;Autres services de transports terrestres de voyageurs n.c.a.   
+H;TRANSPORTS ET ENTREPOSAGE ;H490202;Transports routiers de marchandises ;H49020201;Services de transports routiers de produits pétroliers  
+H;TRANSPORTS ET ENTREPOSAGE ;H490202;Transports routiers de marchandises ;H49020202;Services de transports routiers de grumes 
+H;TRANSPORTS ET ENTREPOSAGE ;H490202;Transports routiers de marchandises ;H49020203;Services de transports routiers d’autres marchandises  
+H;TRANSPORTS ET ENTREPOSAGE ;H490300;Transports par conduites ;H49030000;Transports par conduites  
+H;TRANSPORTS ET ENTREPOSAGE ;H500100;Transports maritimes et côtiers  ;H50010001;Services de transports maritimes et côtiers de passagers  
+H;TRANSPORTS ET ENTREPOSAGE ;H500100;Transports maritimes et côtiers  ;H50010002;Services de transports maritimes et côtiers de marchandises  
+H;TRANSPORTS ET ENTREPOSAGE ;H500200;Transports fluviaux   ;H50020001;Services de transports fluviaux de passagers 
+H;TRANSPORTS ET ENTREPOSAGE ;H500200;Transports fluviaux   ;H50020002;Services de transports fluviaux de marchandises  
+H;TRANSPORTS ET ENTREPOSAGE ;H510001;Transports aériens de passagers ;H51000101;Services de transports aériens  de passagers  
+H;TRANSPORTS ET ENTREPOSAGE ;H510001;Transports aériens de passagers ;H51000102;Services de location d’avions pour passagers avec pilote 
+H;TRANSPORTS ET ENTREPOSAGE ;H510002;Transports aériens de fret et lancements spatiaux ;H51000201;Services de transports aériens de marchandises  
+H;TRANSPORTS ET ENTREPOSAGE ;H510002;Transports aériens de fret et lancements spatiaux ;H51000202;Services de lancement spatial  
+H;TRANSPORTS ET ENTREPOSAGE ;H510002;Transports aériens de fret et lancements spatiaux ;H51000203;Services de location d'avion pour fret avec pilote 
+H;TRANSPORTS ET ENTREPOSAGE ;H520100;Entreposage  ;H52010001;Entreposage   
+H;TRANSPORTS ET ENTREPOSAGE ;H520201;Manutention  ;H52020101;Services de manutention portuaire 
+H;TRANSPORTS ET ENTREPOSAGE ;H520201;Manutention  ;H52020102;Services de manutention non portuaire  
+H;TRANSPORTS ET ENTREPOSAGE ;H520202;Exploitation d'infrastructures de transport ;H52020201;Services des infrastructures de transport terrestre 
+H;TRANSPORTS ET ENTREPOSAGE ;H520202;Exploitation d'infrastructures de transport ;H52020202;Services portuaires 
+H;TRANSPORTS ET ENTREPOSAGE ;H520202;Exploitation d'infrastructures de transport ;H52020203;Services aéroportuaires  
+H;TRANSPORTS ET ENTREPOSAGE ;H520203;Organisation du transport de fret ;H52020300;Services d'organisation du transport de fret  
+H;TRANSPORTS ET ENTREPOSAGE ;H530001;Activités de service postal universel ;H53000100;Service postal universel  
+H;TRANSPORTS ET ENTREPOSAGE ;H530002;Autres activités  de courrier et de distribution ;H53000200;Autres services  de courrier et de distribution  
+I;HEBERGEMENT ET RESTAURATION ;I550000;Hébergement  ;I55000000;Services d’hébergement  
+I;HEBERGEMENT ET RESTAURATION ;I560100;Restauration  ;I56010001;Services des restaurants  
+I;HEBERGEMENT ET RESTAURATION ;I560100;Restauration  ;I56010002;Services des traiteurs  
+I;HEBERGEMENT ET RESTAURATION ;I560200;Activités de débits de boissons ;I56020001;Services des  bars, cafés et autres débits de boisson
+I;HEBERGEMENT ET RESTAURATION ;I560200;Activités de débits de boissons ;I56020002;Services des discothèques et les pistes de danse avec service de boissons prédominant
+J;INFORMATION ET COMMUNICATION ;J580100;Édition de livres et périodiques  ;J58010001;Livres  
+J;INFORMATION ET COMMUNICATION ;J580100;Édition de livres et périodiques  ;J58010002;Journaux, revues et périodiques 
+J;INFORMATION ET COMMUNICATION ;J580100;Édition de livres et périodiques  ;J58010003;Répertoires et fichiers d'adresses édités 
+J;INFORMATION ET COMMUNICATION ;J580100;Édition de livres et périodiques  ;J58010004;Cartes postales et produits divers de l’édition sur papier  
+J;INFORMATION ET COMMUNICATION ;J580100;Édition de livres et périodiques  ;J58010005;Licences pour le droit de reproduction, de distribution ou d'utilisation 
+J;INFORMATION ET COMMUNICATION ;J580200;Édition de logiciels  ;J58020001;Logiciels édités  
+J;INFORMATION ET COMMUNICATION ;J580200;Édition de logiciels  ;J58020002;Licences pour l'utilisation de logiciels  
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010001;Produits cinématographiques, vidéos et programmes de télévision 
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010002;Post-production de films, de vidéos et de programmes de télévision 
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010003;Films cinématographiques distribués  
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010004;Vidéos éditées et distribuées  
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010005;Projection de films cinématographiques  
+J;INFORMATION ET COMMUNICATION ;J590100;Production vidéo : cinéma et télévision;J59010006;Licences  de distribution de films, de vidéos et de programmes de télévision 
+J;INFORMATION ET COMMUNICATION ;J590200;Production audio et édition musicale ;J59020001;Services de création des originaux sonores  
+J;INFORMATION ET COMMUNICATION ;J590200;Production audio et édition musicale ;J59020002;Production de programmes radio   
+J;INFORMATION ET COMMUNICATION ;J590200;Production audio et édition musicale ;J59020003;Produits musicaux édités 
+J;INFORMATION ET COMMUNICATION ;J590200;Production audio et édition musicale ;J59020004;Licences pour l'utilisation d'originaux sonores 
+J;INFORMATION ET COMMUNICATION ;J600001;Édition et diffusion de programmes radio ;J60000100;Services de radio diffusion  
+J;INFORMATION ET COMMUNICATION ;J600002;"Programmation télévisuelle; télédiffusion ";J60000200;Services de programmation télévisuelle et de télédiffusion 
+J;INFORMATION ET COMMUNICATION ;J610000;Télécommunications   ;J61000001;Services de télécommunications filaires 
+J;INFORMATION ET COMMUNICATION ;J610000;Télécommunications   ;J61000002;Services de télécommunications sans fil  
+J;INFORMATION ET COMMUNICATION ;J610000;Télécommunications   ;J61000003;Services de télécommunications par satellite 
+J;INFORMATION ET COMMUNICATION ;J610000;Télécommunications   ;J61000004;Services rendus par les téléboutiques  
+J;INFORMATION ET COMMUNICATION ;J610000;Télécommunications   ;J61000005;Autres services de télécommunications 
+J;INFORMATION ET COMMUNICATION ;J620001;Programmation informatique ;J62000101;Services de conception et développement informatique  
+J;INFORMATION ET COMMUNICATION ;J620001;Programmation informatique ;J62000102;Logiciels spécifiques aux clients 
+J;INFORMATION ET COMMUNICATION ;J620002;Conseil et autres activités informatiques ;J62000201;Services de conseil en informatique  
+J;INFORMATION ET COMMUNICATION ;J620002;Conseil et autres activités informatiques ;J62000202;Services de gestion d'installations informatiques 
+J;INFORMATION ET COMMUNICATION ;J620002;Conseil et autres activités informatiques ;J62000203;Autres services informatiques n.c.a 
+J;INFORMATION ET COMMUNICATION ;J630001;"Traitement de données, hébergement et activités connexes ; portails Internet ";J63000101;Traitement de données, hébergement et activités connexes 
+J;INFORMATION ET COMMUNICATION ;J630001;"Traitement de données, hébergement et activités connexes ; portails Internet ";J63000102;Portails Internet  
+J;INFORMATION ET COMMUNICATION ;J630002;Autres activités liées à l'information ;J63000201;Services des agences de presse   
+J;INFORMATION ET COMMUNICATION ;J630002;Autres activités liées à l'information ;J63000202;Autres services d'information n.c.a.  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640101;Activités de banque centrale ;K64010100;Services de banque centrale   
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640102;Autres intermédiations monétaires ;K64010200;Autres services d’intermédiation monétaire  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640200;Fonds de placements, holdings et activités financières similaires ;K64020000;Services des fonds de placement, holdings et similaires 
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640301;Activités de micro finance ;K64030100;Micro finance 
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640302;Autres activités de crédits et autres intermédiations non monétaires ;K64030201;Services de crédit-bail 
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640302;Autres activités de crédits et autres intermédiations non monétaires ;K64030202;Autres services de crédit  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K640302;Autres activités de crédits et autres intermédiations non monétaires ;K64030203;Autres services d’intermédiation financière  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K650001;Assurance-vie et caisses de retraite ;K65000101;Services d'assurance-vie   
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K650001;Assurance-vie et caisses de retraite ;K65000102;Services des caisses de retraite 
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K650002;Assurance-dommages et réassurance ;K65000201;Services d’assurance-dommages  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K650002;Assurance-dommages et réassurance ;K65000202;Services de réassurance   
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K660001; Gestion fonds pour tiers   ;K66000100;Services de gestion de fonds pour tiers  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K660002;Activités d'auxiliaires financiers ;K66000201;Services d'administration de marchés financiers  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K660002;Activités d'auxiliaires financiers ;K66000202;Autres services d'auxiliaires financiers  
+K;ACTIVITÉS FINANCIÈRES ET D'ASSURANCE ;K660003;Activités d'auxiliaires d'assurance ;K66000300;Services d’auxiliaires d'assurance  
+L;ACTIVITES  IMMOBILIERES ;L680002;Location immobilière et activités sur biens activités sur biens ;L68000201;Services d'intermédiation des agences immobilières  
+L;ACTIVITES  IMMOBILIERES ;L680002;Location immobilière et activités sur biens activités sur biens ;L68000202;Services d'administration de biens immobiliers pour compte de tiers 
+L;ACTIVITES  IMMOBILIERES ;L680100;Location immobilière et activités sur biens activités sur biens ;L68010001;Transactions sur biens immobiliers propres
+L;ACTIVITES  IMMOBILIERES ;L680100;Location immobilière et activités sur biens activités sur biens ;L68010002;Services de location de logements et immeubles non résidentiels
+L;ACTIVITES  IMMOBILIERES ;L680100;Location immobilière et activités sur biens activités sur biens ;L68010003;Services de location d'autres biens  immobiliers, y compris les terrains 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M690001;Activités juridiques  ;M69000100;Services juridiques 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M690002;Activités comptables ;M69000201;Services de tenue de  comptes et d’audit financier 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M690002;Activités comptables ;M69000202;Services de conseil fiscal  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M700001;Activités des sièges sociaux ;M70000100;Services des sièges sociaux  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M700002;Conseil en gestion  ;M70000201;Services de conseil en relations publiques et communication  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M700002;Conseil en gestion  ;M70000202;Services de conseil en gestion d'entreprises 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M700002;Conseil en gestion  ;M70000203;Services de coordination et de gestion des projets  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M700002;Conseil en gestion  ;M70000204;Marques déposées et franchises  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M710001;Architecture, activités d'ingénierie ;M71000101;Services d'architecture 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M710001;Architecture, activités d'ingénierie ;M71000102;Services d'ingénierie  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M710001;Architecture, activités d'ingénierie ;M71000103;Autres services de conseils techniques
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M710002;Activités de contrôle et analyses techniques ;M71000201;Services de contrôle technique automobile  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M710002;Activités de contrôle et analyses techniques ;M71000202;Autres services de contrôle et analyses techniques  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720100;Recherche-développement en sciences physiques et naturelles ;M72010001;Services de recherche et développement en agronomie  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720100;Recherche-développement en sciences physiques et naturelles ;M72010002;Services de recherche et développement en sciences médicales  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720100;Recherche-développement en sciences physiques et naturelles ;M72010003;Services en recherche et développement en biotechnologies  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720100;Recherche-développement en sciences physiques et naturelles ;M72010004;Services de recherche et développement en sciences physiques ou naturelles et ingénierie 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720200;Recherche-développement en sciences humaines et sociales ;M72020001;Services de recherche et développement en sciences humaines 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M720200;Recherche-développement en sciences humaines et sociales ;M72020002;Services de recherche et développement en sciences sociales 
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M730001; Publicité  ;M73000100;Services de publicité  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M730002;Études de marché et sondages ;M73000200;Services d'études de marché et de sondages  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M740001;Activités spécialisées de design ;M74000100;Services spécialisés de design   
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M740002;Activités photographiques ;M74000200;Services photographiques   
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M740003;Autres activités spécialisées, scientifiques et techniques n.c.a.;M74000301;Services de traduction et d'interprétation  
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M740003;Autres activités spécialisées, scientifiques et techniques n.c.a.;M74000302;Services spécialisés divers   
+M;ACTIVITÉS SPECIALISEES, SCIENTIFIQUES ET TECHNIQUES ;M750000;Activités vétérinaires  ;M75000000;Services vétérinaires  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770001;Location de véhicules automobiles ;N77000101;Services de location  de voitures et véhicules automobiles légers 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770001;Location de véhicules automobiles ;N77000102;Services de location  de camions  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000201;Services de location d'autres matériels de transport terrestre  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000202;Services de location de navires 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000203;Services de location d'avions  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000204;Services de location de machines et équipements agricoles  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000205;Services de location de machines et équipements pour la construction 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000206;Services de location de machines de bureau et de matériel informatique 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770002;Location de machines et d'équipements n.c.a ;N77000207;Services de location d'autres machines, équipements et biens n.c.a. 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770003;Location d'articles personnels et domestiques n.c.a. ;N77000301;Services de location de vidéos 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770003;Location d'articles personnels et domestiques n.c.a. ;N77000302;Services de location de mobilier et équipements domestiques  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770003;Location d'articles personnels et domestiques n.c.a. ;N77000303;Services de location  d'autres biens personnels et domestiques 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N770004;Gestion des droits de propriété industrielle ;N77000400;Licences pour l'utilisation des droits de propriété industrielle  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N780000;Activités liées aux ressources humaines ;N78000001;Services des agences de placement de main-d'œuvre
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N780000;Activités liées aux ressources humaines ;N78000002;Autres services de mise à disposition de ressources humaines 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N790000;Activités des agences de réservation et voyagistes ;N79000001;Services des agences de voyages 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N790000;Activités des agences de réservation et voyagistes ;N79000002;Services des voyagistes 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N790000;Activités des agences de réservation et voyagistes ;N79000003;Autres services de réservation et services connexes
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N800000;Enquêtes et sécurité  ;N80000001;Services d'enquête, de sécurité et de gardiennage 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N800000;Enquêtes et sécurité  ;N80000002;Services des systèmes de sécurité   
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N810001;Activités combinées de soutien aux bâtiments ;N81000100;Services combinés de soutien aux bâtiments 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N810002;Activités de nettoyage  ;N81000200;Services de nettoyage  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N810003; Aménagement paysager;N81000300;Aménagement paysager 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N820001;Activités de bureau, routage et centres d'appels ;N82000101;Services de bureau et routage  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N820001;Activités de bureau, routage et centres d'appels ;N82000102;Services des centres d'appels   
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N820002;Organisation de foires, salons et congrès ;N82000200;Services d'organisation de foires, salons et congrès 
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N820003;Activités de soutien aux entreprises n.c.a. ;N82000301;Services de conditionnement  
+N;ACTIVITES DE SERVICES DE SOUTIEN ET DE BUREAU ;N820003;Activités de soutien aux entreprises n.c.a. ;N82000302;Autres services divers de soutien aux entreprises n.c.a.  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840100;Activités d'administration générale, économique et sociale ;O84010001;Services d’administration publique générale  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840100;Activités d'administration générale, économique et sociale ;O84010002;Services de soutien aux administrations  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840100;Activités d'administration générale, économique et sociale ;O84010003;Tutelle des activités sociales  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840100;Activités d'administration générale, économique et sociale ;O84010004;Tutelle des activités économiques  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840200;Activités de prérogative publique ;O84020001;Affaires étrangères  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840200;Activités de prérogative publique ;O84020002;Défense 
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840200;Activités de prérogative publique ;O84020003;Justice  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840200;Activités de prérogative publique ;O84020004;Police  
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840200;Activités de prérogative publique ;O84020005;Protection civile
+O;ACTIVITES D'ADMINISTRATION PUBLIQUE ;O840300;Activités de sécurité sociale obligatoire ;O84030000;Services de sécurité sociale obligatoire 
+P;ENSEIGNEMENT ;P850100;Enseignement pré-primaire et primaire ;P85010001;Services d'enseignement pré-primaire   
+P;ENSEIGNEMENT ;P850100;Enseignement pré-primaire et primaire ;P85010002;Services d'enseignement primaire  
+P;ENSEIGNEMENT ;P850201;Enseignement secondaire général ;P85020100;Services d'enseignement secondaire général
+P;ENSEIGNEMENT ;P850202;Enseignement secondaire technique ou professionnel ;P85020200;Services d'enseignement secondaire technique ou professionnel 
+P;ENSEIGNEMENT ;P850300;Enseignement post-secondaire, supérieur ou non  ;P85030001;Services d'enseignement post-secondaire non supérieur     
+P;ENSEIGNEMENT ;P850300;Enseignement post-secondaire, supérieur ou non  ;P85030002;Services d'enseignement supérieur 
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040001;Services d'enseignement de disciplines sportives et d'activités de loisirs 
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040002;Services d'enseignement culturel 
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040003;Services d'enseignement de la conduite de véhicules  
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040004;Services de formation technique et professionnelle des adultes 
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040005;Autres services d'enseignement divers n.c.a. 
+P;ENSEIGNEMENT ;P850400;Autres activités d'enseignement;P85040006;Services de soutien à l'enseignement  
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860100;Activités hospitalières  ;Q86010001;Services hospitaliers  
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860200;Pratique médicale et/ou dentaire ;Q86020001;Services des médecins 
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860200;Pratique médicale et/ou dentaire ;Q86020002;Services de soins dentaires  
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860301;Activités des tradipraticiens ;Q86030100;Services rendus par les tradipraticiens 
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860302;Autres activités pour la santé  humaine;Q86030201;Analyses biologiques et médicales 
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q860302;Autres activités pour la santé  humaine;Q86030202;Autres services concernant la santé humaine n.c.a.  
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q870000;Activités d'Hébergement médico-social et social ;Q87000001;"Services d'hébergement social pour  malades mentales 
+"
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q870000;Activités d'Hébergement médico-social et social ;Q87000002;"Services d'hébergement social pour
+personnes âgées ou handicapées physiques
+"
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q870000;Activités d'Hébergement médico-social et social ;Q87000003;Services d'hébergement social pour orphelins et enfants en ruptures familiale 
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q870000;Activités d'Hébergement médico-social et social ;Q87000004;"Autres services d'hébergement médico- social et social
+"
+Q;ACTIVITÉS POUR  LA SANTÉ HUMAINE ET L'ACTION SOCIALE  ;Q880000;Action sociale sans hébergement  ;Q88000000;Services d'action sociale sans hébergement   
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R900000;Activités créatives, artistiques et de spectacle ;R90000001;Services d'artistes du spectacle vivant 
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R900000;Activités créatives, artistiques et de spectacle ;R90000002;Services de soutien au spectacle vivant  
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R900000;Activités créatives, artistiques et de spectacle ;R90000003;Services de création artistique 
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R900000;Activités créatives, artistiques et de spectacle ;R90000004;Services de gestion de salles de spectacles  
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R910000;Conservation et valorisation du patrimoine ;R91000001;Services des bibliothèques et archives 
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R910000;Conservation et valorisation du patrimoine ;R91000002;Services de gestion des musées  
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R910000;Conservation et valorisation du patrimoine ;R91000003;Services de gestion des sites et monuments 
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R910000;Conservation et valorisation du patrimoine ;R91000004;Services des zoos et des réserves naturelles  
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R920000;Organisation de jeux de  hasard et d'argent ;R92000000;Jeux de hasard et d’argent 
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930001;Activités sportives;R93000101;Services de  gestion des équipes ou clubs sportifs à caractère professionnel
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930001;Activités sportives;R93000102;"Services de gestion d’installations sportives
+"
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930001;Activités sportives;R93000103;"Services des centres de culture physique et de musculation
+"
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930001;Activités sportives;R93000104;"Services d'autres activités liées au sport
+"
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930002;Activités récréatives et de loisirs ;R93000201;services des parcs d’attractions et des fêtes foraines
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930002;Activités récréatives et de loisirs ;R93000202;Services des discothèques et des pistes de danse (sans service de boissons prédominant)
+R;ACTIVITÉS ARTISTIQUES, SPORTIVES ET RECREATIVES ;R930002;Activités récréatives et de loisirs ;R93000203;Autres activités récréatives et de loisirs
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940100;Activités des organisations économiques, patronales et professionnelles;S94010001;Services fournis par les organisations patronales et consulaires 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940100;Activités des organisations économiques, patronales et professionnelles;S94010002;Services fournis par les organisations professionnelles 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940200;Activités des syndicats des travailleurs ;S94020000;Services fournis par les syndicats de travailleurs 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940301;Activités des organisations religieuses ;S94030100;Services fournis par les organisations religieuses 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940302;Activités des organisations politiques ;S94030200;Services fournis par les organisations politiques  
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S940303;Activités des autres organisations associatives n.c.a. ;S94030300;Services fournis par les autres organisations associatives n.c.a.  
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S950101;Réparation d'ordinateurs et d'équipements périphériques ;S95010100;Réparation d'ordinateurs et d'équipements périphériques  
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S950102;Réparation d'équipements de communication ;S95010200;Réparation d'équipements de communication 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S950200;Réparation de biens personnels et domestiques ;S95020000;Réparation de biens personnels et domestiques 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S960001;Lavage et nettoyage de textiles ;S96000100;Services de lavage et de nettoyage de textiles 
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S960002;Coiffure et soins de beauté ;S96000200;Services de coiffure et soins de beauté  
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S960003;Services funéraires  ;S96000300;Services funéraires  
+S;AUTRES ACTIVITÉS DE SERVICES N.C.A. ;S960004;Autres services personnels n.c.a;S96000400;Autres services personnels n.c.a.  
+T;ACTIVITÉS SPECIALES DES MÉNAGES ;T970000;Activités des ménages en tant qu'employeurs de personnel domestique ;T97000000;Services des ménages en tant qu'employeurs de personnel domestique 
+T;ACTIVITÉS SPECIALES DES MÉNAGES ;T980001;Activités indifférenciées des ménages en tant que producteurs de biens pour usage propre ;T98000100;Biens indifférenciés  produits par les ménages pour leur usage propre 
+T;ACTIVITÉS SPECIALES DES MÉNAGES ;T980002;Activités indifférenciées des ménages en tant que producteurs de biens pour usage propre ;T98000200;Biens indifférenciés  produits par les ménages pour leur usage propre 
+U;ACTIVITÉS DES ORGANISATIONS EXTRATERRITORIALES ;U990000;Activités des organisations extraterritoriales ;U99000000;Services des organisations extraterritoriales 

@@ -1,0 +1,155 @@
+{% extends 'transactions/base.html' %}
+{% load unicorn %}
+
+{% block content %}
+
+<div class="container mx-auto p-4" x-data="{ category: '{{ edit_client.category|default:"individual" }}' }">
+   
+    <h1 class="text-2xl font-bold mb-4">Gestion des clients</h1>
+
+    {% if success_message %}
+        <div class="alert alert-success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    {% if has_errors %}
+        <div class="alert alert-danger">
+            Il y a des erreurs dans le formulaire. Veuillez corriger et soumettre à nouveau.
+        </div>
+    {% endif %}
+
+    <!-- Form for creating or updating a client -->
+    <form method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="bg-{{ message.tags }}-200 border-{{ message.tags }}-600 text-{{ message.tags }}-600 border-l-4 p-4" role="alert">
+                    <p class="font-bold">{{ message.tags|capfirst }}</p>
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+        {% if edit_client %}
+            <input type="hidden" name="client_id" value="{{ edit_client.id }}">
+            <h2 class="text-xl font-bold mb-4">Modifier le client</h2>
+        {% else %}
+            <h2 class="text-xl font-bold mb-4">Ajouter un nouveau client</h2>
+        {% endif %}
+
+        <!-- Category selection (enterprise or individual) -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Catégorie :</label>
+            <select name="category" x-model="category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="enterprise">Entreprise</option>
+                <option value="individual">Individuel</option>
+            </select>
+        </div>
+
+        <!-- Fields specific to enterprise -->
+        <div x-show="category === 'enterprise'" class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Nom de l'entreprise :</label>
+            <input type="text" name="company_name" value="{{ edit_client.company_name|default:'' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <!-- Fields specific to individual -->
+        <div x-show="category === 'individual'" class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Nom :</label>
+            <input type="text" name="name" value="{{ edit_client.name|default:'' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <!-- Common fields -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Adresse :</label>
+            <input type="text" name="address" value="{{ edit_client.address|default:'' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <!-- Select country and province -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Pays :</label>
+            <select name="country" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for country in countries %}
+                    <option value="{{ country.id }}" {% if edit_client and country.id == edit_client.country.id %}selected{% endif %}>{{ country.country }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Province :</label>
+            <select name="province" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for province in provinces %}
+                    <option value="{{ province.id }}" {% if edit_client and edit_client.province and province.id == edit_client.province.id %}selected{% endif %}>{{ province.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Other fields (email, phone number, etc.) -->
+
+        <!-- Select products and sectors -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Produits :</label>
+            <select name="product" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for product in products %}
+                    <option value="{{ product.id }}" {% if edit_client and product.id in selected_product_ids %} selected {% endif %}>{{ product.product_label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Secteurs :</label>
+            <select name="sector_label" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for sector in sectors %}
+                    <option value="{{ sector.id }}" {% if edit_client and sector.id in selected_sector_ids %} selected {% endif %}>{{ sector.sector_label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Upload photo -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Photo :</label>
+            <input type="file" name="photo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Enregistrer</button>
+        </div>
+    </form>
+
+    <!-- List of clients -->
+    <h2 class="text-xl font-bold mb-4">Liste des clients</h2>
+    <ul class="list-disc list-inside">
+        {% for client in clients %}
+            <li class="mb-2">
+                <span class="font-bold">{{ client.name }}</span> - {{ client.email }} - {{ client.province.name }}
+                <a href="{% url 'transactions:edit_client' client.id %}" class="text-blue-500 hover:underline ml-2">Modifier</a>
+                <form method="post" action="{% url 'transactions:delete_client' client.id %}" class="inline" onsubmit="return confirm('Are you sure you want to delete this client?');">
+                    {% csrf_token %}
+                    <button type="submit" class="text-red-500 hover:underline ml-2">Supprimer</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>Aucun client trouvé.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination controls -->
+    <div class="flex justify-between items-center mt-4">
+        {% if clients.has_previous %}
+            <a href="?page=1" class="text-blue-500 hover:underline">&laquo; first</a>
+            <a href="?page={{ clients.previous_page_number }}" class="text-blue-500 hover:underline">previous</a>
+        {% endif %}
+
+        <span class="text-gray-700">
+            Page {{ clients.number }} of {{ clients.paginator.num_pages }}.
+        </span>
+
+        {% if clients.has_next %}
+            <a href="?page={{ clients.next_page_number }}" class="text-blue-500 hover:underline">next</a>
+            <a href="?page={{ clients.paginator.num_pages }}" class="text-blue-500 hover:underline">last &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

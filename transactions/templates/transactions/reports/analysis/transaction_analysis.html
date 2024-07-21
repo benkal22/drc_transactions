@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyse des Transactions</title>
+    <!-- Inclure vos fichiers CSS si nécessaire -->
+    {% comment %} <link rel="stylesheet" href="{% static 'path/to/your/styles.css' %}"> {% endcomment %}
+    <!-- Inclure les styles CSS pour la table si nécessaire -->
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .table-striped tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Analyse des Transactions</h1>
+
+    <h1>Tableau Croisé Dynamique des Transactions</h1>
+
+    <!-- Affichage du tableau généré -->
+    {{ pivot_table_html | safe }}
+    <!-- Insérer l'image de l'histogramme -->
+    <div>
+        <h2>Distribution des prix des transactions</h2>
+        <img src="{% static 'histogram.png' %}" alt="Histogramme des prix">
+    </div>
+
+    <!-- Insérer le diagramme à barres -->
+    <div>
+        <h2>Nombre de Transactions par Type</h2>
+        <img src="{% static 'bar_chart.png' %}" alt="Diagramme à barres">
+    </div>
+
+    <!-- Insérer le diagramme circulaire -->
+    <div>
+        <h2>Répartition des Transactions par Produit</h2>
+        {% comment %} <img src="{% static 'pie_chart.png' %}" alt="Diagramme circulaire"> {% endcomment %}
+    </div>
+
+    <!-- Inclure vos scripts JS si nécessaire -->
+    <script src="{% static 'path/to/your/scripts.js' %}"></script>
+</body>
+</html>

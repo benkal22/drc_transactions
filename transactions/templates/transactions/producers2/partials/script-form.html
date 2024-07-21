@@ -1,0 +1,88 @@
+<script>
+    $(document).ready(function() {
+        // Initialiser Select2 pour tous les sélecteurs
+        $("#id_sector_label").select2();
+        $("#id_product").select2();
+        $("#id_province").select2();
+        $("#id_country").select2();
+    
+        function fetchProductsBySector(sectorLabels) {
+            if (!sectorLabels || sectorLabels.length === 0) {
+                console.log("No sector_labels selected");
+                $.ajax({
+                    url: "{% url 'transactions:products_by_sector' %}",
+                    data: {
+                        'sector_labels[]': [] // Envoyer un tableau vide
+                    },
+                    success: function(response) {
+                        console.log('AJAX Response:', response);
+                        var $productSelect = $("#id_product");
+                        $productSelect.empty(); // Clear previous options
+                        // Ajouter une option par défaut ou un message si nécessaire
+                        $productSelect.append($('<option>', {
+                            value: '',
+                            text: 'Sélectionner un produit',
+                            disabled: true,
+                            selected: true
+                        }));
+                        $productSelect.trigger('change'); // Notify Select2 of the change
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch products:', status, error);
+                        console.error(xhr.responseText); // Log the error response for debugging
+                    }
+                });
+                return;
+            }
+    
+            $.ajax({
+                url: "{% url 'transactions:products_by_sector' %}",
+                data: {
+                    'sector_labels[]': sectorLabels // Utiliser le tableau directement
+                },
+                success: function(response) {
+                    console.log('AJAX Response:', response);
+                    var $productSelect = $("#id_product");
+                    $productSelect.empty(); // Clear previous options
+                    if (response.products) {
+                        // Ajouter une option par défaut ou un message si nécessaire
+                        $productSelect.append($('<option>', {
+                            value: '',
+                            text: 'Sélectionner un produit',
+                            disabled: true,
+                            selected: true
+                        }));
+                        $.each(response.products, function(index, product) {
+                            $productSelect.append($('<option>', {
+                                value: product.id,
+                                text: product.product_label
+                            }));
+                        });
+                        $productSelect.val({{ form.product.value|safe }}); // Assurez-vous que la valeur initiale est correctement formatée
+                        $productSelect.trigger('change'); // Notify Select2 of the change
+                    } else if (response.message) {
+                        alert(response.message); // Afficher un message s'il y en a un
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch products:', status, error);
+                    console.error(xhr.responseText); // Log the error response for debugging
+                }
+            });
+        }
+    
+        // Fetch products based on the initial selection
+        var initialSectorLabels = $("#id_sector_label").val();
+        console.log("Initial sector_labels: ", initialSectorLabels);
+        fetchProductsBySector(initialSectorLabels);
+    
+        // Fetch products on change of sector_label selection
+        $("#id_sector_label").change(function() {
+            var sectorLabels = $(this).val(); // Ceci renvoie un tableau si c'est SelectMultiple
+            console.log("Selected sector_labels: ", sectorLabels); // Log the selected sector_labels
+            fetchProductsBySector(sectorLabels);
+        });
+    });
+    
+</script>
+    

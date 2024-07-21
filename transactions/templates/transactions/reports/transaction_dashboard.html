@@ -1,0 +1,12 @@
+{% comment %} <!-- transactions/templates/transactions/transaction_dashboard.html -->
+
+{% load plotly_dash %}
+
+<div class="container mx-auto h-screen w-screen">
+    <h1 class="text-4xl font-bold mb-4 text-center">Transaction Dashboard</h1>
+    <div id="dash-container" class="h-full w-full">
+        <div style="position: relative; height: 100%; width: 100%; overflow: hidden;">
+            <iframe src="/django_plotly_dash/app/TransactionDashboard/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" sandbox="allow-downloads allow-scripts allow-same-origin allow-modals allow-popups allow-popups-to-escape-sandbox"></iframe>
+        </div>
+    </div>
+</div> {% endcomment %}
