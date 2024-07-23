@@ -304,16 +304,17 @@ class CorrelationMatrixView(View):
         matrix = {}
         provinces = set()
         for sale in sales:
-            producer_province = sale.producer_province
-            client_province = sale.client_province
-            if producer_province not in matrix:
-                matrix[producer_province] = {}
-            if client_province not in matrix[producer_province]:
-                matrix[producer_province][client_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
-            matrix[producer_province][client_province]['quantity'] += sale.quantity
-            matrix[producer_province][client_province]['total_price'] += sale.total_price
-            provinces.add(producer_province)
-            provinces.add(client_province)
+            producer_province = sale.producer.province.name if sale.producer and sale.producer.province else None
+            client_province = sale.client.province.name if sale.client and sale.client.province else None
+            if producer_province and client_province:
+                if producer_province not in matrix:
+                    matrix[producer_province] = {}
+                if client_province not in matrix[producer_province]:
+                    matrix[producer_province][client_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
+                matrix[producer_province][client_province]['quantity'] += sale.quantity
+                matrix[producer_province][client_province]['total_price'] += sale.total_price
+                provinces.add(producer_province)
+                provinces.add(client_province)
         return matrix, sorted(provinces)
 
     def get_purchase_matrix(self, transactions):
@@ -321,16 +322,17 @@ class CorrelationMatrixView(View):
         matrix = {}
         provinces = set()
         for purchase in purchases:
-            producer_province = purchase.producer_province
-            supplier_province = purchase.supplier_province
-            if producer_province not in matrix:
-                matrix[producer_province] = {}
-            if supplier_province not in matrix[producer_province]:
-                matrix[producer_province][supplier_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
-            matrix[producer_province][supplier_province]['quantity'] += purchase.quantity
-            matrix[producer_province][supplier_province]['total_price'] += purchase.total_price
-            provinces.add(producer_province)
-            provinces.add(supplier_province)
+            producer_province = purchase.producer.province.name if purchase.producer and purchase.producer.province else None
+            supplier_province = purchase.supplier.province.name if purchase.supplier and purchase.supplier.province else None
+            if producer_province and supplier_province:
+                if producer_province not in matrix:
+                    matrix[producer_province] = {}
+                if supplier_province not in matrix[producer_province]:
+                    matrix[producer_province][supplier_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
+                matrix[producer_province][supplier_province]['quantity'] += purchase.quantity
+                matrix[producer_province][supplier_province]['total_price'] += purchase.total_price
+                provinces.add(producer_province)
+                provinces.add(supplier_province)
         return matrix, sorted(provinces)
 
     def convert_decimal_to_float(self, matrix):

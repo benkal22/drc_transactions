@@ -112,7 +112,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # Ajoutez cette ligne
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'transactions.context_processors.header_context',
+                # 'transactions.context_processors.header_context',
+                'transactions.context_processors.producer_context',
             ],
             'loaders': [
                 'admin_tools.template_loaders.Loader',  # Ajoutez cette ligne

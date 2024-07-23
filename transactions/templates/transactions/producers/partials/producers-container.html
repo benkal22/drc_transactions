@@ -4,356 +4,220 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
+{% if not request.user.is_superuser%}
+{% for producer in global_producers %}
+
 <!-- Define Grid container div -->
 <div id="producer-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
-
-
-<!-- Cards Stats -->
-<div class="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
-  <!-- Card Total Achats -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Achats</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_sales }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Total Producers -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Producers</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_producers }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Producers Approuvés -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Producers Approuvés</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_approved_producers }}</p>
-    </div>
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="edit_profile-styled-tab" data-tabs-target="#styled-edit_profile" type="button" role="tab" aria-controls="edit_profile" aria-selected="false">Modifier Informations</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Paramètres</button>
+        </li>
+        <li role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="change_password-styled-tab" data-tabs-target="#styled-change_password" type="button" role="tab" aria-controls="change_password" aria-selected="false">Changer mot de passe</button>
+        </li>
+    </ul>
   </div>
 
-  <!-- Card Producers Non Approuvés -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-red-500 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Producers Non Approuvés</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_unapproved_producers }}</p>
-    </div>
-  </div>
-</div>
-{% comment %} {% if request.user.is_superuser %} {% endcomment %}
-<!-- Nouveau Producer -->
-<div class="flex justify-between items-center mt-4 mb-6">
-  <a 
-    @click="$dispatch('open-modal1')" 
-    hx-get="{% url 'transactions:producer_create' %}" 
-    hx-target="#producer-block"
-    class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400"
-  >
-      <span class="mr-2">
-          Nouveau producer
-      </span>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-      </svg>
-  </a>
-</div>
-
-    
-    
-    <!-- Formulaire de filtrage -->
-    {% comment %} <div x-data="{ isOpen: false }">
-      <h4
-          @click="isOpen = !isOpen"
-          class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 cursor-pointer"
-          x-text="isOpen ? 'Cacher les options du Filtre ▲' : 'Afficher les options du Filtre ▼'"
-      >
-      </h4>
-      <div
-          x-show="isOpen"
-          x-transition
-          class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
-      >
-          <form id="filter-form" method="get">
-              <div class="grid gap-4 md:grid-cols-3">
-                  <div>
-                      {{ filter.form.sector|as_crispy_field }}
-                  </div>
-                  <div>
-                      {{ filter.form.products|as_crispy_field }}
-                  </div>
-                  <div>
-                      {{ filter.form.category|as_crispy_field }}
-                  </div>
-                  <div>
-                      {{ filter.form.producer_province|as_crispy_field }}
-                  </div>
+  <div id="default-styled-tab-content">
+    <!-- Profile Content -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+        
+      <div class="flex flex-col lg:flex-row">
+          <div class="lg:w-1/3">
+            <div class="card">
+              <div class="card-body profile-card pt-4 flex flex-col items-center">
+                <img src="{{ producer.photo }}" alt="Profile" class="rounded-full">
+                <h2 class="text-xl font-semibold mt-4">{{ producer.manager_name }}</h2>
+                <h3 class="text-lg font-medium mt-1">{{ producer.company_name }}</h3>
+                <div class="social-links mt-2 flex space-x-4">
+                  <!-- Ajouter ici les liens sociaux si disponibles -->
+                  <a href="{{ producer.twitter_profile }}" class="text-blue-500"><i class="bi bi-twitter"></i></a>
+                  <a href="{{ producer.facebook_profile }}" class="text-blue-700"><i class="bi bi-facebook"></i></a>
+                  <a href="{{ producer.instagram_profile }}" class="text-pink-500"><i class="bi bi-instagram"></i></a>
+                  <a href="{{ producer.linkedin_profile }}" class="text-blue-800"><i class="bi bi-linkedin"></i></a>
+                </div>
               </div>
-              <div class="mt-4 flex justify-left space-x-2">
-                  <button type="button" 
-                          hx-get="{% url 'transactions:producers_list' %}"
-                          hx-include="#filter-form"
-                          hx-target="#producer-container"
-                          hx-push-url="true"
-                          class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                          >
-                      <span class="ml-2" aria-hidden="true">
-                          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4M16 3v4m0 0v4m0-4h4m-8 4V3"></path>
-                          </svg>
-                      </span>
-                      Filtrer
-                  </button>
-                  <button type="button" 
-                          hx-get="{% url 'transactions:producers_list' %}?reset=1"
-                          hx-target="#producer-container"
-                          hx-push-url="true"
-                          class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                      </svg>
-                      Réinitialiser
-                  </button>
+            </div>
+          </div>
+          <div class="lg:w-2/3 mt-6 lg:mt-0">
+            <div class="card">
+              <div class="card-body pt-3">
+                
+                <div class="tab-content pt-2">
+                  <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <h5 class="card-title">About</h5>
+                    <p class="text-sm italic">{{ producer.description }}</p>
+                    <h5 class="card-title mt-4">Profile Details</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                      <div class="col-span-1 font-semibold">Full Name</div>
+                      <div class="col-span-2">{{ producer.manager_name }}</div>
+                      <div class="col-span-1 font-semibold">Company</div>
+                      <div class="col-span-2">{{ producer.company_name }}</div>
+                      <div class="col-span-1 font-semibold">Job</div>
+                      <div class="col-span-2">{{ producer.sector_label }}</div>
+                      <div class="col-span-1 font-semibold">Country</div>
+                      <div class="col-span-2">{{ producer.country.name }}</div>
+                      <div class="col-span-1 font-semibold">Address</div>
+                      <div class="col-span-2">{{ producer.address }}</div>
+                      <div class="col-span-1 font-semibold">Phone</div>
+                      <div class="col-span-2">{{ producer.phone_number }}</div>
+                      <div class="col-span-1 font-semibold">Email</div>
+                      <div class="col-span-2">{{ producer.email }}</div>
+                      <div class="col-span-1 font-semibold">Initial Balance</div>
+                      <div class="col-span-2">{{ producer.initial_balance }}</div>
+                      <div class="col-span-1 font-semibold">Current Balance</div>
+                      <div class="col-span-2">{{ producer.current_balance }}</div>
+                    </div>
+                  </div>
+                  
+                </div>
               </div>
-          </form>
-      </div>
-    </div> {% endcomment %}
-
-    <!-- Table of producers -->
-    <div>
-      {% if filter.qs %}
-      <!-- List of producers -->
-      <div class="w-full overflow-hidden rounded-lg shadow-xs">
-          <!-- Table of producers -->
-          <div class="w-full overflow-x-auto">
-              <table class="w-full whitespace-no-wrap">
-                  <thead>
-                      <tr
-                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                      >
-                          <th class="px-4 py-3">#</th>
-                          <th class="px-4 py-3">Producteur</th>
-                          <th class="px-4 py-3">Secteur</th>
-                          <th class="px-4 py-3">Produits/Services</th>
-                          <th class="px-4 py-3">Province</th>
-                          <th class="px-4 py-3">Chiffre d'Affaire</th>
-                          {% comment %} <th class="px-4 py-3">Catégorie</th> {% endcomment %}
-                          <th></th>
-                      </tr>
-                  </thead>
-                  <tbody
-                      class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-                  >
-                  {% for producer in producers %}
-                  <tr class="text-gray-700 dark:text-gray-400">
-                      <td class="px-4 py-3 text-sm">
-                          {{ producer.id}}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                        {{ producer.company_name}}
-                      </td>
-                      <td class="px-4 py-3 text-sm whitespace-normal">
-                        {{ producer.sector_label}}
-                        
-                      </td>
-                      <td class="px-4 py-3 text-sm whitespace-normal">
-                          {% for product in producer.product.all %}
-                              <div class="text-xs">{{ product }}{% if not forloop.last %}<br>{% endif %}</div>
-                          {% endfor %}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                        {{ producer.province }}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                          CDF {{ producer.total_sales_amount |floatformat:2|intcomma }}
-                      </td>
-                      {% comment %} <td class="px-4 py-3 text-xs">
-                        <span
-                          class="px-2 py-1 font-semibold leading-tight rounded-full 
-                                 {% if producer.category == 'enterprise' %}
-                                 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100
-                                 {% elif producer.category == 'individual' %}
-                                 text-orange-700 bg-orange-100 dark:bg-orange-700 dark:text-orange-100
-                                 {% endif %}
-                          ">
-                          {{ producer.category }}
-                        </span>
-                      </td> {% endcomment %}
-                      
-                      <td class="flex items-center space-x-2">
-                          <!-- Edit and Delete buttons -->
-                          <a hx-get="{% url 'transactions:producer_update' producer.pk %}"
-                              hx-push-url="true"
-                              hx-target="#producer-block"
-                              class="cursor-pointer">
-                              <div>
-                                  <button
-                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                                    aria-label="Edit"
-                                  >
-                                    <svg
-                                      class="w-5 h-5"
-                                      aria-hidden="true"
-                                      fill="currentColor"
-                                      viewBox="0 0 20 20"
-                                    >
-                                      <path
-                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                      ></path>
-                                    </svg>
-                                  </button>
-                                </div>
-                          </a>
-
-                          <a hx-delete="{% url 'transactions:producer_delete' producer.pk %}"
-                            hx-target="#producer-block" 
-                            hx-push-url="true"
-                            class="cursor-pointer"
-                            hx-confirm="Etes-vous sûr de supprimer ce producer ?"
-                          >
-                            <div>
-                              <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Delete">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-                                </svg>
-                              </button>
-                            </div>
-                          </a>    
-                          
-                          <div>
-                            <button
-                              hx-get="{% url 'transactions:producer_detail' pk=producer.pk %}"
-                              hx-push-url="true"
-                              hx-target="#producer-block"
-                              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                            >
-                              Voir
-                            </button>
-                          </div>
-                      </td> 
-                  </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
+    </div>
 
-        <!-- Pagination -->
-        <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-            <span class="flex items-center col-span-3">
-                AFFICHAGE {{ producers.start_index }}-{{ producers.end_index }} DE {{ producers.paginator.count }}
-            </span>
-            <span class="col-span-2"></span>
-            <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                <nav aria-label="Table navigation">
-                    <ul class="inline-flex items-center">
-                        {% if producers.has_previous %}
-                        <li>
-                            <a hx-get="?page=1"
-                               hx-push-url="true"
-                               hx-target="#producer-block"
-                               hx-trigger="click"
-                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Début">
-                                Début
-                            </a>
-                        </li>
-                        {% endif %}
-                        {% if producers.has_previous %}
-                        <li>
-                            <a hx-get="?page={{ producers.previous_page_number }}"
-                               hx-push-url="true"
-                               hx-target="#producer-block"
-                               hx-trigger="click"
-                               class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Précédent">
-                                <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                    <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        {% endif %}
-                        {% for num in producers.paginator.page_range %}
-                        {% if producers.number == num %}
-                        <li>
-                            <span class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer">
-                                {{ num }}
-                            </span>
-                        </li>
-                        {% elif num > producers.number|add:'-3' and num < producers.number|add:'3' %}
-                        <li>
-                            <a hx-get="?page={{ num }}"
-                               hx-push-url="true"
-                               hx-target="#producer-block"
-                               hx-trigger="click"
-                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100">
-                                {{ num }}
-                            </a>
-                        </li>
-                        {% endif %}
-                        {% endfor %}
-                        {% if producers.has_next %}
-                        <li>
-                            <a hx-get="?page={{ producers.next_page_number }}"
-                               hx-push-url="true"
-                               hx-target="#producer-block"
-                               hx-trigger="click"
-                               class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Suivant">
-                                <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                                    <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        {% endif %}
-                        {% if producers.has_next %}
-                        <li>
-                            <a hx-get="?page={{ producers.paginator.num_pages }}"
-                               hx-push-url="true"
-                               hx-target="#producer-block"
-                               hx-trigger="click"
-                               class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Fin">
-                                Fin
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </span>
-        </div>
-
-      </div>
+    <!-- Modifier Informations Content -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-edit_profile" role="tabpanel" aria-labelledby="edit_profile-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Edit Content Profile</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
       
-
-      {% else %}
-      <h2
-        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-      >
-        No producers found
-      </h2>
-      {% endif %}
+      <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+        <!-- Profile Edit Form -->
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-4 flex flex-col md:flex-row items-center">
+            <label for="profileImage" class="md:w-1/3 font-medium">Profile Image</label>
+            <div class="md:w-2/3">
+              <img src="{{ producer.photo }}" alt="Profile">
+              <div class="pt-2 flex space-x-2">
+                <input type="file" name="photo" id="profileImage" class="hidden">
+                <button type="button" onclick="document.getElementById('profileImage').click();" class="btn btn-primary btn-sm">Upload new profile image</button>
+                <a href="{% url 'transactions:producer_delete' producer.id %}" class="btn btn-danger btn-sm">Remove my profile image</a>
+              </div>
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="fullName" class="md:w-1/3 font-medium">Full Name</label>
+            <div class="md:w-2/3">
+              <input name="manager_name" type="text" class="form-control" id="fullName" value="{{ producer.manager_name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="about" class="md:w-1/3 font-medium">About</label>
+            <div class="md:w-2/3">
+              <textarea name="description" class="form-control" id="about" rows="4">{{ producer.description }}</textarea>
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="company" class="md:w-1/3 font-medium">Company</label>
+            <div class="md:w-2/3">
+              <input name="company_name" type="text" class="form-control" id="company" value="{{ producer.company_name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Job" class="md:w-1/3 font-medium">Job</label>
+            <div class="md:w-2/3">
+              <input name="sector_label" type="text" class="form-control" id="Job" value="{{ producer.sector_label }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Country" class="md:w-1/3 font-medium">Country</label>
+            <div class="md:w-2/3">
+              <input name="country" type="text" class="form-control" id="Country" value="{{ producer.country.name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Address" class="md:w-1/3 font-medium">Address</label>
+            <div class="md:w-2/3">
+              <input name="address" type="text" class="form-control" id="Address" value="{{ producer.address }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Phone" class="md:w-1/3 font-medium">Phone</label>
+            <div class="md:w-2/3">
+              <input name="phone_number" type="text" class="form-control" id="Phone" value="{{ producer.phone_number }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Email" class="md:w-1/3 font-medium">Email</label>
+            <div class="md:w-2/3">
+              <input name="email" type="email" class="form-control" id="Email" value="{{ producer.email }}">
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <!-- Paramètres Content -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-settings" role="tabpanel" aria-labelledby="settings-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+        <div class="tab-pane fade pt-3" id="profile-settings">
+          <!-- Settings Form -->
+          <form>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label class="md:w-1/3 font-medium">Email Notifications</label>
+              <div class="md:w-2/3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                  <label class="form-check-label" for="changesMade">
+                    Changes made to your account
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- Other settings fields can be added here -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+    </div>
+
+    <!-- Changer mot de passe Content -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-change_password" role="tabpanel" aria-labelledby="change_password-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Changes password</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+        
+      <div class="tab-pane fade pt-3" id="profile-change-password">
+          <!-- Change Password Form -->
+          <form>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="currentPassword" class="md:w-1/3 font-medium">Current Password</label>
+              <div class="md:w-2/3">
+                <input name="current_password" type="password" class="form-control" id="currentPassword" required>
+              </div>
+            </div>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="newPassword" class="md:w-1/3 font-medium">New Password</label>
+              <div class="md:w-2/3">
+                <input name="new_password" type="password" class="form-control" id="newPassword" required>
+              </div>
+            </div>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="confirmPassword" class="md:w-1/3 font-medium">Confirm New Password</label>
+              <div class="md:w-2/3">
+                <input name="confirm_password" type="password" class="form-control" id="confirmPassword" required>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Change Password</button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
 </div>
 
-{% comment %} {% endif %}
-
-{% if not request.user.is_superuser%}
-  
-{% endif %} {% endcomment %}
+{% endfor %}
+{% endif %} 

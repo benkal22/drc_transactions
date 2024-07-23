@@ -14,9 +14,20 @@ from transactions.models import Producer, Product, UniqueSector, Country, Provin
 from transactions.forms import ProducerForm
 from transactions.filters import ProducerFilter
 
-def header_context(request):
-    # Obtenez les données dont vous avez besoin pour le header
-    header_data = Producer.objects.filter(user=request.user)  # Remplacez ceci par la logique appropriée
+# def header_context(request):
+#     header_data = None
+#     if request.user.is_authenticated:
+#         header_data = Producer.objects.filter(user=request.user)
+#     return {
+#         'header_data': header_data
+#     }
+
+# transactions/context_processors.py
+
+def producer_context(request):
+    producers = Producer.objects.filter(user=request.user) if request.user.is_authenticated else None
     return {
-        'header_data': header_data
+        'global_producers': producers
     }
+
+

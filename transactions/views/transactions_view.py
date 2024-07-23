@@ -141,7 +141,8 @@ def transaction_detail(request, pk):
     if request.user.is_superuser:
         transaction = get_object_or_404(Transaction, pk=pk)
     else:
-        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        transaction = get_object_or_404(Transaction, pk=pk, producer=producer)
         
     transaction_details = transaction.get_details()
 
@@ -159,6 +160,7 @@ def transaction_detail(request, pk):
 def create_transaction_view(request):
     # Obtenez le producteur associé à l'utilisateur connecté
     producer = get_object_or_404(Producer, user=request.user)
+    current_balance = producer.current_balance
     if request.method == 'POST':
         print(f"ProducteurA : {producer.company_name}")
         
@@ -176,11 +178,17 @@ def create_transaction_view(request):
             context = {'message': f"Transaction n°'{transaction.id}' en date de '{transaction.date}' enregistrée avec succès."}
             return render(request, 'transactions/transactions/partials/transaction-success.html', context)
         else:
-            context = {'form': form}
+            context = {
+                'form': form,
+                'current_balance': current_balance
+            }
             response = render(request, 'transactions/transactions/partials/transaction-create.html', context)
             return retarget(response, '#transaction-block')
 
-    context = {'form': TransactionForm(producer=producer)}
+    context = {
+        'form': TransactionForm(producer=producer),
+        'current_balance': current_balance
+    }
     return render(request, 'transactions/transactions/partials/transaction-create.html', context)
 
 @login_required
@@ -190,9 +198,11 @@ def update_transaction(request, pk):
     else:
         producer = get_object_or_404(Producer, user=request.user)
         transaction = get_object_or_404(Transaction, pk=pk, producer=producer)
+
+    current_balance = producer.current_balance
         
     if request.method == 'POST':
-        form = TransactionForm(request.POST, instance=transaction)
+        form = TransactionForm(request.POST, instance=transaction, producer=producer)  # Passer producer ici
         if form.is_valid():
             transaction = form.save()
             context = {'message': f"Transaction n°'{transaction.id}' en date de '{transaction.date}' mise à jour avec succès !"}
@@ -201,13 +211,18 @@ def update_transaction(request, pk):
             context = {
                 'form': form,
                 'transaction': transaction,
+                'current_balance': current_balance,
             }
             response = render(request, 'transactions/transactions/partials/transaction-update.html', context)
             return retarget(response, '#transaction-block')
         
     context = {
-        'form': TransactionForm(instance=transaction),
+        'form': TransactionForm(instance=transaction, producer=producer),  # Passer producer ici
         'transaction': transaction,
+        'current_balance': current_balance,
+        'price': transaction.price,
+        'quantity': transaction.quantity,
+        'tva_rate': transaction.tva_rate,
     }
     return render(request, 'transactions/transactions/partials/transaction-update.html', context)
 

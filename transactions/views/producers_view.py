@@ -104,7 +104,6 @@ def producers_list(request):
         return render(request, 'transactions/producers/partials/producers-container.html', context)
 
     return render(request, 'transactions/producers/producers-list.html', context)
-    # return render(request, 'transactions/components/header.html', context)
 
 def producer_detail(request, pk):
     if request.user.is_superuser:
@@ -184,49 +183,3 @@ def delete_producer(request, pk):
     messages.success(request, f"Producteur '{producer}' supprimé avec succès.")
     return redirect('transactions:producers_list')
 
-@login_required
-def producers_header(request):
-    if request.user.is_superuser:
-        queryset = Producer.objects.all()
-    else:
-        queryset = Producer.objects.filter(user=request.user)
-        
-    producer_filter = ProducerFilter(request.GET, queryset=queryset)
-    filtered_producers = producer_filter.qs
-
-    paginator = Paginator(filtered_producers, 10)
-    page = request.GET.get('page')
-
-    try:
-        producers = paginator.page(page)
-    except PageNotAnInteger:
-        producers = paginator.page(1)
-    except EmptyPage:
-        producers = paginator.page(paginator.num_pages)
-    
-    filter_params = urlencode(request.GET)
-    
-    # Obtenez les statistiques en appelant la fonction producer_statistics
-    stats = producer_statistics(request)
-    
-    welcome = ''
-    if request.user.last_login is None or request.user.last_login == request.user.date_joined:   
-        welcome = f"Bienvenue ! Compléter votre profile"
-
-    context = {
-        'filter': producer_filter,
-        'filter_params': filter_params,
-        'producers': producers,
-        'total_sales': stats['total_sales'],
-        'total_purchases': stats['total_purchases'],
-        'total_producers': stats['total_producers'],
-        'total_approved_producers': stats['total_approved_producers'],
-        'total_unapproved_producers': stats['total_unapproved_producers'],
-        'welcome': welcome
-    }
-    
-    if request.htmx:
-        return render(request, 'transactions/components/header.html', context)
-
-    return render(request, 'transactions/components/header.html', context)
-    # return render(request, 'transactions/components/header.html', context)
