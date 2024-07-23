@@ -7,6 +7,7 @@
 <!-- Define Grid container div -->
 <div id="producer-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
 
+
 <!-- Cards Stats -->
 <div class="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
   <!-- Card Total Achats -->
@@ -61,7 +62,7 @@
     </div>
   </div>
 </div>
-{% if request.user.is_superuser %}
+{% comment %} {% if request.user.is_superuser %} {% endcomment %}
 <!-- Nouveau Producer -->
 <div class="flex justify-between items-center mt-4 mb-6">
   <a 
@@ -173,9 +174,8 @@
                         {{ producer.company_name}}
                       </td>
                       <td class="px-4 py-3 text-sm whitespace-normal">
-                        {% for sector in producer.sector_label.all %}
-                            <div class="text-xs">{{ sector }}{% if not forloop.last %}<br>{% endif %}</div>
-                        {% endfor %}
+                        {{ producer.sector_label}}
+                        
                       </td>
                       <td class="px-4 py-3 text-sm whitespace-normal">
                           {% for product in producer.product.all %}
@@ -243,10 +243,9 @@
                           
                           <div>
                             <button
-                              @click="openModal"
                               hx-get="{% url 'transactions:producer_detail' pk=producer.pk %}"
-                              hx-target="#modal" 
-                              hx-trigger="click" 
+                              hx-push-url="true"
+                              hx-target="#producer-block"
                               class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                             >
                               Voir
@@ -258,80 +257,6 @@
             </tbody>
           </table>
         </div>
-
-        <!-- Modal Detail Transaction -->
-        <div
-          x-init=""
-          x-show="isModalOpen"
-          x-transition:enter="transition ease-out duration-150"
-          x-transition:enter-start="opacity-0"
-          x-transition:enter-end="opacity-100"
-          x-transition:leave="transition ease-in duration-150"
-          x-transition:leave-start="opacity-100"
-          x-transition:leave-end="opacity-0"
-          class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-        >
-          <!-- Modal -->
-          <div
-            x-show="isModalOpen"
-            x-transition:enter="transition ease-out duration-150"
-            x-transition:enter-start="opacity-0 transform translate-y-1/2"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0  transform translate-y-1/2"
-            @click.away="closeModal"
-            @keydown.escape="closeModal"
-            class="w-full max-w-5xl px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4"
-            role="dialog"
-          >
-            <!-- Remove header if you don't want a close icon. Use modal body to place modal title. -->
-            <header class="flex justify-end">
-              <button
-                class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover:text-gray-700"
-                aria-label="close"
-                @click="closeModal"
-              >
-                <svg
-                  class="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  role="img"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </header>
-            <!-- Modal body -->
-            <div class="mt-4 mb-6 overflow-y-auto max-h-96">
-              <!-- Modal title -->
-              <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                Détails de la producer
-              </p>
-              <!-- Modal description -->
-
-              <div id="modal" x-html="dataDetail">
-                <!-- Content goes here -->
-              </div>
-            </div>
-            <footer
-              class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800"
-            >
-              <button
-                @click="closeModal"
-                class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-              >
-                Quitter
-              </button>
-            </footer>
-          </div>
-        </div>
-        <!-- End of modal Transaction Detail -->
 
         <!-- Pagination -->
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
@@ -427,8 +352,8 @@
     </div>
 </div>
 
-{% endif %}
+{% comment %} {% endif %}
 
 {% if not request.user.is_superuser%}
   
-{% endif %}
+{% endif %} {% endcomment %}

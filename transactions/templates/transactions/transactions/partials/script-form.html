@@ -67,3 +67,41 @@
     });
     
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const priceInput = document.getElementById('id_price');
+        const quantityInput = document.getElementById('id_quantity');
+        const tvaRateInput = document.getElementById('id_tva_rate');
+        const amountInput = document.getElementById('id_amount');
+        const amountWithTvaInput = document.getElementById('id_amount_with_tva');
+
+        function calculateAmounts() {
+            const price = parseFloat(priceInput.value) || 0;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const tvaRate = parseFloat(tvaRateInput.value) || 0;
+
+            console.log(`Prix: ${price}, Quantité: ${quantity}, Taux de TVA: ${tvaRate}`);
+
+            const amount = price * quantity;
+            console.log(`Montant calculé: ${amount}`);
+
+            const amountWithTva = amount + (amount * tvaRate);
+            console.log(`Montant avec TVA calculé: ${amountWithTva}`);
+
+            amountInput.value = amount.toFixed(2);
+            amountWithTvaInput.value = amountWithTva.toFixed(2);
+
+            console.log(`Montant affiché: ${amountInput.value}`);
+            console.log(`Montant avec TVA affiché: ${amountWithTvaInput.value}`);
+        }
+
+        priceInput.addEventListener('input', calculateAmounts);
+        quantityInput.addEventListener('input', calculateAmounts);
+        tvaRateInput.addEventListener('input', calculateAmounts);
+
+        // Call the function initially to set initial values
+        calculateAmounts();
+    });
+</script>
+

@@ -45,7 +45,8 @@ def transaction_statistics(request):
     if request.user.is_superuser:
         queryset = Transaction.objects.all()
     else:
-        queryset = Transaction.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Transaction.objects.filter(producer=producer)
         
     transaction_filter = TransactionFilter(request.GET, queryset=queryset)
     
@@ -92,7 +93,8 @@ def transactions_list(request):
     if request.user.is_superuser:
         queryset = Transaction.objects.all()
     else:
-        queryset = Transaction.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Transaction.objects.filter(producer=producer)
         
     transaction_filter = TransactionFilter(request.GET, queryset=queryset)
     
@@ -155,11 +157,21 @@ def transaction_detail(request, pk):
 
 @login_required
 def create_transaction_view(request):
+    # Obtenez le producteur associé à l'utilisateur connecté
+    producer = get_object_or_404(Producer, user=request.user)
     if request.method == 'POST':
-        form = TransactionForm(request.POST)
-        if form.is_valid():
+        print(f"ProducteurA : {producer.company_name}")
+        
+        form = TransactionForm(request.POST, producer=producer)
+        print(f"ProducteurForm : {producer.company_name}")
+        
+        if form.is_valid():            
             transaction = form.save(commit=False)
-            transaction.user = request.user
+            
+            # Associez le producteur à la transaction
+            transaction.producer = producer
+            print(f"Transaction ProducteurB : {transaction.producer}")
+            
             transaction.save()
             context = {'message': f"Transaction n°'{transaction.id}' en date de '{transaction.date}' enregistrée avec succès."}
             return render(request, 'transactions/transactions/partials/transaction-success.html', context)
@@ -168,7 +180,7 @@ def create_transaction_view(request):
             response = render(request, 'transactions/transactions/partials/transaction-create.html', context)
             return retarget(response, '#transaction-block')
 
-    context = {'form': TransactionForm()}
+    context = {'form': TransactionForm(producer=producer)}
     return render(request, 'transactions/transactions/partials/transaction-create.html', context)
 
 @login_required
@@ -176,7 +188,8 @@ def update_transaction(request, pk):
     if request.user.is_superuser:
         transaction = get_object_or_404(Transaction, pk=pk)
     else:
-        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        transaction = get_object_or_404(Transaction, pk=pk, producer=producer)
         
     if request.method == 'POST':
         form = TransactionForm(request.POST, instance=transaction)
@@ -204,10 +217,24 @@ def delete_transaction(request, pk):
     if request.user.is_superuser:
         transaction = get_object_or_404(Transaction, pk=pk)
     else:
-        transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        transaction = get_object_or_404(Transaction, pk=pk, producer=producer)
+        
     transaction.delete()
     context = {
         'message': f"Transaction of {transaction.total_price_cdf()} on {transaction.date} was deleted successfully!"
     }
     return render(request, 'transactions/transactions/partials/transaction-success.html', context)
     
+
+def calculate_amount(request):
+    if request.method == "POST":
+        price = float(request.POST.get('price', 0))
+        quantity = int(request.POST.get('quantity', 0))
+        tva_rate = 0.20  # Par exemple, 20% de TVA
+
+        amount = price * quantity
+        amount_with_tva = amount * (1 + tva_rate)
+
+        return JsonResponse({'amount': amount, 'amount_with_tva': amount_with_tva})
+    return JsonResponse({'error': 'Invalid request'}, status=400)

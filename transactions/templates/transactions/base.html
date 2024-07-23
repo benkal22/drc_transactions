@@ -77,6 +77,7 @@
     <link href="{% static 'img/favicon.png' %}" rel="icon">
     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
   </head>
+  {% if user.is_authenticated %}
   <body>
     <div
       class="flex h-screen bg-gray-50 dark:bg-gray-900"
@@ -121,5 +122,6 @@
     {% comment %} <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script> {% endcomment %}
     
 </body>
+{% endif %}
 
 </html> 

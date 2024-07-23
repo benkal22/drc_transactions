@@ -5,6 +5,8 @@ from ..models import Product, Supplier, Client, Producer, UniqueSector
 from django.views.decorators.http import require_GET
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 # def get_products(request):
 #     if request.method == 'GET' and request.is_ajax():
@@ -74,7 +76,9 @@ def filter_producer_details(request):
         products_list = list(products)
 
         # Récupérer les fournisseurs
-        suppliers = producer.suppliers.values('id', 'category', 'name')
+        producer = get_object_or_404(Producer, user=request.user)
+        suppliers = Supplier.objects.filter(producer=producer).values('id', 'category', 'name')
+        # suppliers = producer.suppliers.values('id', 'category', 'name')
         suppliers_list = [
             {
                 'id': supplier['id'],
@@ -84,7 +88,9 @@ def filter_producer_details(request):
         ]
 
         # Récupérer les clients
-        clients = producer.clients.values('id', 'category', 'name')
+        producer = get_object_or_404(Producer, user=request.user)
+        clients = Client.objects.filter(producer=producer).values('id', 'category', 'name')
+        # clients = producer.clients.values('id', 'category', 'name')
         clients_list = [
             {
                 'id': client['id'],

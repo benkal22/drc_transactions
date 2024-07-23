@@ -6,6 +6,7 @@ from transactions.views.base_views import (filter_products_by_producer,  filter_
                                            ) 
 from transactions.views.transactions_view import (transactions_list, create_transaction_view,
                                                   update_transaction, delete_transaction, transaction_detail,
+                                                  calculate_amount
                                                   )
 from transactions.views.clients_view import (clients_list, create_client_view,
                                                   update_client, delete_client, client_detail,
@@ -35,6 +36,7 @@ urlpatterns = [
     path('transactions/<int:pk>/delete/', delete_transaction, name='transaction_delete'),
     path('transaction/<int:pk>/', transaction_detail, name='transaction_detail'),
     path('transactions/create/', create_transaction_view, name='transaction_create'),
+    path('calculate-amount/', calculate_amount, name='calculate_amount'),
     
     path('suppliers/', suppliers_list, name='suppliers_list'), 
     path('suppliers/<int:pk>/update/', update_supplier, name='supplier_update'),
@@ -46,6 +48,7 @@ urlpatterns = [
     path('producers/<int:pk>/update/', producer_update, name='producer_update'),
     path('producers/<int:pk>/delete/', delete_producer, name='producer_delete'),
     path('producer/<int:pk>/', producer_detail, name='producer_detail'),
+    path('producers/', producers_list, name='profile'),
     path('producers/create/', create_producer_view, name='producer_create'),
     
     path('clients/', clients_list, name='clients_list'), 

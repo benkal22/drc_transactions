@@ -6,20 +6,6 @@ from django.utils import timezone
 from django import forms
 from .models import Supplier, Product, UniqueSector, Country, Province
 
-# class ProducerForm(forms.ModelForm):
-#     class Meta:
-#         model = Producer
-#         fields = '__all__'
-    
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         for field in self.fields.values():
-#             field.widget.attrs.update({'class': 'form-control'})
-#             if isinstance(field.widget, forms.widgets.CheckboxInput):
-#                 field.widget.attrs.update({'class': 'form-check-input'})
-#             if isinstance(field.widget, forms.widgets.FileInput):
-#                 field.widget.attrs.update({'class': 'form-control-file'})
-
 class ProducerForm(forms.ModelForm):
     class Meta:
         model = Producer
@@ -286,58 +272,142 @@ class ClientForm(forms.ModelForm):
             self.add_error('province', "Le champ province est requis pour le pays Congo (Kinshasa).")
         
         return cleaned_data
+from .models import Transaction, Product, Supplier, Client, Producer
+
+from django.utils.translation import gettext_lazy as _
 
 # class TransactionForm(forms.ModelForm):
 #     class Meta:
 #         model = Transaction
-#         fields = '__all__'
-    
+#         fields = ['producer', 'product', 'type', 'supplier', 'client', 'price',
+#                   'quantity', 'unit_of_measure', 'currency', 'tva_rate', 'photo']
+#         widgets = {
+#             'producer': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select'
+#             }),
+#             'product': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select'
+#             }),
+#             'type': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select'
+#             }),
+#             'supplier': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select'
+#             }),
+#             'client': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select'
+#             }),
+#             'price': forms.NumberInput(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input',
+#                 'step': '0.01',
+#                 'placeholder': 'Entrez le prix'
+#             }),
+#             'quantity': forms.NumberInput(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input',
+#                 'step': '0.01',
+#                 'placeholder': 'Entrez la quantité'
+#             }),
+#             'unit_of_measure': forms.Select(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-select',
+#                 'placeholder': 'Sélectionnez l’unité de mesure'
+#             }),
+#             'currency': forms.TextInput(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input',
+#                 'value': 'CDF',
+#                 'readonly': 'readonly'
+#             }),
+#             'tva_rate': forms.NumberInput(attrs={
+#                 'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input',
+#                 'readonly': 'readonly',
+#                 'placeholder': 'Entrez le taux de TVA'
+#             }),
+#             'photo': forms.ClearableFileInput(attrs={
+#                 'class': 'block w-full text-sm text-gray-500 dark:text-gray-400',
+#             }),
+#         }
+
 #     def __init__(self, *args, **kwargs):
+#         producer = kwargs.pop('producer', None)  # Extraire 'producer' des arguments
 #         super().__init__(*args, **kwargs)
-#         for field in self.fields.values():
-#             field.widget.attrs.update({'class': 'form-control'})
-#             if isinstance(field.widget, forms.widgets.CheckboxInput):
-#                 field.widget.attrs.update({'class': 'form-check-input'})
-#             if isinstance(field.widget, forms.widgets.FileInput):
-#                 field.widget.attrs.update({'class': 'form-control-file'})
+
+#         # Définir 'type' par défaut comme 'sale'
+#         self.fields['type'].initial = 'sale'
+#         self.fields['tva_rate'].initial = 0.16
+
+#         if producer:
+#             # Filtrer les produits associés au producteur
+#             self.fields['product'].queryset = Product.objects.filter(producer=producer).order_by('product_label')
+
+#             # Filtrer les fournisseurs associés au producteur
+#             self.fields['supplier'].queryset = Supplier.objects.filter(producer=producer).order_by('name')
+
+#             # Filtrer les clients associés au producteur
+#             self.fields['client'].queryset = Client.objects.filter(producer=producer).order_by('name')
+
+#     def clean(self):
+#         cleaned_data = super().clean()
+#         transaction_type = cleaned_data.get('type')
+#         supplier = cleaned_data.get('supplier')
+#         client = cleaned_data.get('client')
+
+#         if transaction_type == 'sale' and client is None:
+#             self.add_error('client', "Un client doit être spécifié pour les transactions de vente.")
+#         elif transaction_type == 'purchase' and supplier is None:
+#             self.add_error('supplier', "Un fournisseur doit être spécifié pour les transactions d'achat.")
+
+#         return cleaned_data
+
+from django import forms
 
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = [
-            'producer', 'product', 'type', 'supplier', 'client',
-            'price', 'quantity', 'unit_of_measure', 'currency'
-        ]
+        fields = ['producer', 'product', 'type', 'supplier', 'client', 'price', 'quantity', 'unit_of_measure', 'currency', 'tva_rate', 'photo']
+        labels = {
+            'product': 'Produit',
+            'type': 'Type de transaction',
+            'supplier': 'Fournisseur',
+            'client': 'Client',
+            'price': 'Prix',
+            'quantity': 'Quantité',
+            'unit_of_measure': 'Unité de mesure',
+            'currency': 'Devise',
+            'tva_rate': 'Taux de TVA',
+            'photo': 'Photo',
+        }
+        widgets = {
+            'product': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm'}),
+            'type': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm'}),
+            'supplier': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm'}),
+            'client': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm'}),
+            'price': forms.NumberInput(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'step': '0.01', 'placeholder': 'Entrez le prix'}),
+            'quantity': forms.NumberInput(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'step': '0.01', 'placeholder': 'Entrez la quantité'}),
+            'unit_of_measure': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'placeholder': 'Sélectionnez l’unité de mesure'}),
+            'currency': forms.TextInput(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'value': 'CDF', 'readonly': 'readonly'}),
+            'tva_rate': forms.NumberInput(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'readonly': 'readonly'}),
+            'photo': forms.ClearableFileInput(attrs={'class': 'mt-1 block w-full text-sm text-gray-500'}),
+        }
 
     def __init__(self, *args, **kwargs):
+        producer = kwargs.pop('producer', None)
         super().__init__(*args, **kwargs)
+
         self.fields['type'].initial = 'sale'
-        self.fields['producer'].widget.attrs.update({
-            'id': 'id_producer',
-            'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'
-        })
-        self.fields['product'].queryset = Product.objects.none()
-        self.fields['product'].widget.attrs.update({
-            'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'
-        })
+        self.fields['tva_rate'].initial = 0.16  # Initialiser le taux de TVA
+        self.fields['tva_rate'].widget.attrs['readonly'] = True
 
-        if 'producer' in self.data:
-            try:
-                producer_id = int(self.data.get('producer'))
-                self.fields['product'].queryset = Product.objects.filter(producer__id=producer_id).order_by('product_label')
-                self.fields['supplier'].queryset = Supplier.objects.filter(producersupplier__producer__id=producer_id).order_by('name')
-                self.fields['client'].queryset = Client.objects.filter(producerclient__producer__id=producer_id).order_by('name')
-            except (ValueError, TypeError):
-                pass  # Invalid input from the client; ignore and fallback to empty querysets
-        elif self.instance.pk:
-            self.fields['product'].queryset = self.instance.producer.product.all().order_by('product_label')
-            self.fields['supplier'].queryset = self.instance.producer.suppliers.order_by('name')
-            self.fields['client'].queryset = self.instance.producer.clients.order_by('name')
+        if producer:
+            self.fields['product'].queryset = Product.objects.filter(producer=producer).order_by('product_label')
+            self.fields['supplier'].queryset = Supplier.objects.filter(producer=producer).order_by('name')
+            self.fields['client'].queryset = Client.objects.filter(producer=producer).order_by('name')
 
-        for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({
-                'class': 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'
-            })
+        # Masquer le champ producer et le définir en lecture seule
+        self.fields['producer'] = forms.ModelChoiceField(
+            queryset=Producer.objects.filter(id=producer.id),
+            initial=producer,
+            widget=forms.HiddenInput()
+        )
+        self.producer_name = producer.company_name  # Stocker le nom du producteur pour l'afficher dans le template
 
     def clean(self):
         cleaned_data = super().clean()
@@ -345,83 +415,12 @@ class TransactionForm(forms.ModelForm):
         supplier = cleaned_data.get('supplier')
         client = cleaned_data.get('client')
 
-        if transaction_type == 'sale':
-            if client is None:
-                self.add_error('client', "Client must be specified for sales transactions.")
-        elif transaction_type == 'purchase':
-            if supplier is None:
-                self.add_error('supplier', "Supplier must be specified for purchase transactions.")
+        if transaction_type == 'sale' and client is None:
+            self.add_error('client', "Un client doit être spécifié pour les transactions de vente.")
+        elif transaction_type == 'purchase' and supplier is None:
+            self.add_error('supplier', "Un fournisseur doit être spécifié pour les transactions d'achat.")
 
         return cleaned_data
-
-    def get_date(self):
-        date_option = self.cleaned_data.get('date_option')
-        date_manual = self.cleaned_data.get('date_manual')
-
-        if date_option == 'now':
-            return timezone.now()
-        elif date_option == 'manual':
-            return date_manual
-        return None
-
-
-# class ClientForm(forms.ModelForm):
-#     class Meta:
-#         model = Client
-#         fields = [
-#             'category', 'name', 'manager_name', 'tax_code', 'nrc',
-#             'nat_id', 'address', 'email', 'phone_number',
-#             'country', 'province', 'product', 'sector_label', 'photo'
-#         ]
-#         widgets = {
-#             'category': forms.Select(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'manager_name': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'tax_code': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'nrc': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'nat_id': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'name': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'address': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'email': forms.EmailInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'phone_number': forms.TextInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'country': forms.Select(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'province': forms.Select(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'product': forms.SelectMultiple(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'sector_label': forms.SelectMultiple(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#             'photo': forms.ClearableFileInput(attrs={
-#                 'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-#             }),
-#         }
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         # Ajouter une classe pour une meilleure lisibilité en mode paysage
-#         self.fields['address'].widget.attrs['class'] = 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-24 overflow-auto'
 
 class FilterForm(forms.Form):
     date_filter = forms.ChoiceField(

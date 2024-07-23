@@ -8,7 +8,7 @@ from django.utils.http import urlencode
 from django_htmx.http import retarget
 from django.db.models import F, ExpressionWrapper, DecimalField, Sum
 
-from transactions.models import Client, Product, UniqueSector, Country, Province
+from transactions.models import Client, Producer, Product, UniqueSector, Country, Province
 from transactions.forms import ClientForm
 from transactions.filters import ClientFilter
 
@@ -18,7 +18,8 @@ def client_statistics(request):
     if request.user.is_superuser:
         queryset = Client.objects.all()
     else:
-        queryset = Client.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Client.objects.filter(producer=producer)
         
     client_filter =ClientFilter(request.GET, queryset=queryset)
     
@@ -68,7 +69,8 @@ def clients_list(request):
     if request.user.is_superuser:
         queryset = Client.objects.all()
     else:
-        queryset = Client.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Client.objects.filter(producer=producer)
         
     client_filter =ClientFilter(request.GET, queryset=queryset)
     
@@ -113,7 +115,8 @@ def client_detail(request, pk):
     if request.user.is_superuser:
         client = get_object_or_404(Client, pk=pk)
     else:
-        client = get_object_or_404(Client, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        client = get_object_or_404(Client, pk=pk, producer=producer)
     
     stats = client_statistics(request)
 
@@ -136,7 +139,9 @@ def create_client_view(request):
         form = ClientForm(request.POST, request.FILES)
         if form.is_valid():
             client = form.save(commit=False)
-            client.user = request.user
+            # Associer le producteur connecté au client
+            producer = get_object_or_404(Producer, user=request.user)
+            client.producer = producer
             client = form.save()
             messages.success(request, f"Client '{client}' créé avec succès.")
             context = {'message': f"Client '{client.id}' '{client.name}' enregistré avec succès !"}
@@ -155,7 +160,8 @@ def update_client(request, pk):
     if request.user.is_superuser:
         client = get_object_or_404(Client, pk=pk)
     else:
-        client = get_object_or_404(Client, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        client = get_object_or_404(Client, pk=pk, producer=producer)
         
     if request.method == 'POST':
         form = ClientForm(request.POST, instance=client)
@@ -183,7 +189,8 @@ def delete_client(request, pk):
     if request.user.is_superuser:
         client = get_object_or_404(Client, pk=pk)
     else:
-        client = get_object_or_404(Client, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        client = get_object_or_404(Client, pk=pk, producer=producer)
      
     client.delete()
     messages.success(request, f"Client '{client}' supprimé avec succès.")

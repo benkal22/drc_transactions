@@ -1,4 +1,8 @@
 <!-- transactions/transactions/partials/transaction-form.html -->
+<script
+src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+defer
+></script>
 {% load widget_tweaks %}
     {% csrf_token %}
     {% if messages %}
@@ -9,42 +13,174 @@
             </div>
         {% endfor %}
     </div>
-    {% endif %} 
-    <div>
-        <label for="id_producer">Producer</label>
-        {% render_field form.producer %}
-    </div>
-    <div>
-        <label for="id_product">Product</label>
-        {% render_field form.product %}
-    </div>
-    <div>
-        <label for="id_type">Transaction Type</label>
-        {% render_field form.type %}
-    </div>
-    <div id="supplier-field" class="hidden">
-        <label for="id_supplier">Supplier</label>
-        {% render_field form.supplier %}
-    </div>
-    <div id="client-field" class="hidden">
-        <label for="id_client">Client</label>
-        {% render_field form.client %}
-    </div>
-    <div>
-        <label for="id_price">Price</label>
-        {% render_field form.price %}
-    </div>
-    <div>
-        <label for="id_quantity">Quantity</label>
-        {% render_field form.quantity %}
-    </div>
-    <div>
-        <label for="id_unit_of_measure">Unit of Measure</label>
-        {% render_field form.unit_of_measure %}
-    </div>
-    <div>
-        <label for="id_currency">Currency</label>
-        {% render_field form.currency %}
-    </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Erreur !</strong>
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %} 
+    <div x-data="{ 
+        price: 0, 
+        quantity: 0, 
+        tva_rate: 0.16, 
+        amount: 0, 
+        amount_with_tva: 0,
+        updateCalculations() {
+            this.amount = this.price * this.quantity;
+            this.amount_with_tva = this.amount * (1 + this.tva_rate);
+        }
+    }" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    
+    {{ form.media }}
 
+        {% comment %} <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            
+            <div>
+                <label for="id_producer" class="block text-sm font-medium text-gray-700">Producer</label>
+                {% render_field form.producer class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_product" class="block text-sm font-medium text-gray-700">Product</label>
+                {% render_field form.product class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+                {% if form.producer.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                    {{ form.producer.errors }}
+                </div>
+            {% endif %}
+            </div>
+
+            <div>
+                <label for="id_type" class="block text-sm font-medium text-gray-700">Transaction Type</label>
+                {% render_field form.type class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div id="supplier-field" class="hidden">
+                <label for="id_supplier" class="block text-sm font-medium text-gray-700">Supplier</label>
+                {% render_field form.supplier class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div id="client-field" class="hidden">
+                <label for="id_client" class="block text-sm font-medium text-gray-700">Client</label>
+                {% render_field form.client class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_price" class="block text-sm font-medium text-gray-700">Price</label>
+                {% render_field form.price id='id_price' x-model.number='price' @input='updateCalculations()' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                {% render_field form.quantity id='id_quantity' x-model.number='quantity' @input='updateCalculations()' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_unit_of_measure" class="block text-sm font-medium text-gray-700">Unit of Measure</label>
+                {% render_field form.unit_of_measure class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_currency" class="block text-sm font-medium text-gray-700">Currency</label>
+                {% render_field form.currency class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_tva_rate" class="block text-sm font-medium text-gray-700">TVA Rate</label>
+                {% render_field form.tva_rate class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_photo" class="block text-sm font-medium text-gray-700">Photo</label>
+                {% render_field form.photo class='mt-1 block w-full text-sm text-gray-500' %}
+            </div>
+        </div> {% endcomment %}
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div>
+                <div class="flex items-center bg-purple-600 text-white rounded-lg shadow-sm dark:bg-purple-800 px-2 py-1 ml-4">
+                    <span class="text-xs font-medium">💰</span>
+                    <span class="text-sm font-semibold ml-1">
+                        {% for producer in header_data %}
+                            CDF {{ producer.current_balance | floatformat:2 | intcomma }}
+                        {% endfor %}
+                    </span>
+                </div>
+                {{producer.company_name}}
+                {% comment %} <label for="id_producer" class="block text-sm font-medium text-gray-700">Producteur</label> {% endcomment %}
+                {% render_field form.producer id='id_producer' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_product" class="block text-sm font-medium text-gray-700">Produit</label>
+                {% render_field form.product id='id_product' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_type" class="block text-sm font-medium text-gray-700">Type de Transaction</label>
+                {% render_field form.type id='id_type' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div id="supplier-field" class="hidden">
+                <label for="id_supplier" class="block text-sm font-medium text-gray-700">Fournisseur</label>
+                {% render_field form.supplier id='id_supplier' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div id="client-field" class="hidden">
+                <label for="id_client" class="block text-sm font-medium text-gray-700">Client</label>
+                {% render_field form.client id='id_client' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_price" class="block text-sm font-medium text-gray-700">Prix</label>
+                {% render_field form.price id='id_price' x-model.number='price' @input='updateCalculations()' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_quantity" class="block text-sm font-medium text-gray-700">Quantité</label>
+                {% render_field form.quantity id='id_quantity' x-model.number='quantity' @input='updateCalculations()' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_unit_of_measure" class="block text-sm font-medium text-gray-700">Unité de Mesure</label>
+                {% render_field form.unit_of_measure id='id_unit_of_measure' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_currency" class="block text-sm font-medium text-gray-700">Devise</label>
+                {% render_field form.currency id='id_currency' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_tva_rate" class="block text-sm font-medium text-gray-700">Taux de TVA</label>
+                {% render_field form.tva_rate id='id_tva_rate' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            {% comment %} <div>
+                <label for="id_amount" class="block text-sm font-medium text-gray-700">Montant</label>
+                {% render_field form.amount id='id_amount' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_amount_with_tva" class="block text-sm font-medium text-gray-700">Montant avec TVA</label>
+                {% render_field form.amount_with_tva id='id_amount_with_tva' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div> {% endcomment %}
+
+            <div>
+                <label for="id_photo" class="block text-sm font-medium text-gray-700">Joindre une pièce justificative</label>
+                {% render_field form.photo id='id_photo' class='mt-1 block w-full text-sm text-gray-500' %}
+            </div>
+        </div>
+
+        <div class="mt-6 p-4 bg-gray-50 border-t border-gray-200 rounded-lg">
+            <p class="text-sm font-medium text-gray-700">Montant : CDF <span x-text="amount.toFixed(2)" class="font-semibold"></span></p>
+            <p class="text-sm font-medium text-gray-700">Montant avec TVA : CDF <span x-text="amount_with_tva.toFixed(2)" class="font-semibold"></span></p>
+        </div>
+
+    
 {% include 'transactions/transactions/partials/script-form.html' %}

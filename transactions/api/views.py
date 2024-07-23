@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Sum
 
-from ..models import CustomUser, Producer, Client, Supplier, Transaction, Product, UniqueSector, Country, Province, ProducerClient, ProducerSupplier
+from ..models import CustomUser, Producer, Client, Supplier, Transaction, Product, UniqueSector, Country, Province
 from .serializers import (
     CustomUserSerializer, ProducerSerializer, ClientSerializer, SupplierSerializer, TransactionSerializer,
     ProductSerializer, UniqueSectorSerializer, CountrySerializer, ProvinceSerializer

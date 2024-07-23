@@ -112,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # Ajoutez cette ligne
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'transactions.context_processors.header_context',
             ],
             'loaders': [
                 'admin_tools.template_loaders.Loader',  # Ajoutez cette ligne
@@ -211,7 +212,6 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 LOGIN_REDIRECT_URL = '/redirect/'  # Mettez à jour cela pour qu'il pointe vers la vue de redirection
 LOGOUT_REDIRECT_URL = '/accounts/login/'
-
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Désactiver la vérification par email
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # ou "optional" selon vos besoins

@@ -13,7 +13,7 @@ from django_htmx.http import retarget
 from django.db.models import F, ExpressionWrapper, DecimalField, Sum
 import json
 
-from transactions.models import Supplier, ProducerSupplier, Transaction, Product, UniqueSector, Country, Province
+from transactions.models import Supplier, Producer, Transaction, Product, UniqueSector, Country, Province
 from transactions.serializers import SupplierSerializer
 from transactions.filters import SupplierFilter
 from transactions.forms import SupplierForm
@@ -28,7 +28,8 @@ def supplier_statistics(request):
     if request.user.is_superuser:
         queryset = Supplier.objects.all()
     else:
-        queryset = Supplier.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Supplier.objects.filter(producer=producer)
         
     supplier_filter = SupplierFilter(request.GET, queryset=queryset)
     # supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
@@ -77,7 +78,8 @@ def suppliers_list(request):
     if request.user.is_superuser:
         queryset = Supplier.objects.all()
     else:
-        queryset = Supplier.objects.filter(user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        queryset = Supplier.objects.filter(producer=producer)
         
     supplier_filter = SupplierFilter(request.GET, queryset=queryset)
     
@@ -121,7 +123,8 @@ def supplier_detail(request, pk):
     if request.user.is_superuser:
         supplier = get_object_or_404(Supplier, pk=pk)
     else:
-        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        supplier = get_object_or_404(Supplier, pk=pk, producer=producer)
     
     stats = supplier_statistics(request)
 
@@ -144,8 +147,11 @@ def create_supplier_view(request):
         form = SupplierForm(request.POST, request.FILES)
         if form.is_valid():
             supplier = form.save(commit=False)
-            supplier.user = request.user
-            supplier = form.save()
+            # Associer le producteur connecté au supplier
+            producer = get_object_or_404(Producer, user=request.user)
+            supplier.save()  # Sauvegarder le supplier pour obtenir l'ID
+            supplier.producer.set([producer])  # Utiliser .set() pour les ManyToManyFields
+            supplier.save() 
             messages.success(request, f"Fournisseur '{supplier}' créé avec succès.")
             context = {'message': f"Fournisseur '{supplier.id}' '{supplier.name}' enregistrée avec succès !"}
             return render(request, 'transactions/suppliers/partials/supplier-success.html', context)
@@ -163,7 +169,9 @@ def update_supplier(request, pk):
     if request.user.is_superuser:
         supplier = get_object_or_404(Supplier, pk=pk)
     else:
-        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        supplier = get_object_or_404(Supplier, pk=pk, producer=producer)
+        
     if request.method == 'POST':
         form = SupplierForm(request.POST, instance=supplier)
         if form.is_valid():
@@ -191,7 +199,8 @@ def delete_supplier(request, pk):
     if request.user.is_superuser:
         supplier = get_object_or_404(Supplier, pk=pk)
     else:
-        supplier= get_object_or_404(Supplier, pk=pk, user=request.user)
+        producer = get_object_or_404(Producer, user=request.user)
+        supplier = get_object_or_404(Supplier, pk=pk, producer=producer)
         
     supplier.delete()
     # messages.success(request, f"Fournisseur '{supplier}' supprimé avec succès.")

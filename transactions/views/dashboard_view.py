@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 import matplotlib.pyplot as plt
-from ..models import Transaction, Product, Producer, Supplier, Client, Province, Country, UniqueSector, ProducerClient, ProducerSupplier
+from ..models import Transaction, Product, Producer, Supplier, Client, Province, Country, UniqueSector
 import pandas as pd
 from collections import defaultdict
 from django.views.generic import ListView

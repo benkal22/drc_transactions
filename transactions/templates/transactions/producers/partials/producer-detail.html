@@ -3,78 +3,132 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-<div class="mt-4 mb-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="flex items-center text-xl text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
-            <span class="mr-2">🏢</span> <strong class="mr-1">Producteur :</strong> {{ producer.name|default_if_none:"Non spécifié" }}
-            <span class="ml-2">ID_{{ producer.id }}</span>
-        </h2>
-        <p class="flex items-center text-xl text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
-            <span class="mr-2">💰</span> <strong class="text-lg text-green-700 dark:text-green-300">CDF {{ producer.total_purchases|floatformat:2|intcomma|default_if_none:"0" }}</strong>
-        </p>
-    </div>
-    <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
-        <span class="mr-2">👤</span> <strong class="mr-1">Nom du gestionnaire :</strong> {{ producer.manager_name|default_if_none:"Non spécifié" }}
-    </p>
 
-    <hr class="my-2 border-gray-300 dark:border-gray-600">
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {% comment %} 
-        <div class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-yellow-100 dark:bg-yellow-900 rounded p-2">
-            <span class="mr-2">📸</span> <strong class="mr-1">Photo :</strong>
-            <img src="{{ producer.photo.url }}" alt="Photo de {{ producer.name }}" class="ml-2 w-20 h-20 object-cover rounded">
-        </div> 
-        {% endcomment %}
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-purple-100 dark:bg-purple-900 rounded p-2">
-            <span class="mr-2">🏷️</span> <strong class="mr-1">Catégorie :</strong> {{ producer.category|default_if_none:"Non spécifiée" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
-            <span class="mr-2">🌍</span> <strong class="mr-1">Pays :</strong> {{ producer.country|default_if_none:"Non spécifié" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-teal-100 dark:bg-teal-900 rounded p-2">
-            <span class="mr-2">📍</span> <strong class="mr-1">Province :</strong> {{ producer.province|default_if_none:"Non spécifiée" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-indigo-100 dark:bg-indigo-900 rounded p-2">
-            <span class="mr-2">🏠</span> <strong class="mr-1">Adresse :</strong> {{ producer.address|default_if_none:"Non spécifiée" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-pink-100 dark:bg-pink-900 rounded p-2">
-            <span class="mr-2">✉️</span> <strong class="mr-1">Email :</strong> {{ producer.email|default_if_none:"Non spécifié" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-red-100 dark:bg-red-900 rounded p-2">
-            <span class="mr-2">📞</span> <strong class="mr-1">Téléphone :</strong> {{ producer.phone_number|default_if_none:"Non spécifié" }}
-        </p>
-        
-        <hr class="my-2 border-gray-300 dark:border-gray-600">
+<div x-data="{ modalProducerDetail: true }">
+    <!-- Modal -->
+    <div x-show="modalProducerDetail" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">
+            <div x-cloak x-show="modalProducerDetail"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0" 
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100" 
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-40" aria-hidden="true"
+            ></div>
 
-        <h6 class="text-lg text-gray-700 dark:text-gray-400">Autres informations</h6>
-        <div class="flex flex-col space-y-1 text-xs text-gray-700 dark:text-gray-400 bg-yellow-100 dark:bg-yellow-900 rounded p-2">
-            <span class="mr-2">🏭</span> <strong class="mr-1">Secteur d'activité :</strong>
-            <ul class="list-disc pl-5">
-                {% for sector in producer.sector_label.all %}
-                    <li>{{ sector }}</li>
-                {% endfor %}
-            </ul>
+            <div x-cloak x-show="modalProducerDetail"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="inline-block w-full max-w-5xl p-8 my-20 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl"
+            >
+                <div class="flex items-center justify-between space-x-4">
+                    <h1 class="text-xl font-medium text-gray-800">Détails du Client</h1>
+                    <button 
+                        hx-get="{% url 'transactions:producers_list' %}" 
+                        hx-target="#producer-block"
+                        hx-push-url='/producers'
+                        class="text-gray-600 focus:outline-none hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Contenu du modal -->
+                <div class="mt-4 mb-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="flex items-center text-xl text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
+                            <span class="mr-2">🏢</span> <strong class="mr-1">Producteur :</strong> {{ producer.name|default_if_none:"Non spécifié" }}
+                            <span class="ml-2">ID_{{ producer.id }}</span>
+                        </h2>
+                        <p class="flex items-center text-xl text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
+                            <span class="mr-2">💰</span> <strong class="text-lg text-green-700 dark:text-green-300">CDF {{ producer.total_purchases|floatformat:2|intcomma|default_if_none:"0" }}</strong>
+                        </p>
+                    </div>
+                    <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
+                        <span class="mr-2">👤</span> <strong class="mr-1">Nom du gestionnaire :</strong> {{ producer.manager_name|default_if_none:"Non spécifié" }}
+                    </p>
+                
+                    <hr class="my-2 border-gray-300 dark:border-gray-600">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {% comment %} 
+                        <div class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-yellow-100 dark:bg-yellow-900 rounded p-2">
+                            <span class="mr-2">📸</span> <strong class="mr-1">Photo :</strong>
+                            <img src="{{ producer.photo.url }}" alt="Photo de {{ producer.name }}" class="ml-2 w-20 h-20 object-cover rounded">
+                        </div> 
+                        {% endcomment %}
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-purple-100 dark:bg-purple-900 rounded p-2">
+                            <span class="mr-2">🏷️</span> <strong class="mr-1">Catégorie :</strong> {{ producer.category|default_if_none:"Non spécifiée" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
+                            <span class="mr-2">🌍</span> <strong class="mr-1">Pays :</strong> {{ producer.country|default_if_none:"Non spécifié" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-teal-100 dark:bg-teal-900 rounded p-2">
+                            <span class="mr-2">📍</span> <strong class="mr-1">Province :</strong> {{ producer.province|default_if_none:"Non spécifiée" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-indigo-100 dark:bg-indigo-900 rounded p-2">
+                            <span class="mr-2">🏠</span> <strong class="mr-1">Adresse :</strong> {{ producer.address|default_if_none:"Non spécifiée" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-pink-100 dark:bg-pink-900 rounded p-2">
+                            <span class="mr-2">✉️</span> <strong class="mr-1">Email :</strong> {{ producer.email|default_if_none:"Non spécifié" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-red-100 dark:bg-red-900 rounded p-2">
+                            <span class="mr-2">📞</span> <strong class="mr-1">Téléphone :</strong> {{ producer.phone_number|default_if_none:"Non spécifié" }}
+                        </p>
+                        
+                        <hr class="my-2 border-gray-300 dark:border-gray-600">
+                
+                        <h6 class="text-lg text-gray-700 dark:text-gray-400">Autres informations</h6>
+                        <div class="flex flex-col space-y-1 text-xs text-gray-700 dark:text-gray-400 bg-yellow-100 dark:bg-yellow-900 rounded p-2">
+                            <span class="mr-2">🏭</span> <strong class="mr-1">Secteur d'activité :</strong>
+                            <ul class="list-disc pl-5">
+                                {% for sector in producer.sector_label.all %}
+                                    <li>{{ sector }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="flex flex-col space-y-1 text-xs text-gray-700 dark:text-gray-400 bg-purple-100 dark:bg-purple-900 rounded p-2">
+                            <span class="mr-2">🛠️</span> <strong class="mr-1">Produits/Services :</strong>
+                            <ul class="list-disc pl-5">
+                                {% for product in producer.product.all %}
+                                    <li>{{ product }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
+                            <span class="mr-2">👤</span> <strong class="mr-1">Nom du gestionnaire :</strong> {{ producer.manager_name|default_if_none:"Non spécifié" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
+                            <span class="mr-2">🔢</span> <strong class="mr-1">Numéro impôt :</strong> {{ producer.tax_code|default_if_none:"Non spécifié" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-teal-100 dark:bg-teal-900 rounded p-2">
+                            <span class="mr-2">🆔</span> <strong class="mr-1">Identité nationale :</strong> {{ producer.nat_id|default_if_none:"Non spécifiée" }}
+                        </p>
+                        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-indigo-100 dark:bg-indigo-900 rounded p-2">
+                            <span class="mr-2">📄</span> <strong class="mr-1">NRC :</strong> {{ producer.nrc|default_if_none:"Non spécifié" }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Buttons d'action -->   
+                <div class="mt-4 flex justify-end items-center space-x-4">
+                    
+                    <button 
+                        hx-get="{% url 'transactions:producers_list' %}" 
+                        hx-target="#producer-block"
+                        hx-push-url='/producers'
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    >
+                        Fermer
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-col space-y-1 text-xs text-gray-700 dark:text-gray-400 bg-purple-100 dark:bg-purple-900 rounded p-2">
-            <span class="mr-2">🛠️</span> <strong class="mr-1">Produits/Services :</strong>
-            <ul class="list-disc pl-5">
-                {% for product in producer.product.all %}
-                    <li>{{ product }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-green-100 dark:bg-green-900 rounded p-2">
-            <span class="mr-2">👤</span> <strong class="mr-1">Nom du gestionnaire :</strong> {{ producer.manager_name|default_if_none:"Non spécifié" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-blue-100 dark:bg-blue-900 rounded p-2">
-            <span class="mr-2">🔢</span> <strong class="mr-1">Numéro impôt :</strong> {{ producer.tax_code|default_if_none:"Non spécifié" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-teal-100 dark:bg-teal-900 rounded p-2">
-            <span class="mr-2">🆔</span> <strong class="mr-1">Identité nationale :</strong> {{ producer.nat_id|default_if_none:"Non spécifiée" }}
-        </p>
-        <p class="flex items-center text-sm text-gray-700 dark:text-gray-400 bg-indigo-100 dark:bg-indigo-900 rounded p-2">
-            <span class="mr-2">📄</span> <strong class="mr-1">NRC :</strong> {{ producer.nrc|default_if_none:"Non spécifié" }}
-        </p>
     </div>
 </div>

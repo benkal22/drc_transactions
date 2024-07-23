@@ -18,7 +18,6 @@
                         console.log('AJAX Response:', response);
                         var $productSelect = $("#id_product");
                         $productSelect.empty(); // Clear previous options
-                        // Ajouter une option par défaut ou un message si nécessaire
                         $productSelect.append($('<option>', {
                             value: '',
                             text: 'Sélectionner un produit',
@@ -45,7 +44,6 @@
                     var $productSelect = $("#id_product");
                     $productSelect.empty(); // Clear previous options
                     if (response.products) {
-                        // Ajouter une option par défaut ou un message si nécessaire
                         $productSelect.append($('<option>', {
                             value: '',
                             text: 'Sélectionner un produit',
@@ -83,6 +81,7 @@
             fetchProductsBySector(sectorLabels);
         });
     });
+    
     
 </script>
     

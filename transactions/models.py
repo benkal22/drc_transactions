@@ -185,8 +185,8 @@ class Producer(models.Model):
     initial_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
     current_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
     # Relations ManyToMany avec les fournisseurs et clients à travers les modèles intermédiaires
-    suppliers = models.ManyToManyField('Supplier', through='ProducerSupplier', related_name='suppliers')
-    clients = models.ManyToManyField('Client', through='ProducerClient', related_name='clients')
+    # suppliers = models.ManyToManyField(Supplier, through='ProducerSupplier', related_name='suppliers')
+    # clients = models.ManyToManyField(Client, through='ProducerClient', related_name='clients')
     photo =  models.ImageField(
         upload_to="img/producers/",
         blank=True,
@@ -208,8 +208,8 @@ class Producer(models.Model):
         return self.company_name
     
     def save(self, *args, **kwargs):
-        if not self.pk:  # Si c'est une nouvelle instance
-            self.current_balance = self.initial_balance
+        # if not self.pk:  # Si c'est une nouvelle instance
+        #     self.current_balance = self.initial_balance
         
         if self.photo:
             # Ouvrir l'image avec Pillow
@@ -244,6 +244,7 @@ class Producer(models.Model):
         total_sales = sales.aggregate(total=Sum(ExpressionWrapper(F('price') * F('quantity'), output_field=DecimalField())))
         return total_sales['total'] if total_sales['total'] else 0
 
+
 # Modèle pour les clients
 class Client(models.Model):
     CATEGORY_CHOICES = [
@@ -264,6 +265,8 @@ class Client(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
     total_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    # producer =  models.ManyToManyField(Producer)
+    producer = models.ManyToManyField(Producer, related_name='producer_clients')
     photo =  models.ImageField(
         upload_to="img/clients/",
         blank=True,
@@ -352,13 +355,14 @@ class Supplier(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
     total_purchases = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    # producer =  models.ManyToManyField(Producer)
+    producer = models.ManyToManyField(Producer, related_name='producer_suppliers')
     photo =  models.ImageField(
         upload_to="img/suppliers/",
         blank=True,
         null=True,
     )
     
-
     class Meta:
         verbose_name = "Supplier"
         verbose_name_plural = "Suppliers"
@@ -447,30 +451,6 @@ class Supplier(models.Model):
         }
         return details
 
-# Modèle intermédiaire pour les relations Producer-Supplier
-class ProducerSupplier(models.Model):
-    producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = "Producteur-Fournisseur"
-        verbose_name_plural = "Producteurs-Fournisseurs"
-
-    def __str__(self):
-        return f"{self.producer} - {self.supplier}"
-
-# Modèle intermédiaire pour les relations Producer-Client
-class ProducerClient(models.Model):
-    producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = "Producteur-Client"
-        verbose_name_plural = "Producteurs-Clients"
-
-    def __str__(self):
-        return f"{self.producer} - {self.client}"
-
 # Modèle pour les transactions
 class Transaction(models.Model):
     producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
@@ -558,81 +538,56 @@ class Transaction(models.Model):
         self.clean()  # Appeler clean pour vérifier les validations
         new_amount = self.price * self.quantity
         new_amount_with_tva = new_amount + (new_amount * self.tva_rate)
-        is_new = self.pk is None
+        # is_new = self.pk is None
 
-        if not is_new:
-            previous = Transaction.objects.get(pk=self.pk)
-            previous_amount_with_tva = previous.amount_with_tva
+        # if not is_new:
+        #     previous = Transaction.objects.get(pk=self.pk)
+        #     previous_amount_with_tva = previous.amount_with_tva
 
-            if self.type == 'purchase':
-                self.producer.current_balance += previous_amount_with_tva
-                if previous.supplier:
-                    previous.supplier.total_purchases -= previous_amount_with_tva
-                    previous.supplier.save()
-            elif self.type == 'sale':
-                self.producer.current_balance -= previous_amount_with_tva
-                if previous.client:
-                    previous.client.total_sales -= previous_amount_with_tva
-                    previous.client.save()
+        #     if self.type == 'purchase':
+        #         self.producer.current_balance += previous_amount_with_tva
+        #         if previous.supplier:
+        #             previous.supplier.total_purchases -= previous_amount_with_tva
+        #             previous.supplier.save()
+        #     elif self.type == 'sale':
+        #         self.producer.current_balance -= previous_amount_with_tva
+        #         if previous.client:
+        #             previous.client.total_sales -= previous_amount_with_tva
+        #             previous.client.save()
 
         self.amount = new_amount
         self.amount_with_tva = new_amount_with_tva
 
-        if is_new:
-            if self.type == 'purchase':
-                if self.producer.current_balance < self.amount_with_tva:
-                    raise ValidationError(_("Solde insuffisant pour cet achat."))
-                self.producer.current_balance -= self.amount_with_tva
-                if self.supplier:
-                    self.supplier.total_purchases += self.amount_with_tva
-                    self.supplier.save()
-            elif self.type == 'sale':
-                self.producer.current_balance += self.amount_with_tva
-                if self.client:
-                    self.client.total_sales += self.amount_with_tva
-                    self.client.save()
-        
+        # if is_new:
+        #     if self.type == 'purchase':
+        #         if self.producer.current_balance < self.amount_with_tva:
+        #             raise ValidationError(_("Solde insuffisant pour cet achat."))
+        #         self.producer.current_balance -= self.amount_with_tva
+        #         if self.supplier:
+        #             self.supplier.total_purchases += self.amount_with_tva
+        #             self.supplier.save()
+        #     elif self.type == 'sale':
+        #         self.producer.current_balance += self.amount_with_tva
+        #         if self.client:
+        #             self.client.total_sales += self.amount_with_tva
+        #             self.client.save()
+
         if self.photo:
             # Ouvrir l'image avec Pillow
             image = Image.open(self.photo)
             output = BytesIO()
-            
+
             # Redimensionner l'image si nécessaire
             image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
-            
+
             # Sauvegarder l'image dans le format souhaité
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
-            
+
             # Créer un nouveau fichier ContentFile
             self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
 
         super().save(*args, **kwargs)
-
-        if not is_new:
-            self.update_balances()
-
-    def update_balances(self):
-        if not self.pk:
-            return
-
-        previous = Transaction.objects.get(pk=self.pk)
-        previous_amount_with_tva = previous.amount_with_tva
-
-        if self.type == 'purchase':
-            if self.producer.current_balance < self.amount_with_tva:
-                raise ValidationError(_("Solde insuffisant pour cet achat."))
-            self.producer.current_balance -= self.amount_with_tva
-            if self.supplier:
-                self.supplier.total_purchases += self.amount_with_tva
-                self.supplier.save()
-        elif self.type == 'sale':
-            self.producer.current_balance += self.amount_with_tva
-            if self.client:
-                self.client.total_sales += self.amount_with_tva
-                self.client.save()
-
-        self.producer.save()
 
     def delete(self, *args, **kwargs):
         amount_with_tva = self.amount_with_tva
@@ -650,8 +605,8 @@ class Transaction(models.Model):
 
         self.producer.save()
         super().delete(*args, **kwargs)
-
     @staticmethod
+    
     def total_purchases():
         purchases = Transaction.objects.filter(type='purchase').aggregate(total=Sum(ExpressionWrapper(F('price') * F('quantity'), output_field=DecimalField())))
         return purchases['total'] if purchases['total'] else 0
@@ -692,7 +647,6 @@ class Transaction(models.Model):
     @property
     def client_province(self):
         return self.client.province.name if self.client and self.client.province else None
-    
     
     @classmethod
     def total_quantity_sales(cls):
@@ -741,3 +695,37 @@ def update_client_total_sales(sender, instance, **kwargs):
 def update_supplier_total_purchases(sender, instance, **kwargs):
     if instance.supplier:
         instance.supplier.update_total_purchases()
+
+# Signal pour mettre à jour le solde du producteur lors de la création ou de la mise à jour d'une transaction
+@receiver(post_save, sender=Transaction)
+def update_producer_balance_on_transaction_save(sender, instance, created, **kwargs):
+    if created:
+        # Création d'une nouvelle transaction
+        if instance.type == 'purchase':
+            instance.producer.current_balance -= instance.amount_with_tva
+        elif instance.type == 'sale':
+            instance.producer.current_balance += instance.amount_with_tva
+    else:
+        # Mise à jour d'une transaction existante
+        old_instance = Transaction.objects.get(pk=instance.pk)
+        if old_instance.type == 'purchase':
+            instance.producer.current_balance += old_instance.amount_with_tva
+        elif old_instance.type == 'sale':
+            instance.producer.current_balance -= old_instance.amount_with_tva
+
+        if instance.type == 'purchase':
+            instance.producer.current_balance -= instance.amount_with_tva
+        elif instance.type == 'sale':
+            instance.producer.current_balance += instance.amount_with_tva
+
+    instance.producer.save()
+    
+# Signal pour ajuster les soldes lors de la suppression d'une transaction
+@receiver(post_delete, sender=Transaction)
+def update_producer_balance_on_transaction_delete(sender, instance, **kwargs):
+    if instance.type == 'purchase':
+        instance.producer.current_balance += instance.amount_with_tva
+    elif instance.type == 'sale':
+        instance.producer.current_balance -= instance.amount_with_tva
+
+    instance.producer.save()

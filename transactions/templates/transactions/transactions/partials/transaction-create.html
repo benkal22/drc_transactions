@@ -26,7 +26,7 @@
                 class="inline-block w-full max-w-xl p-8 my-20 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl"
             >
                 <div class="flex items-center justify-between space-x-4">
-                    <h1 class="text-xl font-medium text-gray-800 ">Modifier transaction</h1>
+                    <h1 class="text-xl font-medium text-gray-800 ">Nouvelle transaction</h1>
                     <button 
                         hx-get="{% url 'transactions:transactions_list' %}" 
                         hx-target="#transaction-block"
@@ -44,6 +44,9 @@
                     hx-target="#transaction-block" 
                     hx-swap="innerHTML"
                 >
+                {% csrf_token %}
+                {% comment %} {{ form|crispy }} {% endcomment %}
+
                     {% include 'transactions/transactions/partials/transaction-form.html' %}
 
                     <!-- Buttons d'action -->   
