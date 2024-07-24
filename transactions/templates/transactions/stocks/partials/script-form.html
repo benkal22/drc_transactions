@@ -1,0 +1,107 @@
+{% comment %} <script>
+    $(document).ready(function() {
+        $(".select2").select2();
+    
+        function toggleFieldsBasedOnType() {
+            const stockType = $('#id_type').val();
+    
+            if (stockType === 'purchase') {
+                $('#client-field').addClass('hidden');
+                $('#supplier-field').removeClass('hidden');
+            } else if (stockType === 'sale') {
+                $('#supplier-field').addClass('hidden');
+                $('#client-field').removeClass('hidden');
+            } else {
+                $('#supplier-field').removeClass('hidden');
+                $('#client-field').removeClass('hidden');
+            }
+        }
+    
+        toggleFieldsBasedOnType();
+        $('#id_type').on('change', toggleFieldsBasedOnType);
+    
+        function toggleDateField() {
+            const dateOption = $('input[name="date_option"]:checked').val();
+            if (dateOption === 'manual') {
+                $('#date-manual-field').removeClass('hidden');
+            } else {
+                $('#date-manual-field').addClass('hidden');
+            }
+        }
+    
+        toggleDateField();
+        $('input[name="date_option"]').on('change', toggleDateField);
+    
+        $('#id_producer').on('change', function() {
+            const producer_id = $(this).val();
+    
+            $('#id_product, #id_supplier, #id_client').empty();
+    
+            $.ajax({
+                url: '/filter-producer-details/',
+                data: { 'producer_id': producer_id },
+                dataType: 'json',
+                success: function(data) {
+                    data.products.forEach(product => {
+                        $('#id_product').append(`<option value="${product.id}">${product.product_label}</option>`);
+                    });
+                    $('#id_product').trigger('change.select2');
+    
+                    data.suppliers.forEach(supplier => {
+                        const name = supplier.company_name ? supplier.company_name : supplier.name;
+                        $('#id_supplier').append(`<option value="${supplier.id}">${name}</option>`);
+                    });
+                    $('#id_supplier').trigger('change.select2');
+    
+                    data.clients.forEach(client => {
+                        const name = client.company_name ? client.company_name : client.name;
+                        $('#id_client').append(`<option value="${client.id}">${name}</option>`);
+                    });
+                    $('#id_client').trigger('change.select2');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+    
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const priceInput = document.getElementById('id_price');
+        const quantityInput = document.getElementById('id_quantity');
+        const tvaRateInput = document.getElementById('id_tva_rate');
+        const amountInput = document.getElementById('id_amount');
+        const amountWithTvaInput = document.getElementById('id_amount_with_tva');
+
+        function calculateAmounts() {
+            const price = parseFloat(priceInput.value) || 0;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const tvaRate = parseFloat(tvaRateInput.value) || 0;
+
+            console.log(`Prix: ${price}, Quantité: ${quantity}, Taux de TVA: ${tvaRate}`);
+
+            const amount = price * quantity;
+            console.log(`Montant calculé: ${amount}`);
+
+            const amountWithTva = amount + (amount * tvaRate);
+            console.log(`Montant avec TVA calculé: ${amountWithTva}`);
+
+            amountInput.value = amount.toFixed(2);
+            amountWithTvaInput.value = amountWithTva.toFixed(2);
+
+            console.log(`Montant affiché: ${amountInput.value}`);
+            console.log(`Montant avec TVA affiché: ${amountWithTvaInput.value}`);
+        }
+
+        priceInput.addEventListener('input', calculateAmounts);
+        quantityInput.addEventListener('input', calculateAmounts);
+        tvaRateInput.addEventListener('input', calculateAmounts);
+
+        // Call the function initially to set initial values
+        calculateAmounts();
+    });
+</script>
+ {% endcomment %}

@@ -36,6 +36,11 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = '__all__'
 
+class StockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = '__all__'
+        
 class CorrelationMatrixSerializer(serializers.Serializer):
     producer_province = serializers.CharField()
     other_province = serializers.CharField()

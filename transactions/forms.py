@@ -1,5 +1,5 @@
 from django import forms
-from .models import Supplier, Producer, Client, Transaction, Product, UniqueSector
+from .models import Supplier, Producer, Client, Transaction, Product, UniqueSector, Stock
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.utils import timezone
@@ -419,6 +419,41 @@ class TransactionForm(forms.ModelForm):
         elif transaction_type == 'purchase' and supplier is None:
             self.add_error('supplier', "Un fournisseur doit être spécifié pour les transactions d'achat.")
 
+        return cleaned_data
+
+class StockForm(forms.ModelForm):
+    class Meta:
+        model = Stock
+        fields = ['producer', 'product', 'quantity', 'unit_of_measure']
+        labels = {
+            'product': 'Produit',
+            'quantity': 'Quantité',
+            'unit_of_measure': 'Unité de mesure',
+        }
+        widgets = {
+            'product': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm'}),
+            'quantity': forms.NumberInput(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'step': '0.01', 'placeholder': 'Entrez la quantité'}),
+            'unit_of_measure': forms.Select(attrs={'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm', 'placeholder': 'Sélectionnez l’unité de mesure'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        producer = kwargs.pop('producer', None)
+        super().__init__(*args, **kwargs)
+
+        if producer:
+            self.fields['product'].queryset = Product.objects.filter(producer=producer).order_by('product_label')
+
+        # Masquer le champ producer et le définir en lecture seule
+        self.fields['producer'] = forms.ModelChoiceField(
+            queryset=Producer.objects.filter(id=producer.id),
+            initial=producer,
+            widget=forms.HiddenInput()
+        )
+        self.producer_name = producer.company_name  # Stocker le nom du producteur pour l'afficher dans le template
+
+    def clean(self):
+        cleaned_data = super().clean()
+        
         return cleaned_data
 
 class FilterForm(forms.Form):

@@ -111,9 +111,13 @@ defer
             </div>
         </div>
 
-        <div class="mt-6 p-4 bg-gray-50 border-t border-gray-200 rounded-lg">
+        {% comment %} <div class="mt-6 p-4 bg-gray-50 border-t border-gray-200 rounded-lg">
             <p class="text-sm font-medium text-gray-700">Montant : CDF <span x-text="amount.toFixed(2)" class="font-semibold"></span></p>
             <p class="text-sm font-medium text-gray-700">Montant avec TVA : CDF <span x-text="amount_with_tva.toFixed(2)" class="font-semibold"></span></p>
+        </div> {% endcomment %}
+        <div class="mt-6 p-4 bg-gray-50 border-t border-gray-200 rounded-lg">
+            <p class="text-sm font-medium text-gray-700">Montant : CDF <span id="amount" x-text="amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')" class="font-semibold"></span></p>
+            <p class="text-sm font-medium text-gray-700">Montant avec TVA : CDF <span id="amount_with_tva" x-text="amount_with_tva.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')" class="font-semibold"></span></p>
         </div>
 
     

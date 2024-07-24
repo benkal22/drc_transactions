@@ -1,129 +1,166 @@
-<!-- transactions/suppliers/partials/supplier-container.html -->
+<!-- transactions/stocks/partials/stock-container.html -->
 
 {% load widget_tweaks %}
 {% load humanize %}
 {% load crispy_forms_tags %}
 
 <!-- Define Grid container div -->
-<div id="supplier-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
+<div id="stock-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">  
+  {% comment %} {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %} {% endcomment %}
 
-<!-- Cards Stats -->
-<div class="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
-  <!-- Card Total Achats -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Achats</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Total Fournisseurs -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Total Fournisseurs</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_suppliers }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Fournisseurs Entreprises -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Fournisseurs Entreprises</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_enterprise_suppliers }}</p>
-    </div>
-  </div>
+    <!-- Cards Stats-->
+    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Total clients
+            </p>
+            <p
+              class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+            >
+            {{ total_clients }}
+            </p>
+          </div>
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Marge bénéficiaire
+            </p>
+            <p
+              class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+            >
+              CDF {{ net_income|floatformat:2|intcomma }}
+            </p>
+          </div>
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Ventes
+            </p>
+            <p
+              class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+            >
+            
+            CDF {{ total_sales|floatformat:2|intcomma }}
+            </p>
+          </div>
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+          </svg>
+          
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Achats
+            </p>
+            <p
+              class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+            >
+            CDF {{ total_purchases|floatformat:2|intcomma }}
+            </p>
+          </div>
+        </div>
 
-  <!-- Card Fournisseurs Individuels -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-yellow-500 bg-yellow-100 rounded-full dark:text-yellow-100 dark:bg-yellow-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
-      </svg>
+        <!-- Card Stock -->
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-pink-500 bg-pink-100 rounded-full dark:text-pink-100 dark:bg-pink-500"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Stock
+            </p>
+            <p
+              class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+            >
+             {{ stock}}
+            </p>
+          </div>
+        </div>
     </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Fournisseurs Individuels</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_individual_suppliers }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Achats Entreprises -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Achats Entreprises</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases_enterprises }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Achats Individuels -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-pink-500 bg-pink-100 rounded-full dark:text-pink-100 dark:bg-pink-500">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M5 13.5L12 6l7 7.5m-14 0h14"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Achats Individuels</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ total_purchases_individuals }}</p>
-    </div>
-  </div>
-  
-  <!-- Card Revenu Net Entreprises -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-green-600 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-600">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Revenu Net Entreprises</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ net_income_enterprises }}</p>
-    </div>
-  </div>
-
-  <!-- Card Revenu Net Individuels -->
-  <div class="flex items-center p-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 transition-transform transform hover:scale-105">
-    <div class="p-2 mr-3 text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 011 1v2a1 1 0 01-2 0V3a1 1 0 011-1zM6 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM18 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM12 8a1 1 0 011 1v2a1 1 0 01-2 0V9a1 1 0 011-1z"></path>
-      </svg>
-    </div>
-    <div>
-      <p class="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Revenu Net Individuels</p>
-      <p class="text-base font-semibold text-gray-700 dark:text-gray-200 animate-pulse">{{ net_income_individuals }}</p>
-    </div>
-  </div>
-</div>
-
-    <!-- Nouveau Fournisseur -->
+    
+    <!-- Effectuer Transaction-->
     <div class="flex justify-between items-center mt-4 mb-6">
       <a 
         @click="$dispatch('open-modal1')" 
-        hx-get="{% url 'transactions:supplier_create' %}" 
-        hx-target="#supplier-block"
+        hx-get="{% url 'transactions:stock_create' %}" 
+        hx-target="#stock-block"
         class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400"
       >
           <span class="mr-2">
-              Nouveau fournisseur
+              Déclarer un stock
           </span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
@@ -132,7 +169,7 @@
     </div>
     
     <!-- Formulaire de filtrage -->
-    {% comment %} <div x-data="{ isOpen: false }">
+    <div x-data="{ isOpen: false }">
       <h4
           @click="isOpen = !isOpen"
           class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 cursor-pointer"
@@ -147,23 +184,22 @@
           <form id="filter-form" method="get">
               <div class="grid gap-4 md:grid-cols-3">
                   <div>
-                      {{ filter.form.sector|as_crispy_field }}
+                      {{ filter.form.product|as_crispy_field }}
                   </div>
                   <div>
-                      {{ filter.form.products|as_crispy_field }}
+                      {{ filter.form.producer|as_crispy_field }}
                   </div>
+                  
                   <div>
-                      {{ filter.form.category|as_crispy_field }}
+                      {{ filter.form.date|as_crispy_field }}
                   </div>
-                  <div>
-                      {{ filter.form.supplier_province|as_crispy_field }}
-                  </div>
+                  
               </div>
               <div class="mt-4 flex justify-left space-x-2">
                   <button type="button" 
-                          hx-get="{% url 'transactions:suppliers_list' %}"
+                          hx-get="{% url 'transactions:stocks_list' %}"
                           hx-include="#filter-form"
-                          hx-target="#supplier-container"
+                          hx-target="#stock-container"
                           hx-push-url="true"
                           class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                           >
@@ -175,8 +211,8 @@
                       Filtrer
                   </button>
                   <button type="button" 
-                          hx-get="{% url 'transactions:suppliers_list' %}?reset=1"
-                          hx-target="#supplier-container"
+                          hx-get="{% url 'transactions:stocks_list' %}?reset=1"
+                          hx-target="#stock-container"
                           hx-push-url="true"
                           class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -187,75 +223,53 @@
               </div>
           </form>
       </div>
-    </div> {% endcomment %}
+    </div>
 
-    <!-- Table of suppliers -->
+    <!-- Table of stocks -->
     <div>
       {% if filter.qs %}
-      <!-- List of suppliers -->
+      <!-- List of stocks -->
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
-          <!-- Table of suppliers -->
+          <!-- Table of stocks -->
           <div class="w-full overflow-x-auto">
               <table class="w-full whitespace-no-wrap">
                   <thead>
                       <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                       >
-                          <th class="px-4 py-3">#</th>
-                          <th class="px-4 py-3">Fournisseur</th>
-                          <th class="px-4 py-3">Secteur</th>
-                          <th class="px-4 py-3">Produits/Services</th>
-                          <th class="px-4 py-3">Province</th>
-                          <th class="px-4 py-3">Montant total</th>
-                          <th class="px-4 py-3">Catégorie</th>
+                          <th class="px-4 py-3">Date</th>
+                          <th class="px-4 py-3">Product/Service</th>
+                          <th class="px-4 py-3">Montant</th>
+                          <th class="px-4 py-3">Type</th>
                           <th></th>
                       </tr>
                   </thead>
                   <tbody
                       class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                   >
-                  {% for supplier in suppliers %}
+                  {% for stock in stocks %}
                   <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3 text-sm">
-                          {{ supplier.id}}
+                          {{ stock.date }}
                       </td>
                       <td class="px-4 py-3 text-sm">
-                        {{ supplier.name}}
-                      </td>
-                      <td class="px-4 py-3 text-sm whitespace-normal">
-                        {% for sector in supplier.sector_label.all %}
-                            <div class="text-xs">{{ sector }}{% if not forloop.last %}<br>{% endif %}</div>
-                        {% endfor %}
-                      </td>
-                      <td class="px-4 py-3 text-sm whitespace-normal">
-                          {% for product in supplier.product.all %}
-                              <div class="text-xs">{{ product }}{% if not forloop.last %}<br>{% endif %}</div>
-                          {% endfor %}
+                          {{ stock.product }}  {{stock.amount}}
                       </td>
                       <td class="px-4 py-3 text-sm">
-                        {{ supplier.province }}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                          CDF {{ supplier.total_price_cdf |floatformat:2|intcomma }}
+                          CDF {{ stock.amount_with_tva |floatformat:2|intcomma }}
                       </td>
                       <td class="px-4 py-3 text-xs">
-                        <span
-                          class="px-2 py-1 font-semibold leading-tight rounded-full 
-                                 {% if supplier.category == 'enterprise' %}
-                                 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100
-                                 {% elif supplier.category == 'individual' %}
-                                 text-orange-700 bg-orange-100 dark:bg-orange-700 dark:text-orange-100
-                                 {% endif %}
-                          ">
-                          {{ supplier.category }}
-                        </span>
+                          <span
+                            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                          >
+                          {{ stock.type }}
+                          </span>
                       </td>
-                      
                       <td class="flex items-center space-x-2">
                           <!-- Edit and Delete buttons -->
-                          <a hx-get="{% url 'transactions:supplier_update' supplier.pk %}"
+                          <a hx-get="{% url 'transactions:stock_update' stock.pk %}"
                               hx-push-url="true"
-                              hx-target="#supplier-block"
+                              hx-target="#stock-block"
                               class="cursor-pointer">
                               <div>
                                   <button
@@ -275,12 +289,12 @@
                                   </button>
                                 </div>
                           </a>
-
-                          <a hx-delete="{% url 'transactions:supplier_delete' supplier.pk %}"
-                            hx-target="#supplier-block" 
+                          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                          <a hx-delete="{% url 'transactions:stock_delete' stock.pk %}"
+                            hx-target="#stock-block" 
                             hx-push-url="true"
                             class="cursor-pointer"
-                            hx-confirm="Etes-vous sûr de supprimer ce fournisseur ?"
+                            hx-confirm="Are you sure you want to delete this stock?"
                           >
                             <div>
                               <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Delete">
@@ -293,9 +307,9 @@
                           
                           <div>
                             <button
-                              hx-get="{% url 'transactions:supplier_detail' pk=supplier.pk %}"
-                              hx-target="#supplier-block" 
-                          hx-push-url="true"
+                              hx-get="{% url 'transactions:stock_detail' pk=stock.pk %}"
+                              hx-push-url="true"
+                              hx-target="#stock-block"
                               class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                             >
                               Voir
@@ -308,31 +322,44 @@
           </table>
         </div>
 
+        <!-- Modal Detail Transaction -->
+        <div
+          x-init=""
+          x-show="isModalOpen"
+          x-transition:enter="transition ease-out duration-150"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-150"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+        >
+
         <!-- Pagination -->
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
-                AFFICHAGE {{ suppliers.start_index }}-{{ suppliers.end_index }} DE {{ suppliers.paginator.count }}
+                AFFICHAGE {{ stocks.start_index }}-{{ stocks.end_index }} DE {{ stocks.paginator.count }}
             </span>
             <span class="col-span-2"></span>
             <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 <nav aria-label="Table navigation">
                     <ul class="inline-flex items-center">
-                        {% if suppliers.has_previous %}
+                        {% if stocks.has_previous %}
                         <li>
                             <a hx-get="?page=1"
                                hx-push-url="true"
-                               hx-target="#supplier-block"
+                               hx-target="#stock-block"
                                hx-trigger="click"
                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Début">
                                 Début
                             </a>
                         </li>
                         {% endif %}
-                        {% if suppliers.has_previous %}
+                        {% if stocks.has_previous %}
                         <li>
-                            <a hx-get="?page={{ suppliers.previous_page_number }}"
+                            <a hx-get="?page={{ stocks.previous_page_number }}"
                                hx-push-url="true"
-                               hx-target="#supplier-block"
+                               hx-target="#stock-block"
                                hx-trigger="click"
                                class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Précédent">
                                 <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -341,18 +368,18 @@
                             </a>
                         </li>
                         {% endif %}
-                        {% for num in suppliers.paginator.page_range %}
-                        {% if suppliers.number == num %}
+                        {% for num in stocks.paginator.page_range %}
+                        {% if stocks.number == num %}
                         <li>
                             <span class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer">
                                 {{ num }}
                             </span>
                         </li>
-                        {% elif num > suppliers.number|add:'-3' and num < suppliers.number|add:'3' %}
+                        {% elif num > stocks.number|add:'-3' and num < stocks.number|add:'3' %}
                         <li>
                             <a hx-get="?page={{ num }}"
                                hx-push-url="true"
-                               hx-target="#supplier-block"
+                               hx-target="#stock-block"
                                hx-trigger="click"
                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100">
                                 {{ num }}
@@ -360,11 +387,11 @@
                         </li>
                         {% endif %}
                         {% endfor %}
-                        {% if suppliers.has_next %}
+                        {% if stocks.has_next %}
                         <li>
-                            <a hx-get="?page={{ suppliers.next_page_number }}"
+                            <a hx-get="?page={{ stocks.next_page_number }}"
                                hx-push-url="true"
-                               hx-target="#supplier-block"
+                               hx-target="#stock-block"
                                hx-trigger="click"
                                class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Suivant">
                                 <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
@@ -373,11 +400,11 @@
                             </a>
                         </li>
                         {% endif %}
-                        {% if suppliers.has_next %}
+                        {% if stocks.has_next %}
                         <li>
-                            <a hx-get="?page={{ suppliers.paginator.num_pages }}"
+                            <a hx-get="?page={{ stocks.paginator.num_pages }}"
                                hx-push-url="true"
-                               hx-target="#supplier-block"
+                               hx-target="#stock-block"
                                hx-trigger="click"
                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple cursor-pointer hover:bg-purple-100" aria-label="Fin">
                                 Fin
@@ -396,7 +423,7 @@
       <h2
         class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
       >
-        Pas de fournisseurs disponibles
+        Pas de stock disponible
       </h2>
       {% endif %}
     </div>

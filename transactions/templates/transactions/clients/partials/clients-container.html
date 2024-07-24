@@ -275,21 +275,21 @@
                                   </button>
                                 </div>
                           </a>
-
+                          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                           <a hx-delete="{% url 'transactions:client_delete' client.pk %}"
                             hx-target="#client-block" 
                             hx-push-url="true"
                             class="cursor-pointer"
-                            hx-confirm="Etes-vous sûr de supprimer ce client ?"
-                          >
+                            hx-confirm="Etes-vous sûr de supprimer ce client ?">
                             <div>
-                              <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Delete">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-                                </svg>
-                              </button>
+                                <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                    </svg>
+                                </button>
                             </div>
-                          </a>    
+                          </a>
+
                           
                           <div>
                             <button
@@ -399,7 +399,7 @@
       <h2
         class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
       >
-        No clients found
+      Pas de clients disponible
       </h2>
       {% endif %}
     </div>

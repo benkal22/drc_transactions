@@ -1,0 +1,61 @@
+<!-- transactions/stocks/partials/stock-form.html -->
+<script
+src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+defer
+></script>
+{% load widget_tweaks %}
+{% load humanize %}
+
+<div class="flex items-center bg-purple-600 text-white rounded-lg shadow-sm dark:bg-purple-800 px-2 py-1 ml-4">
+    <span class="text-xs font-medium">💰</span>
+    <span class="text-sm font-semibold ml-1">
+        CDF {{ current_balance | floatformat:2 | intcomma }}
+    </span>
+</div>
+    {% csrf_token %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Erreur !</strong>
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %} 
+
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    
+    {{ form.media }}
+        <div>
+            {% comment %} <label for="id_producer" class="block text-sm font-medium text-gray-700">Producteur</label> {% endcomment %}
+            {% render_field form.producer id='id_producer' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+        </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+            <div>
+                <label for="id_product" class="block text-sm font-medium text-gray-700">Produit</label>
+                {% render_field form.product id='id_product' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_quantity" class="block text-sm font-medium text-gray-700">Quantité</label>
+                {% render_field form.quantity id='id_quantity' x-model.number='quantity' @input='updateCalculations()' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+            <div>
+                <label for="id_unit_of_measure" class="block text-sm font-medium text-gray-700">Unité de Mesure</label>
+                {% render_field form.unit_of_measure id='id_unit_of_measure' class='mt-1 block w-full border border-gray-300 rounded-md shadow-sm' %}
+            </div>
+
+        </div>
+{% include 'transactions/stocks/partials/script-form.html' %}

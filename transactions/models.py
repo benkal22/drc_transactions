@@ -3,8 +3,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .managers import CustomUserManager, TransactionQuerySet,  TransactionManager
-from django.dispatch import receiver
-from django.db.models.signals import post_save, post_delete
 from django.core.exceptions import ValidationError
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 
@@ -15,7 +13,11 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 
 from django.db import models
+from django.core.files.base import ContentFile
 from decimal import Decimal
+
+from django.db.models.signals import post_save, post_delete, pre_save
+from django.dispatch import receiver
 
 # Modèle personnalisé pour les utilisateurs
 class CustomUser(AbstractUser):
@@ -127,8 +129,9 @@ class Product(models.Model):
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         
         super().save(*args, **kwargs)
 
@@ -164,12 +167,11 @@ class UniqueSector(models.Model):
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         
         super().save(*args, **kwargs)
-
-
 
 class Producer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
@@ -183,8 +185,8 @@ class Producer(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, limit_choices_to={'country': 'Congo (Kinshasa)'})
-    province = models.ForeignKey('Province', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
     is_approved = models.BooleanField(default=False)
     initial_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     current_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
@@ -202,20 +204,30 @@ class Producer(models.Model):
         return self.company_name
 
     def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old_instance = Producer.objects.get(pk=self.pk)
+                if old_instance.initial_balance != self.initial_balance:
+                    difference = self.initial_balance - old_instance.initial_balance
+                    self.current_balance += difference
+            except Producer.DoesNotExist:
+                pass
+        
         if self.photo:
             # Ouvrir l'image avec Pillow
             image = Image.open(self.photo)
             output = BytesIO()
             
             # Redimensionner l'image si nécessaire
-            image = image.resize((800, 800))
+            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
             
             # Sauvegarder l'image dans le format souhaité
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         
         super().save(*args, **kwargs)
 
@@ -244,14 +256,14 @@ class Client(models.Model):
     tax_code = models.CharField(max_length=100, blank=True, null=True)
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255)
     product = models.ManyToManyField(Product, blank=True, null=True)
     sector_label = models.ManyToManyField(UniqueSector, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
     total_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     # producer =  models.ManyToManyField(Producer)
     producer = models.ManyToManyField(Producer, related_name='producer_clients')
@@ -284,8 +296,9 @@ class Client(models.Model):
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         
         super().save(*args, **kwargs)
 
@@ -334,14 +347,14 @@ class Supplier(models.Model):
     tax_code = models.CharField(max_length=100, blank=True, null=True)
     nrc = models.CharField(max_length=100, blank=True, null=True)
     nat_id = models.CharField(max_length=100, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255)
     product = models.ManyToManyField(Product,  blank=True, null=True)
     sector_label = models.ManyToManyField(UniqueSector,  blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    province = models.ForeignKey(Province, on_delete=models.PROTECT, null=True, blank=True)
     total_purchases = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     # producer =  models.ManyToManyField(Producer)
     producer = models.ManyToManyField(Producer, related_name='producer_suppliers')
@@ -384,8 +397,9 @@ class Supplier(models.Model):
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         
         super().save(*args, **kwargs)
         
@@ -439,7 +453,6 @@ class Supplier(models.Model):
         }
         return details
 
-
 # Modèle pour les transactions
 class Transaction(models.Model):
     producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
@@ -491,6 +504,7 @@ class Transaction(models.Model):
         upload_to="img/transactions/",
         blank=True,
         null=True,
+        max_length=255
     )
     
     objects = TransactionQuerySet.as_manager()
@@ -508,14 +522,23 @@ class Transaction(models.Model):
             self.supplier = None  # Forcer supplier à null pour les transactions de type 'vente'
             if self.client is None:
                 raise ValidationError(_("Le client doit être spécifié pour les transactions de vente."))
+
+            # Vérifier la disponibilité du stock
+            stock = Stock.objects.get(producer=self.producer, product=self.product, unit_of_measure=self.unit_of_measure)
+            if stock.quantity < self.quantity:
+                raise ValidationError(_("Stock insuffisant pour effectuer cette vente."))
         elif self.type == 'purchase':
             self.client = None  # Forcer client à null pour les transactions de type 'achat'
             if self.supplier is None:
                 raise ValidationError(_("Le fournisseur doit être spécifié pour les transactions d'achat."))
 
-        producer_products = self.producer.product.all() if self.producer else []
-        if self.product not in producer_products:
-            raise ValidationError(_("Le produit n'est pas répertorié dans le profil du producteur."))
+            # Vérifier le solde disponible
+            if self.producer.current_balance < self.amount_with_tva:
+                raise ValidationError(_("Solde insuffisant pour effectuer cet achat."))
+
+        # producer_products = self.producer.product.all() if self.producer else []
+        # if self.product not in producer_products:
+        #     raise ValidationError(_("Le produit n'est pas répertorié dans le profil du producteur."))
 
         if self.quantity <= 0:
             raise ValidationError(_("La quantité doit être un entier positif."))
@@ -530,7 +553,7 @@ class Transaction(models.Model):
    
         self.amount = new_amount
         self.amount_with_tva = new_amount_with_tva
- 
+
         if self.photo:
             # Ouvrir l'image avec Pillow
             image = Image.open(self.photo)
@@ -543,49 +566,10 @@ class Transaction(models.Model):
             image.save(output, format='JPEG', quality=85)
             output.seek(0)
             
-            # Créer un nouveau fichier ContentFile
-            self.photo.save(self.photo.name, ContentFile(output.getvalue()), save=False)
-
+            # Créer un nouveau fichier ContentFile avec un nom unique basé sur l'ID du modèle
+            file_name = f"{self.id}.jpg" if self.id else "default.jpg"
+            self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         super().save(*args, **kwargs)
-
-    # def update_balances(self):
-    #     if not self.pk:
-    #         return
-
-    #     previous = Transaction.objects.get(pk=self.pk)
-    #     previous_amount_with_tva = previous.amount_with_tva
-
-    #     if self.type == 'purchase':
-    #         if self.producer.current_balance < self.amount_with_tva:
-    #             raise ValidationError(_("Solde insuffisant pour cet achat."))
-    #         self.producer.current_balance -= self.amount_with_tva
-    #         if self.supplier:
-    #             self.supplier.total_purchases += self.amount_with_tva
-    #             self.supplier.save()
-    #     elif self.type == 'sale':
-    #         self.producer.current_balance += self.amount_with_tva
-    #         if self.client:
-    #             self.client.total_sales += self.amount_with_tva
-    #             self.client.save()
-
-    #     self.producer.save()
-
-    # def delete(self, *args, **kwargs):
-    #     amount_with_tva = self.amount_with_tva
-
-    #     if self.type == 'purchase':
-    #         self.producer.current_balance += amount_with_tva
-    #         if self.supplier:
-    #             self.supplier.total_purchases -= amount_with_tva
-    #             self.supplier.save()
-    #     elif self.type == 'sale':
-    #         self.producer.current_balance -= amount_with_tva
-    #         if self.client:
-    #             self.client.total_sales -= amount_with_tva
-    #             self.client.save()
-
-    #     self.producer.save()
-    #     super().delete(*args, **kwargs)
 
     @staticmethod
     def total_purchases():
@@ -659,6 +643,41 @@ class Transaction(models.Model):
             details['supplier'] = self.supplier.name if self.supplier else None
         return details
 
+class Stock(models.Model):
+    producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    unit_of_measure = models.CharField(max_length=10, choices=Transaction.UNIT_OF_MEASURE_CHOICES, default='unit')
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('producer', 'product', 'unit_of_measure')
+        verbose_name = "Stock"
+        verbose_name_plural = "Stocks"
+
+    def __str__(self):
+        return f"{self.product} - {self.quantity} {self.unit_of_measure} - {self.producer}"
+
+    def add_stock(self, quantity):
+        self.quantity += quantity
+        self.save()
+
+    def remove_stock(self, quantity):
+        if self.quantity < quantity:
+            raise ValueError("Not enough stock available")
+        self.quantity -= quantity
+        self.save()
+    def get_details(self):
+        details = {
+            'producer': self.producer.company_name if self.producer else None,
+            'product': self.product.product_label if self.product else None,
+            'quantity': self.quantity,
+            'unit_of_measure': self.get_unit_of_measure_display(),
+            'date': self.date.strftime('%Y-%m-%d %H:%M:%S'),
+            'id': self.id,
+        }
+        return details
+
 # Signal pour créer automatiquement un producteur pour chaque nouvel utilisateur
 @receiver(post_save, sender=CustomUser)
 def create_producer(sender, instance, created, **kwargs):
@@ -677,7 +696,17 @@ def update_supplier_total_purchases(sender, instance, **kwargs):
     if instance.supplier:
         instance.supplier.update_total_purchases()
 
-# Signal pour mettre à jour le solde du producteur lors de la création ou de la mise à jour d'une transaction
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+
+# @receiver(pre_save, sender=Transaction)
+# def capture_old_transaction_values(sender, instance, **kwargs):
+#     if instance.pk:
+#         try:
+#             instance._old_instance = Transaction.objects.get(pk=instance.pk)
+#         except Transaction.DoesNotExist:
+#             instance._old_instance = None
+
 # @receiver(post_save, sender=Transaction)
 # def update_producer_balance_on_transaction_save(sender, instance, created, **kwargs):
 #     if created:
@@ -688,12 +717,15 @@ def update_supplier_total_purchases(sender, instance, **kwargs):
 #             instance.producer.current_balance += instance.amount_with_tva
 #     else:
 #         # Mise à jour d'une transaction existante
-#         old_instance = Transaction.objects.get(pk=instance.pk)
-#         if old_instance.type == 'purchase':
-#             instance.producer.current_balance += old_instance.amount_with_tva
-#         elif old_instance.type == 'sale':
-#             instance.producer.current_balance -= old_instance.amount_with_tva
-        
+#         if hasattr(instance, '_old_instance') and instance._old_instance:
+#             old_instance = instance._old_instance
+#             # Annuler l'effet de l'ancienne transaction sur le solde
+#             if old_instance.type == 'purchase':
+#                 instance.producer.current_balance += old_instance.amount_with_tva
+#             elif old_instance.type == 'sale':
+#                 instance.producer.current_balance -= old_instance.amount_with_tva
+
+#         # Appliquer l'effet de la nouvelle transaction sur le solde
 #         if instance.type == 'purchase':
 #             instance.producer.current_balance -= instance.amount_with_tva
 #         elif instance.type == 'sale':
@@ -701,8 +733,15 @@ def update_supplier_total_purchases(sender, instance, **kwargs):
     
 #     instance.producer.save()
 
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
+# Signal pour ajuster les soldes lors de la suppression d'une transaction
+@receiver(post_delete, sender=Transaction)
+def update_producer_balance_on_transaction_delete(sender, instance, **kwargs):
+    if instance.type == 'purchase':
+        instance.producer.current_balance += instance.amount_with_tva
+    elif instance.type == 'sale':
+        instance.producer.current_balance -= instance.amount_with_tva
+    
+    instance.producer.save()
 
 @receiver(pre_save, sender=Transaction)
 def capture_old_transaction_values(sender, instance, **kwargs):
@@ -713,10 +752,73 @@ def capture_old_transaction_values(sender, instance, **kwargs):
             instance._old_instance = None
 
 @receiver(post_save, sender=Transaction)
+def update_stock_on_transaction_save(sender, instance, created, **kwargs):
+    if created:
+        # Création d'une nouvelle transaction
+        if instance.type == 'purchase':
+            stock, created = Stock.objects.get_or_create(
+                producer=instance.producer,
+                product=instance.product,
+                unit_of_measure=instance.unit_of_measure
+            )
+            stock.add_stock(instance.quantity)
+            # Vérification du solde du producteur
+            if instance.producer.current_balance < instance.amount_with_tva:
+                raise ValueError("Insufficient balance for the purchase")
+        elif instance.type == 'sale':
+            stock = Stock.objects.get(
+                producer=instance.producer,
+                product=instance.product,
+                unit_of_measure=instance.unit_of_measure
+            )
+            stock.remove_stock(instance.quantity)
+    else:
+        # Mise à jour d'une transaction existante
+        if hasattr(instance, '_old_instance') and instance._old_instance:
+            old_instance = instance._old_instance
+            stock = Stock.objects.get(
+                producer=old_instance.producer,
+                product=old_instance.product,
+                unit_of_measure=old_instance.unit_of_measure
+            )
+            # Annuler l'effet de l'ancienne transaction sur le stock
+            if old_instance.type == 'purchase':
+                stock.remove_stock(old_instance.quantity)
+            elif old_instance.type == 'sale':
+                stock.add_stock(old_instance.quantity)
+
+            # Appliquer l'effet de la nouvelle transaction sur le stock
+            if instance.type == 'purchase':
+                stock.add_stock(instance.quantity)
+                # Vérification du solde du producteur
+                if instance.producer.current_balance < instance.amount_with_tva:
+                    raise ValueError("Insufficient balance for the purchase")
+            elif instance.type == 'sale':
+                stock.remove_stock(instance.quantity)
+
+@receiver(post_delete, sender=Transaction)
+def update_stock_on_transaction_delete(sender, instance, **kwargs):
+    stock = Stock.objects.get(
+        producer=instance.producer,
+        product=instance.product,
+        unit_of_measure=instance.unit_of_measure
+    )
+    if instance.type == 'purchase':
+        stock.remove_stock(instance.quantity)
+    elif instance.type == 'sale':
+        stock.add_stock(instance.quantity)
+
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+
+@receiver(post_save, sender=Transaction)
 def update_producer_balance_on_transaction_save(sender, instance, created, **kwargs):
     if created:
         # Création d'une nouvelle transaction
         if instance.type == 'purchase':
+            if instance.producer.current_balance < instance.amount_with_tva:
+                raise ValidationError("Solde insuffisant pour effectuer cet achat.")
             instance.producer.current_balance -= instance.amount_with_tva
         elif instance.type == 'sale':
             instance.producer.current_balance += instance.amount_with_tva
@@ -732,18 +834,20 @@ def update_producer_balance_on_transaction_save(sender, instance, created, **kwa
 
         # Appliquer l'effet de la nouvelle transaction sur le solde
         if instance.type == 'purchase':
+            if instance.producer.current_balance < instance.amount_with_tva:
+                raise ValidationError("Solde insuffisant pour effectuer cet achat.")
             instance.producer.current_balance -= instance.amount_with_tva
         elif instance.type == 'sale':
             instance.producer.current_balance += instance.amount_with_tva
     
     instance.producer.save()
 
-# Signal pour ajuster les soldes lors de la suppression d'une transaction
-@receiver(post_delete, sender=Transaction)
-def update_producer_balance_on_transaction_delete(sender, instance, **kwargs):
-    if instance.type == 'purchase':
-        instance.producer.current_balance += instance.amount_with_tva
-    elif instance.type == 'sale':
-        instance.producer.current_balance -= instance.amount_with_tva
-    
-    instance.producer.save()
+@receiver(pre_save, sender=Transaction)
+def save_old_instance(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            instance._old_instance = Transaction.objects.get(pk=instance.pk)
+        except Transaction.DoesNotExist:
+            instance._old_instance = None
+    else:
+        instance._old_instance = None

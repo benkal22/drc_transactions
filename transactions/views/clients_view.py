@@ -141,8 +141,8 @@ def create_client_view(request):
             client = form.save(commit=False)
             # Associer le producteur connecté au client
             producer = get_object_or_404(Producer, user=request.user)
-            client.producer = producer
-            client = form.save()
+            client.save()  # Sauvegarder l'instance du client en premier
+            client.producer.set([producer])  # Utiliser la méthode set() pour assigner le producteur
             messages.success(request, f"Client '{client}' créé avec succès.")
             context = {'message': f"Client '{client.id}' '{client.name}' enregistré avec succès !"}
             return render(request, 'transactions/clients/partials/client-success.html', context)
@@ -191,7 +191,7 @@ def delete_client(request, pk):
     else:
         producer = get_object_or_404(Producer, user=request.user)
         client = get_object_or_404(Client, pk=pk, producer=producer)
-     
+
     client.delete()
     messages.success(request, f"Client '{client}' supprimé avec succès.")
-    return redirect('clients_list')
+    return redirect('transactions:clients_list')

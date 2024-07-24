@@ -3,7 +3,7 @@
 import django_filters
 from django import forms
 from django_filters import DateFilter
-from .models import Transaction, Product, Producer, Province, Supplier, UniqueSector, Country, Client
+from .models import Transaction, Stock, Product, Producer, Province, Supplier, UniqueSector, Country, Client
 
 class ProductFilter(django_filters.FilterSet):
     class Meta:
@@ -78,6 +78,27 @@ class TransactionFilter(django_filters.FilterSet):
 
     def filter_by_client_province(self, queryset, name, value):
         return queryset.filter(client__province=value)
+
+class StockFilter(django_filters.FilterSet):
+    product = django_filters.ModelChoiceFilter(
+        queryset=Product.objects.all(),
+        label='Choisir le produit',
+        widget=forms.Select(attrs={
+            'class': 'form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+        })
+    )
+    producer = django_filters.ModelChoiceFilter(
+        queryset=Producer.objects.all(),
+        label='Choisir le producteur',
+        widget=forms.Select(attrs={
+            'class': 'form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+        })
+    )
+
+    class Meta:
+        model = Stock
+        fields = ['producer', 'product', 'unit_of_measure', 'date']
+
 
 class ProducerFilter(django_filters.FilterSet):
     company_name = django_filters.CharFilter(

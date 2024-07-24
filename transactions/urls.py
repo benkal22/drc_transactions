@@ -17,6 +17,9 @@ from transactions.views.suppliers_view import (suppliers_list, create_supplier_v
 from transactions.views.producers_view import (producers_list, create_producer_view,
                                                   producer_update, delete_producer, producer_detail,
                                                   )
+from transactions.views.stocks_view import (stocks_list, create_stock_view,
+                                                  stock_update, delete_stock, stock_detail,
+                                                  )
 from transactions.views.dashboard_view import DashboardListView, reports_provinces
 from transactions.views.dashboard_view import dashboard_view
 
@@ -37,6 +40,13 @@ urlpatterns = [
     path('transaction/<int:pk>/', transaction_detail, name='transaction_detail'),
     path('transactions/create/', create_transaction_view, name='transaction_create'),
     path('calculate-amount/', calculate_amount, name='calculate_amount'),
+    
+    path('stocks/', stocks_list, name='stocks_list'), 
+    path('stocks/<int:pk>/update/', stock_update, name='stock_update'),
+    path('stocks/<int:pk>/delete/', delete_stock, name='stock_delete'),
+    path('stock/<int:pk>/', stock_detail, name='stock_detail'),
+    path('stocks/', stocks_list, name='profile'),
+    path('stocks/create/', create_stock_view, name='stock_create'),
     
     path('suppliers/', suppliers_list, name='suppliers_list'), 
     path('suppliers/<int:pk>/update/', update_supplier, name='supplier_update'),
