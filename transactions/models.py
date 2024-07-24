@@ -14,6 +14,9 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
 
+from django.db import models
+from decimal import Decimal
+
 # Modèle personnalisé pour les utilisateurs
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -166,7 +169,8 @@ class UniqueSector(models.Model):
         
         super().save(*args, **kwargs)
 
-# Modèle pour les producteurs
+
+
 class Producer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
     company_name = models.CharField(max_length=255)
@@ -180,18 +184,11 @@ class Producer(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, limit_choices_to={'country': 'Congo (Kinshasa)'})
-    province = models.ForeignKey('Province', on_delete=models.CASCADE, null=False, blank=False)
+    province = models.ForeignKey('Province', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    initial_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
-    current_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Nouveau champ de solde
-    # Relations ManyToMany avec les fournisseurs et clients à travers les modèles intermédiaires
-    # suppliers = models.ManyToManyField(Supplier, through='ProducerSupplier', related_name='suppliers')
-    # clients = models.ManyToManyField(Client, through='ProducerClient', related_name='clients')
-    photo =  models.ImageField(
-        upload_to="img/producers/",
-        blank=True,
-        null=True,
-    )
+    initial_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    current_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    photo = models.ImageField(upload_to="img/producers/", blank=True, null=True)
 
     class Meta:
         verbose_name = "Producer"
@@ -200,24 +197,18 @@ class Producer(models.Model):
     def clean(self):
         if self.country.country == 'Congo (Kinshasa)' and not self.province:
             raise ValidationError("Province field is required for Congo (Kinshasa) country.")
-        
-    def __unicode__(self):
-        return self.company_name
 
     def __str__(self):
         return self.company_name
-    
+
     def save(self, *args, **kwargs):
-        # if not self.pk:  # Si c'est une nouvelle instance
-        #     self.current_balance = self.initial_balance
-        
         if self.photo:
             # Ouvrir l'image avec Pillow
             image = Image.open(self.photo)
             output = BytesIO()
             
             # Redimensionner l'image si nécessaire
-            image = image.resize((800, 800))  # Par exemple, redimensionner à 800x800 pixels
+            image = image.resize((800, 800))
             
             # Sauvegarder l'image dans le format souhaité
             image.save(output, format='JPEG', quality=85)
@@ -229,21 +220,18 @@ class Producer(models.Model):
         super().save(*args, **kwargs)
 
     def update_sector_labels(self):
-        # Met à jour les étiquettes de secteur pour le producteur
         sector_labels = Product.objects.values_list('sector_label', flat=True).distinct()
         self.sector_label = ', '.join(sector_labels)
         self.save()
 
     @property
     def get_products_by_sector(self):
-        # Retourne les produits du producteur par secteur
         return Product.objects.filter(sector_label=self.sector_label.sector_label)
-    
+
     def total_sales_amount(self):
         sales = Transaction.objects.filter(producer=self, type='sale')
         total_sales = sales.aggregate(total=Sum(ExpressionWrapper(F('price') * F('quantity'), output_field=DecimalField())))
         return total_sales['total'] if total_sales['total'] else 0
-
 
 # Modèle pour les clients
 class Client(models.Model):

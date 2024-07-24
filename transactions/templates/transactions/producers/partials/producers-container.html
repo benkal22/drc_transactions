@@ -8,7 +8,7 @@
 {% for producer in global_producers %}
 
 <!-- Define Grid container div -->
-<div id="producer-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
+{% comment %} <div id="producer-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">  
   <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
         <li class="me-2" role="presentation">
@@ -217,7 +217,255 @@
         </div>
     </div>
   </div>
+</div> {% endcomment %}
+
+<div id="producer-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 overflow-auto">
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profil</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="edit_profile-styled-tab" data-tabs-target="#styled-edit_profile" type="button" role="tab" aria-controls="edit_profile" aria-selected="false">Modifier les Informations</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Paramètres</button>
+        </li>
+        <li role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="change_password-styled-tab" data-tabs-target="#styled-change_password" type="button" role="tab" aria-controls="change_password" aria-selected="false">Changer le Mot de Passe</button>
+        </li>
+    </ul>
+  </div>
+
+  <div id="default-styled-tab-content">
+    <!-- Contenu Profil -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-profile" role="tabpanel" aria-labelledby="profile-styled-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">Voici le contenu pour le <strong class="font-medium text-gray-800 dark:text-white">Profil</strong>. Cliquer sur un autre onglet fera apparaître ce contenu. Le JavaScript des onglets échange les classes pour contrôler la visibilité et le style du contenu.</p>
+        
+      <div class="flex flex-col lg:flex-row">
+          <div class="lg:w-1/3">
+            <div class="card">
+              <div class="card-body profile-card pt-4 flex flex-col items-center">
+                {% comment %} <img src="{{ producer.photo.url }}" alt="Profil" class="rounded-full w-32 h-32 object-cover"> {% endcomment %}
+                <h2 class="text-xl font-semibold mt-4">{{ producer.manager_name }}</h2>
+                <h3 class="text-lg font-medium mt-1">{{ producer.company_name }}</h3>
+                <div class="social-links mt-2 flex space-x-4">
+                  <!-- Ajouter des liens sociaux si disponibles -->
+                  <a href="{{ producer.twitter_profile }}" class="text-blue-500"><i class="bi bi-twitter"></i></a>
+                  <a href="{{ producer.facebook_profile }}" class="text-blue-700"><i class="bi bi-facebook"></i></a>
+                  <a href="{{ producer.instagram_profile }}" class="text-pink-500"><i class="bi bi-instagram"></i></a>
+                  <a href="{{ producer.linkedin_profile }}" class="text-blue-800"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:w-2/3 mt-6 lg:mt-0">
+            <div class="card">
+              <div class="card-body pt-3">
+                <div class="tab-content pt-2">
+                  <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <h5 class="card-title">À Propos</h5>
+                    <p class="text-sm italic">{{ producer.description }}</p>
+                    <h5 class="card-title mt-4">Détails du Profil</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                      <div class="col-span-1 font-semibold">Nom Complet</div>
+                      <div class="col-span-2">{{ producer.manager_name }}</div>
+                      <div class="col-span-1 font-semibold">Entreprise</div>
+                      <div class="col-span-2">{{ producer.company_name }}</div>
+                      <div class="col-span-1 font-semibold">Code Fiscal</div>
+                      <div class="col-span-2">{{ producer.tax_code }}</div>
+                      <div class="col-span-1 font-semibold">NRC</div>
+                      <div class="col-span-2">{{ producer.nrc }}</div>
+                      <div class="col-span-1 font-semibold">ID National</div>
+                      <div class="col-span-2">{{ producer.nat_id }}</div>
+                      <div class="col-span-1 font-semibold">Métier</div>
+                      <div class="col-span-2">{{ producer.sector_label }}</div>
+                      <div class="col-span-1 font-semibold">Pays</div>
+                      <div class="col-span-2">{{ producer.country.name }}</div>
+                      <div class="col-span-1 font-semibold">Province</div>
+                      <div class="col-span-2">{{ producer.province.name }}</div>
+                      <div class="col-span-1 font-semibold">Adresse</div>
+                      <div class="col-span-2">{{ producer.address }}</div>
+                      <div class="col-span-1 font-semibold">Téléphone</div>
+                      <div class="col-span-2">{{ producer.phone_number }}</div>
+                      <div class="col-span-1 font-semibold">Email</div>
+                      <div class="col-span-2">{{ producer.email }}</div>
+                      <div class="col-span-1 font-semibold">Solde Initial</div>
+                      <div class="col-span-2">{{ producer.initial_balance }}</div>
+                      <div class="col-span-1 font-semibold">Solde Actuel</div>
+                      <div class="col-span-2">{{ producer.current_balance }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Contenu Modifier le Profil -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-edit_profile" role="tabpanel" aria-labelledby="edit_profile-styled-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">Voici le contenu pour <strong class="font-medium text-gray-800 dark:text-white">Modifier les Informations</strong>. Cliquer sur un autre onglet fera apparaître ce contenu.</p>
+      
+      <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+        <!-- Formulaire de Modification du Profil -->
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-4 flex flex-col md:flex-row items-center">
+            <label for="profileImage" class="md:w-1/3 font-medium">Image de Profil</label>
+            <div class="md:w-2/3">
+              {% comment %} <img src="{{ producer.photo.url }}" alt="Profil" class="w-32 h-32 object-cover"> {% endcomment %}
+              <div class="pt-2 flex space-x-2">
+                <input type="file" name="photo" id="profileImage" class="hidden">
+                <button type="button" onclick="document.getElementById('profileImage').click();" class="btn btn-primary btn-sm">Télécharger une nouvelle image de profil</button>
+                <a href="{% url 'transactions:producer_delete' producer.id %}" class="btn btn-danger btn-sm">Supprimer l'image de profil</a>
+              </div>
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="fullName" class="md:w-1/3 font-medium">Nom Complet</label>
+            <div class="md:w-2/3">
+              <input name="manager_name" type="text" class="form-control" id="fullName" value="{{ producer.manager_name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="about" class="md:w-1/3 font-medium">À Propos</label>
+            <div class="md:w-2/3">
+              <textarea name="description" class="form-control" id="about" rows="4">{{ producer.description }}</textarea>
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="company" class="md:w-1/3 font-medium">Entreprise</label>
+            <div class="md:w-2/3">
+              <input name="company_name" type="text" class="form-control" id="company" value="{{ producer.company_name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="taxCode" class="md:w-1/3 font-medium">Code Fiscal</label>
+            <div class="md:w-2/3">
+              <input name="tax_code" type="text" class="form-control" id="taxCode" value="{{ producer.tax_code }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="nrc" class="md:w-1/3 font-medium">NRC</label>
+            <div class="md:w-2/3">
+              <input name="nrc" type="text" class="form-control" id="nrc" value="{{ producer.nrc }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="nationalId" class="md:w-1/3 font-medium">ID National</label>
+            <div class="md:w-2/3">
+              <input name="nat_id" type="text" class="form-control" id="nationalId" value="{{ producer.nat_id }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Job" class="md:w-1/3 font-medium">Métier</label>
+            <div class="md:w-2/3">
+              <input name="sector_label" type="text" class="form-control" id="Job" value="{{ producer.sector_label }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Country" class="md:w-1/3 font-medium">Pays</label>
+            <div class="md:w-2/3">
+              <input name="country" type="text" class="form-control" id="Country" value="{{ producer.country.name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Province" class="md:w-1/3 font-medium">Province</label>
+            <div class="md:w-2/3">
+              <input name="province" type="text" class="form-control" id="Province" value="{{ producer.province.name }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Address" class="md:w-1/3 font-medium">Adresse</label>
+            <div class="md:w-2/3">
+              <input name="address" type="text" class="form-control" id="Address" value="{{ producer.address }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Phone" class="md:w-1/3 font-medium">Téléphone</label>
+            <div class="md:w-2/3">
+              <input name="phone_number" type="text" class="form-control" id="Phone" value="{{ producer.phone_number }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="Email" class="md:w-1/3 font-medium">Email</label>
+            <div class="md:w-2/3">
+              <input name="email" type="email" class="form-control" id="Email" value="{{ producer.email }}">
+            </div>
+          </div>
+          <div class="mb-4 flex flex-col md:flex-row">
+            <label for="InitialBalance" class="md:w-1/3 font-medium">Solde Initial</label>
+            <div class="md:w-2/3">
+              <input name="initial_balance" type="number" step="0.01" class="form-control" id="InitialBalance" value="{{ producer.initial_balance }}">
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Enregistrer les Modifications</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Contenu Paramètres -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-settings" role="tabpanel" aria-labelledby="settings-styled-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">Voici le contenu pour le <strong class="font-medium text-gray-800 dark:text-white">Paramètres</strong>. Cliquer sur un autre onglet fera apparaître ce contenu.</p>
+        <div class="tab-pane fade pt-3" id="profile-settings">
+          <!-- Formulaire des Paramètres -->
+          <form>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label class="md:w-1/3 font-medium">Notifications Email</label>
+              <div class="md:w-2/3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                  <label class="form-check-label" for="changesMade">
+                    Modifications apportées à votre compte
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- Autres champs de paramètres peuvent être ajoutés ici -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Enregistrer les Modifications</button>
+            </div>
+          </form>
+        </div>
+    </div>
+
+    <!-- Contenu Changer le Mot de Passe -->
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-change_password" role="tabpanel" aria-labelledby="change_password-styled-tab">
+      <p class="text-sm text-gray-500 dark:text-gray-400">Voici le contenu pour <strong class="font-medium text-gray-800 dark:text-white">Changer le Mot de Passe</strong>. Cliquer sur un autre onglet fera apparaître ce contenu.</p>
+        
+      <div class="tab-pane fade pt-3" id="profile-change-password">
+          <!-- Formulaire de Changement de Mot de Passe -->
+          <form>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="currentPassword" class="md:w-1/3 font-medium">Mot de Passe Actuel</label>
+              <div class="md:w-2/3">
+                <input name="current_password" type="password" class="form-control" id="currentPassword" required>
+              </div>
+            </div>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="newPassword" class="md:w-1/3 font-medium">Nouveau Mot de Passe</label>
+              <div class="md:w-2/3">
+                <input name="new_password" type="password" class="form-control" id="newPassword" required>
+              </div>
+            </div>
+            <div class="mb-4 flex flex-col md:flex-row">
+              <label for="confirmPassword" class="md:w-1/3 font-medium">Confirmer le Nouveau Mot de Passe</label>
+              <div class="md:w-2/3">
+                <input name="confirm_password" type="password" class="form-control" id="confirmPassword" required>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Changer le Mot de Passe</button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
 </div>
+
 
 {% endfor %}
 {% endif %} 

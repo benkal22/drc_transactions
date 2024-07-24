@@ -22,6 +22,8 @@ class SupplierViewSet(viewsets.ModelViewSet):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
 
+from decimal import Decimal
+
 @login_required
 def supplier_statistics(request):
     # Appliquer le filtre des fournisseurs
@@ -32,11 +34,10 @@ def supplier_statistics(request):
         queryset = Supplier.objects.filter(producer=producer)
         
     supplier_filter = SupplierFilter(request.GET, queryset=queryset)
-    # supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
     filtered_suppliers = supplier_filter.qs
 
     # Montant général de tous les achats effectués par le producer aux suppliers en CDF
-    total_purchases = filtered_suppliers.aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or 0.00
+    total_purchases = filtered_suppliers.aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or Decimal('0.00')
 
     # Nombre total de tous les fournisseurs
     total_suppliers = filtered_suppliers.count()
@@ -48,10 +49,10 @@ def supplier_statistics(request):
     total_individual_suppliers = filtered_suppliers.filter(category='individual').count()
 
     # Montant de tous les achats des fournisseurs entreprise
-    total_purchases_enterprises = filtered_suppliers.filter(category='enterprise').aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or 0.00
+    total_purchases_enterprises = filtered_suppliers.filter(category='enterprise').aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or Decimal('0.00')
 
     # Montant de tous les achats des fournisseurs individuels
-    total_purchases_individuals = filtered_suppliers.filter(category='individual').aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or 0.00
+    total_purchases_individuals = filtered_suppliers.filter(category='individual').aggregate(total_purchases=Sum('total_purchases'))['total_purchases'] or Decimal('0.00')
 
     # Calculer les revenus nets
     net_income_enterprises = total_purchases - total_purchases_enterprises
