@@ -2,89 +2,84 @@
 {% load humanize %}
 
 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-    <div
-      class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
-    >
-        <!-- Mobile hamburger -->
-        <button
-        class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
-        @click="toggleSideMenu"
-        aria-label="Menu"
-        >
-            <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+          <div
+            class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+          >
+            <!-- Mobile hamburger -->
+            <button
+              class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+              @click="toggleSideMenu"
+              aria-label="Menu"
             >
-            <path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-            ></path>
-            </svg>
-        </button>
-
-        <!-- Search input -->
-        <div class="flex justify-center flex-1 lg:mr-32">
-        <div
-          class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-        >
-          <div class="absolute inset-y-0 flex items-center pl-2">
-            <svg
-              class="w-4 h-4"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-          <input
-            class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-            type="text"
-            placeholder="Rechercher un élément"
-            aria-label="Search"
-          />
-            </div>
-        </div>
-        <div class="block px-4 py-2 text-sm font-semibold text-gray-800 dark:text-gray-200">
-          <a
-              class="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-gray-800 transition-colors duration-150 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-gray-100"
-              href="#"
-          > 
-          <span class="text-sm font-semibold ml-1">
-            {% for producer in global_producers %}
-              {% if producer.is_approved %}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                  <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
-                </svg>
-              {% endif %}
-
-            {% endfor %}
-        </span>
-              <span class="font-bold">{{ user.username }}</span>
-              <div class="flex items-center bg-purple-600 text-white rounded-lg shadow-sm dark:bg-purple-800 px-2 py-1 ml-4">
-                  <span class="text-xs font-medium">💰</span>
-                  <span class="text-sm font-semibold ml-1">
-                      {% for producer in global_producers %}
-                          CDF {{ producer.current_balance | floatformat:2 | intcomma }}
-                      {% endfor %}
-                  </span>
+              <svg
+                class="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <!-- Search input -->
+            <div class="flex justify-center flex-1 lg:mr-32">
+              <div
+                class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
+              >
+                <div class="absolute inset-y-0 flex items-center pl-2">
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                  type="text"
+                  placeholder="Rechercher un élément"
+                  aria-label="Search"
+                />
               </div>
-          </a>
-      </div>
-      
-        <ul>
-        
-    </ul>
-        <ul class="flex items-center flex-shrink-0 space-x-6">
-            <!-- Theme toggler -->
-            <li class="flex">
+            </div>
+            <div class="block px-4 py-2 text-sm font-semibold text-gray-800 dark:text-gray-200">
+              <a
+                  class="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-gray-800 transition-colors duration-150 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-gray-100"
+                  href="#"
+              > 
+                <span class="text-sm font-semibold ml-1">
+                  {% for producer in global_producers %}
+                    {% if producer.is_approved %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                      </svg>
+                    {% endif %}
+    
+                  {% endfor %}
+                </span>
+                <span class="font-bold">{{ user.username }}</span>
+                <div class="flex items-center bg-purple-600 text-white rounded-lg shadow-sm dark:bg-purple-800 px-2 py-1 ml-4">
+                      <span class="text-xs font-medium">💰</span>
+                      <span class="text-sm font-semibold ml-1">
+                          {% for producer in global_producers %}
+                              CDF {{ producer.current_balance | floatformat:2 | intcomma }}
+                          {% endfor %}
+                      </span>
+                </div>
+              </a>
+            </div>
+            <ul class="flex items-center flex-shrink-0 space-x-6">
+              <!-- Theme toggler -->
+              <li class="flex">
                 <button
                   class="rounded-md focus:outline-none focus:shadow-outline-purple"
                   @click="toggleTheme"
@@ -174,7 +169,7 @@
                         <span
                           class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
                         >
-                          {{request.user.producer.total_sales_amount }}
+                          {{ producer.total_sales_amount }}
                         </span>
                       </a>
                     </li>
@@ -184,18 +179,13 @@
                         href="#"
                       >
                         <span>Alerts</span>
-                        <span
-                          class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                        >
-                          0
-                        </span>
                       </a>
                     </li>
                   </ul>
                 </template>
-            </li>
-            <!-- Profile menu -->
-            <li class="relative">
+              </li>
+              <!-- Profile menu -->
+              <li class="relative">
                 <button
                   class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                   @click="toggleProfileMenu"
@@ -311,6 +301,7 @@
                     </ul>
                   </template>
             </li>
-        </ul>
-    </div>
+            </ul>
+          </div>
 </header>
+        

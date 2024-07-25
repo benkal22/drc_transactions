@@ -1,39 +1,51 @@
-<!-- templates/account/signup.html -->
 {% extends "base.html" %}
 {% load allauth i18n %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
     {% trans "Inscription" %} - DRC Transactions
 {% endblock title %}
 
 {% block content %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h1 class="mb-4 text-center">{% trans "Inscription" %}</h1>
-
+    <div class="flex justify-center mt-10">
+        <div class="w-full max-w-lg">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="py-4 text-gray-500 dark:text-gray-400">
+                    <div class="flex items-center justify-between w-full">
+                        <h1 class="text-2xl font-semibold">
+                            {% trans "Inscription" %}
+                        </h1>
+                        <div class="relative w-16 h-16">
+                            <img 
+                                src="{% static 'img/logo.png' %}" 
+                                alt="Logo DRC Transactions" 
+                                class="object-cover w-full h-full rounded-full"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                            >
+                        </div>
+                    </div>
                     {% if user.is_authenticated %}
                         {% include "account/snippets/already_logged_in.html" %}
                     {% else %}
                         <p class="mb-4 text-center">
-                            {% blocktrans %}Vous avez déjà un compte ? Alors veuillez <a href="{{ login_url }}">vous connecter</a>.{% endblocktrans %}
+                            {% blocktrans %}Vous avez déjà un compte ? Alors veuillez <a href="{{ login_url }}" class="text-blue-600 hover:underline">vous connecter</a>.{% endblocktrans %}
                         </p>
                         
                         {% if not SOCIALACCOUNT_ONLY %}
                             {% url 'account_signup' as action_url %}
-                            <form method="post" action="{{ action_url }}" class="entrance signup">
+                            <form method="post" action="{{ action_url }}" class="space-y-4">
                                 {% csrf_token %}
                                 {{ form|crispy }}
                                 {{ redirect_field }}
-                                <button type="submit" class="btn btn-primary btn-block w-100 mt-4">
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-4">
                                     {% trans "S'inscrire" %}
                                 </button>
                             </form>
                         {% endif %}
                         
                         {% if SOCIALACCOUNT_ENABLED %}
+                            <hr class="my-4">
                             {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
                         {% endif %}
                     {% endif %}

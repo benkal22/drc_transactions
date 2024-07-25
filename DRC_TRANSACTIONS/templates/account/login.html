@@ -1,45 +1,60 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
     {% trans "Se connecter" %} - DRC Transactions
 {% endblock title %}
 
 {% block content %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-6 col-md-8 col-sm-10">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h1 class="mb-4 text-center">{% trans "Se connecter" %}</h1>
-                    
-                    <form method="post" action="{% url 'account_login' %}" class="entrance login">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <a href="{% url 'account_signup' %}">
-                                {% trans "Créer votre compte" %}
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                {% trans "Se connecter" %}
-                            </button>
+    <div class="flex justify-center mt-10">
+        <div class="w-full max-w-lg">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="py-4 text-gray-500 dark:text-gray-400">
+                    <div class="flex items-center justify-between w-full">
+                        <h1 class="text-2xl font-semibold">
+                            {% trans "Se connecter" %}
+                        </h1>
+                        <div class="relative w-16 h-16">
+                            <img 
+                                src="{% static 'img/logo.png' %}" 
+                                alt="Logo DRC Transactions" 
+                                class="object-cover w-full h-full rounded-full"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                            >
                         </div>
-                    </form>
+                    </div>
+                    
 
-                    {% if LOGIN_BY_CODE_ENABLED %}
-                        <hr>
-                        <h2 class="text-center mt-4">
-                            <a href="{{ request_login_code_url }}" class="text-primary">
-                                {% trans "Envoyez-moi un code de connexion par email" %}
-                            </a>
-                        </h2>
-                    {% endif %}
+                <form method="post" action="{% url 'account_login' %}" class="space-y-4">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="flex justify-between items-center mt-3">
+                        <a href="{% url 'account_signup' %}" class="text-blue-600 hover:underline">
+                            {% trans "Créer votre compte" %}
+                        </a>
+                        <button type="submit" 
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            {% trans "Se connecter" %}
+                        </button>
+                    </div>
+                </form>
 
-                    {% if SOCIALACCOUNT_ENABLED %}
-                        <hr>
-                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-                    {% endif %}
-                </div>
+                {% if LOGIN_BY_CODE_ENABLED %}
+                    <hr class="my-4">
+                    <h2 class="text-center mt-4">
+                        <a href="{{ request_login_code_url }}" class="text-blue-600 hover:underline">
+                            {% trans "Envoyez-moi un code de connexion par email" %}
+                        </a>
+                    </h2>
+                {% endif %}
+
+                {% if SOCIALACCOUNT_ENABLED %}
+                    <hr class="my-4">
+                    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                {% endif %}
             </div>
         </div>
     </div>

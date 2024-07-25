@@ -1,0 +1,28 @@
+<!-- logout.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form id="logoutForm" class="mt-5 p-4 bg-white rounded shadow-lg" method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <h2 class="text-center mb-4">Déconnexion</h2>
+                <p class="text-center">Êtes-vous sûr de vouloir vous déconnecter ?</p>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Déconnexion</button>
+                    <div class="mx-2"></div> <!-- Espace entre les boutons -->
+                    <a href="#" class="btn btn-secondary" onclick="return goToPreviousPage();">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goToPreviousPage() {
+        history.back();
+        return false; // Pour empêcher le lien de suivre son href
+    }
+</script>
+{% endblock %}

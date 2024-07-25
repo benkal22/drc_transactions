@@ -523,10 +523,18 @@ class Transaction(models.Model):
             if self.client is None:
                 raise ValidationError(_("Le client doit être spécifié pour les transactions de vente."))
 
-            # Vérifier la disponibilité du stock
-            stock = Stock.objects.get(producer=self.producer, product=self.product, unit_of_measure=self.unit_of_measure)
-            if stock.quantity < self.quantity:
-                raise ValidationError(_("Stock insuffisant pour effectuer cette vente."))
+            stock = Stock.objects.filter(producer=self.producer, product=self.product, unit_of_measure=self.unit_of_measure).first()
+            if stock is None:
+                raise ValidationError(_("Le stock pour ce produit et unité de mesure n'existe pas."))
+
+            stock_quantity_base = stock.convert_to_base_unit()
+            transaction_quantity_base = convert_to_base_unit(self.quantity, self.unit_of_measure)
+
+            if stock_quantity_base < transaction_quantity_base:
+                raise ValidationError(_("Stock insuffisant pour effectuer cette vente. Disponible: %(available)d, Requis: %(required)d"),
+                                      params={'available': stock_quantity_base, 'required': transaction_quantity_base})
+
+                
         elif self.type == 'purchase':
             self.client = None  # Forcer client à null pour les transactions de type 'achat'
             if self.supplier is None:
@@ -570,6 +578,7 @@ class Transaction(models.Model):
             file_name = f"{self.id}.jpg" if self.id else "default.jpg"
             self.photo.save(file_name, ContentFile(output.getvalue()), save=False)
         super().save(*args, **kwargs)
+
 
     @staticmethod
     def total_purchases():
@@ -647,7 +656,28 @@ class Stock(models.Model):
     producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    unit_of_measure = models.CharField(max_length=10, choices=Transaction.UNIT_OF_MEASURE_CHOICES, default='unit')
+    unit_of_measure = models.CharField(max_length=10, choices=[
+        ('kg', 'Kilogramme'),
+        ('g', 'Gramme'),
+        ('lb', 'Livre'),
+        ('l', 'Litre'),
+        ('ml', 'Millilitre'),
+        ('m3', 'Mètre cube'),
+        ('unit', 'Unité'),
+        ('box', 'Boîte'),
+        ('piece', 'Pièce'),
+        ('m', 'Mètre'),
+        ('cm', 'Centimètre'),
+        ('mm', 'Millimètre'),
+        ('inch', 'Pouce'),
+        ('ft', 'Pied'),
+        ('yd', 'Yard'),
+        ('tonne', 'Tonne'),
+        ('ton', 'Ton'),
+        ('kWh', 'Kilowatt-heure'),
+        ('Wh', 'Watt-heure'),
+        ('other', 'Autre')
+    ], default='unit')
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -667,6 +697,33 @@ class Stock(models.Model):
             raise ValueError("Not enough stock available")
         self.quantity -= quantity
         self.save()
+
+    def convert_to_base_unit(self):
+        conversion_factors = {
+        'kg': 1,
+        'g': 1,
+        'lb': 1,
+        'l': 1,
+        'ml': 1,
+        'm3': 1,
+        'unit': 1,
+        'box': 1,
+        'piece': 1,
+        'm': 1,
+        'cm': 1,
+        'mm': 1,
+        'inch': 1,
+        'ft': 1,
+        'yd': 1,
+        'tonne': 1,
+        'ton': 1,
+        'kWh': 1,
+        'Wh': 1,
+        'other': 1
+        }
+        factor = conversion_factors.get(self.unit_of_measure, 1)
+        return self.quantity * factor
+        
     def get_details(self):
         details = {
             'producer': self.producer.company_name if self.producer else None,
@@ -678,6 +735,58 @@ class Stock(models.Model):
         }
         return details
 
+# def convert_to_base_unit(quantity, unit_of_measure):
+#     conversion_factors = {
+#         'kg': 1000,
+#         'g': 1,
+#         'lb': 453.592,
+#         'l': 1000,
+#         'ml': 1,
+#         'm3': 1000000,
+#         'unit': 1,
+#         'box': 1,
+#         'piece': 1,
+#         'm': 100,
+#         'cm': 1,
+#         'mm': 0.1,
+#         'inch': 2.54,
+#         'ft': 30.48,
+#         'yd': 91.44,
+#         'tonne': 1000000,
+#         'ton': 1000000,
+#         'kWh': 1,
+#         'Wh': 0.001,
+#         'other': 1
+#     }
+#     factor = conversion_factors.get(unit_of_measure, 1)
+#     return quantity * factor
+
+def convert_to_base_unit(quantity, unit_of_measure):
+    conversion_factors = {
+        'kg': 1,
+        'g': 1,
+        'lb': 1,
+        'l': 1,
+        'ml': 1,
+        'm3': 1,
+        'unit': 1,
+        'box': 1,
+        'piece': 1,
+        'm': 1,
+        'cm': 1,
+        'mm': 1,
+        'inch': 1,
+        'ft': 1,
+        'yd': 1,
+        'tonne': 1,
+        'ton': 1,
+        'kWh': 1,
+        'Wh': 1,
+        'other': 1
+    }
+    factor = conversion_factors.get(unit_of_measure, 1)
+    return quantity * factor
+  
 # Signal pour créer automatiquement un producteur pour chaque nouvel utilisateur
 @receiver(post_save, sender=CustomUser)
 def create_producer(sender, instance, created, **kwargs):

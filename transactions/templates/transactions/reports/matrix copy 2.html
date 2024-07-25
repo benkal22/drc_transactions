@@ -1,8 +1,4 @@
 {% extends 'transactions/base.html' %}
-{% load widget_tweaks %}
-{% load humanize %}
-{% load crispy_forms_tags %}
-
 {% block title %}
 Matrice de Corrélation - DRC Transactions
 {% endblock %}
@@ -10,32 +6,18 @@ Matrice de Corrélation - DRC Transactions
 {% block content %}
     {% include 'transactions/reports/nav.html' %}    
 
-    <div id="dashboard-block" class="container-fluid mt-4" x-data="sectorFilter()" x-init="fetchUniqueSectors()">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Matrice des Echanges Economiques
-        </h2>
-        
-        <!-- Formulaire de filtrage -->
-        {% comment %} <div>
-            <button
-              hx-get="{% url 'transactions:reports_filter' %}"
-              hx-push-url="true"
-              hx-target="#dashboard-block"
-              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-            >
-              Filtrer
-            </button>
-        </div> {% endcomment %}
+    <div class="container-fluid mt-4" x-data="sectorFilter()" x-init="fetchUniqueSectors()">
+        <h1 class="mb-4">Matrice des Echanges Economiques</h1>
 
         <form method="get" class="mb-4">
             <!-- Secteur d'activité -->
             <div class="mb-4">
-                {% comment %} <label for="sector_label" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Secteur d'activité :</label>
+                <label for="sector_label" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Secteur d'activité :</label>
                 <select id="sector_label" x-model="client.sector_label" @change="updateSectorLabel" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select">
                     <template x-for="unique_sector in uniqueSectors" :key="unique_sector.id">
                         <option :value="unique_sector.sector_label" x-text="unique_sector.sector_label"></option>
                     </template>
-                </select> {% endcomment %}
+                </select>
             </div>
             <div class="row g-3 align-items-center">
                 <div class="col-auto">
@@ -45,29 +27,22 @@ Matrice de Corrélation - DRC Transactions
                     <button type="submit" 
                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                     >
-                    Filtrer</button>
+                    Filter</button>
                 </div>
             </div>
         </form>
 
         <div id="matrix-container">
             <h2>Matrices des Ventes (Producteurs-Clients)</h2>
-            <button id="toggleLabelsSales" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mb-3">Afficher/Cacher Étiquettes</button>
+            <button id="toggleLabelsSales" class="btn btn-secondary mb-3">Afficher/Cacher Étiquettes</button>
             <div id="salesMatrixChart" style="height: 1000px; width: 100%;"></div>
             <h2>Matrice des Achats (Producteurs-Fournisseurs)</h2>
-            <button id="toggleLabelsPurchase" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mb-3">Afficher/Cacher Étiquettes</button>
+            <button id="toggleLabelsPurchase" class="btn btn-secondary mb-3">Afficher/Cacher Étiquettes</button>
             <div id="purchaseMatrixChart" style="height: 1000px; width: 100%;"></div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/alpine.min.js" defer></script>
         <script>
-            $("#id_sector_label").select2();
-        $("#id_product").select2();
-        $("#id_producer").select2();
-        $("#id_client_province").select2();
-        $("#id_supplier_province").select2();
-        $("#id_producer_province").select2();
-        $("#id_country").select2();
             function sectorFilter() {
                 return {
                     uniqueSectors: [],

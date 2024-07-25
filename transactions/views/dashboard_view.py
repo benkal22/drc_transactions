@@ -272,15 +272,102 @@ from django.views import View
 from decimal import Decimal
 from ..filters import TransactionFilter
 import json
+from django.shortcuts import render, get_object_or_404
+
+# class CorrelationMatrixView(View):
+#     def get(self, request, *args, **kwargs):
+#         products = Product.objects.all()
+#         filter = TransactionFilter(request.GET, queryset=Transaction.objects.all())
+#         transactions = filter.qs
+
+#         sales_matrix, sales_provinces = self.get_sales_matrix(transactions)
+#         purchase_matrix, purchase_provinces = self.get_purchase_matrix(transactions)
+
+#         data = {
+#             'products': list(products.values('id', 'product_label')),
+#             'sales_matrix': self.convert_decimal_to_float(sales_matrix),
+#             'purchase_matrix': self.convert_decimal_to_float(purchase_matrix),
+#             'sales_provinces': sales_provinces,
+#             'purchase_provinces': purchase_provinces,
+#             'sales_heatmap_data': self.convert_matrix_to_heatmap_data(sales_matrix, sales_provinces),
+#             'purchase_heatmap_data': self.convert_matrix_to_heatmap_data(purchase_matrix, purchase_provinces),
+#         }
+
+#         context = {
+#             'filter': filter,
+#             'data_json': json.dumps(data),  # Convertir les données en JSON pour le template
+#         }
+
+#         return render(request, 'transactions/reports/matrix.html', context)
+
+#     def get_sales_matrix(self, transactions):
+#         sales = transactions.filter(type='sale')
+#         matrix = {}
+#         provinces = set()
+#         for sale in sales:
+#             producer_province = sale.producer.province.name if sale.producer and sale.producer.province else None
+#             client_province = sale.client.province.name if sale.client and sale.client.province else None
+#             if producer_province and client_province:
+#                 if producer_province not in matrix:
+#                     matrix[producer_province] = {}
+#                 if client_province not in matrix[producer_province]:
+#                     matrix[producer_province][client_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
+#                 matrix[producer_province][client_province]['quantity'] += sale.quantity
+#                 matrix[producer_province][client_province]['total_price'] += sale.total_price
+#                 provinces.add(producer_province)
+#                 provinces.add(client_province)
+#         return matrix, sorted(provinces)
+
+#     def get_purchase_matrix(self, transactions):
+#         purchases = transactions.filter(type='purchase')
+#         matrix = {}
+#         provinces = set()
+#         for purchase in purchases:
+#             producer_province = purchase.producer.province.name if purchase.producer and purchase.producer.province else None
+#             supplier_province = purchase.supplier.province.name if purchase.supplier and purchase.supplier.province else None
+#             if producer_province and supplier_province:
+#                 if producer_province not in matrix:
+#                     matrix[producer_province] = {}
+#                 if supplier_province not in matrix[producer_province]:
+#                     matrix[producer_province][supplier_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
+#                 matrix[producer_province][supplier_province]['quantity'] += purchase.quantity
+#                 matrix[producer_province][supplier_province]['total_price'] += purchase.total_price
+#                 provinces.add(producer_province)
+#                 provinces.add(supplier_province)
+#         return matrix, sorted(provinces)
+
+#     def convert_decimal_to_float(self, matrix):
+#         for producer_province in matrix:
+#             for province in matrix[producer_province]:
+#                 matrix[producer_province][province]['total_price'] = float(matrix[producer_province][province]['total_price'])
+#         return matrix
+
+#     def convert_matrix_to_heatmap_data(self, matrix, provinces):
+#         heatmap_data = []
+#         for producer_province in provinces:
+#             data = []
+#             for province in provinces:
+#                 value = matrix.get(producer_province, {}).get(province, {'quantity': 0, 'total_price': 0})
+#                 data.append({'x': province, 'y': value['total_price'], 'quantity': value['quantity']})
+#             heatmap_data.append({'name': producer_province, 'data': data})
+#         return heatmap_data
 
 class CorrelationMatrixView(View):
+   
     def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            querysetTransaction = Transaction.objects.all()
+        else:
+            producer = get_object_or_404(Producer, user=request.user)
+            querysetTransaction = Transaction.objects.filter(producer=producer)
+    
         products = Product.objects.all()
-        filter = TransactionFilter(request.GET, queryset=Transaction.objects.all())
+        filter = TransactionFilter(request.GET, queryset=querysetTransaction)    
         transactions = filter.qs
 
-        sales_matrix, sales_provinces = self.get_sales_matrix(transactions)
-        purchase_matrix, purchase_provinces = self.get_purchase_matrix(transactions)
+        all_provinces = self.get_all_provinces()
+        sales_matrix, sales_provinces = self.get_sales_matrix(transactions, all_provinces)
+        purchase_matrix, purchase_provinces = self.get_purchase_matrix(transactions, all_provinces)
 
         data = {
             'products': list(products.values('id', 'product_label')),
@@ -288,8 +375,8 @@ class CorrelationMatrixView(View):
             'purchase_matrix': self.convert_decimal_to_float(purchase_matrix),
             'sales_provinces': sales_provinces,
             'purchase_provinces': purchase_provinces,
-            'sales_heatmap_data': self.convert_matrix_to_heatmap_data(sales_matrix, sales_provinces),
-            'purchase_heatmap_data': self.convert_matrix_to_heatmap_data(purchase_matrix, purchase_provinces),
+            'sales_heatmap_data': self.convert_matrix_to_heatmap_data(sales_matrix, all_provinces),
+            'purchase_heatmap_data': self.convert_matrix_to_heatmap_data(purchase_matrix, all_provinces),
         }
 
         context = {
@@ -299,40 +386,31 @@ class CorrelationMatrixView(View):
 
         return render(request, 'transactions/reports/matrix.html', context)
 
-    def get_sales_matrix(self, transactions):
+    def get_all_provinces(self):
+        return [province.name for province in Province.objects.all()]  # Assume there is a Province model with a name field
+
+    def get_sales_matrix(self, transactions, all_provinces):
         sales = transactions.filter(type='sale')
-        matrix = {}
-        provinces = set()
+        matrix = {province: {p: {'quantity': 0, 'total_price': Decimal('0.0')} for p in all_provinces} for province in all_provinces}
+        provinces = set(all_provinces)
         for sale in sales:
             producer_province = sale.producer.province.name if sale.producer and sale.producer.province else None
             client_province = sale.client.province.name if sale.client and sale.client.province else None
             if producer_province and client_province:
-                if producer_province not in matrix:
-                    matrix[producer_province] = {}
-                if client_province not in matrix[producer_province]:
-                    matrix[producer_province][client_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
                 matrix[producer_province][client_province]['quantity'] += sale.quantity
                 matrix[producer_province][client_province]['total_price'] += sale.total_price
-                provinces.add(producer_province)
-                provinces.add(client_province)
         return matrix, sorted(provinces)
 
-    def get_purchase_matrix(self, transactions):
+    def get_purchase_matrix(self, transactions, all_provinces):
         purchases = transactions.filter(type='purchase')
-        matrix = {}
-        provinces = set()
+        matrix = {province: {p: {'quantity': 0, 'total_price': Decimal('0.0')} for p in all_provinces} for province in all_provinces}
+        provinces = set(all_provinces)
         for purchase in purchases:
             producer_province = purchase.producer.province.name if purchase.producer and purchase.producer.province else None
             supplier_province = purchase.supplier.province.name if purchase.supplier and purchase.supplier.province else None
             if producer_province and supplier_province:
-                if producer_province not in matrix:
-                    matrix[producer_province] = {}
-                if supplier_province not in matrix[producer_province]:
-                    matrix[producer_province][supplier_province] = {'quantity': 0, 'total_price': Decimal('0.0')}
                 matrix[producer_province][supplier_province]['quantity'] += purchase.quantity
                 matrix[producer_province][supplier_province]['total_price'] += purchase.total_price
-                provinces.add(producer_province)
-                provinces.add(supplier_province)
         return matrix, sorted(provinces)
 
     def convert_decimal_to_float(self, matrix):
@@ -432,3 +510,35 @@ from django.shortcuts import render
 def dashboard_view(request):
     return render(request, 'transactions/reports/transaction_dashboard.html')
 
+def reports_filter(self, request, *args, **kwargs):
+        # if request.user.is_superuser:
+        #     querysetTransaction = Transaction.objects.all()
+        # else:
+        #     producer = get_object_or_404(Producer, user=request.user)
+        #     querysetTransaction = Transaction.objects.filter(producer=producer)
+    
+        # products = Product.objects.all()
+        # filter = TransactionFilter(request.GET, queryset=querysetTransaction)    
+        # transactions = filter.qs
+
+        # all_provinces = self.get_all_provinces()
+        # sales_matrix, sales_provinces = self.get_sales_matrix(transactions, all_provinces)
+        # purchase_matrix, purchase_provinces = self.get_purchase_matrix(transactions, all_provinces)
+
+        # data = {
+        #     'products': list(products.values('id', 'product_label')),
+        #     'sales_matrix': self.convert_decimal_to_float(sales_matrix),
+        #     'purchase_matrix': self.convert_decimal_to_float(purchase_matrix),
+        #     'sales_provinces': sales_provinces,
+        #     'purchase_provinces': purchase_provinces,
+        #     'sales_heatmap_data': self.convert_matrix_to_heatmap_data(sales_matrix, all_provinces),
+        #     'purchase_heatmap_data': self.convert_matrix_to_heatmap_data(purchase_matrix, all_provinces),
+        # }
+
+        # context = {
+        #     'filter': filter,
+        #     'data_json': json.dumps(data),  # Convertir les données en JSON pour le template
+        # }
+
+        # return render(request, 'transactions/reports/partials/filtre.html', context)
+        return render(request, 'transactions/reports/partials/filtre.html')

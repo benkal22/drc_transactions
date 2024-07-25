@@ -86,18 +86,17 @@
     <link href="{% static 'img/favicon.png' %}" rel="icon">
     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
   </head>
-  {% if user.is_authenticated %}
   <body>
     <div
       class="flex h-screen bg-gray-50 dark:bg-gray-900"
       :class="{ 'overflow-hidden': isSideMenuOpen }"
     >
-        <!-- Desktop sidebar -->
-        {% include 'transactions/components/aside_desktop.html' %}    
-
-        <!-- Mobile sidebar -->
-        <!-- Backdrop -->
-        <div
+      <!-- Desktop sidebar -->
+      {% include 'transactions/components/aside_desktop.html' %}
+      
+      <!-- Mobile sidebar -->
+      <!-- Backdrop -->
+      <div
         x-show="isSideMenuOpen"
         x-transition:enter="transition ease-in-out duration-150"
         x-transition:enter-start="opacity-0"
@@ -106,31 +105,24 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-        @click="closeSideMenu"
       ></div>
-        {% include 'transactions/components/aside_mobile.html' %}    
-
-        <div class="flex flex-col flex-1 w-full">
-        <!-- Header -->
-        {% include 'transactions/components/header.html' %}    
-
-        <!-- Main -->
-        {% block content %}
-
-        {% endblock %}
-        </div>
+      {% include 'transactions/components/aside_mobile.html' %}
+      
+      <div class="flex flex-col flex-1 w-full">
+        {% include 'transactions/components/header.html' %}
+        <main class="h-full overflow-y-auto">
+          <div class="container px-6 mx-auto grid">
             
+            {% block content %}
+            {% endblock %}
+            
+          </div>
+        </main>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-    {% comment %} <script src="./assets/js/init-alpine.js"></script> {% endcomment %}
-    
-    <!-- Your custom JS if any -->
     {% block js %}
-    <!-- Additional JS scripts if needed -->
+      <!-- Additional JS scripts if needed -->
+      <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     {% endblock %}
-    {% comment %} <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script> {% endcomment %}
-    
-</body>
-{% endif %}
-
-</html> 
+  </body>
+</html>

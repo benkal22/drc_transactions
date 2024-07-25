@@ -1,20 +1,40 @@
 <!-- logout.html -->
+
 {% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form id="logoutForm" class="mt-5 p-4 bg-white rounded shadow-lg" method="post" action="{% url 'account_logout' %}">
-                {% csrf_token %}
-                <h2 class="text-center mb-4">Déconnexion</h2>
-                <p class="text-center">Êtes-vous sûr de vouloir vous déconnecter ?</p>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Déconnexion</button>
-                    <div class="mx-2"></div> <!-- Espace entre les boutons -->
-                    <a href="#" class="btn btn-secondary" onclick="return goToPreviousPage();">Annuler</a>
+<div class="flex justify-center mt-10">
+    <div class="w-full max-w-lg">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <div class="py-4 text-gray-500 dark:text-gray-400">
+                <div class="flex items-center justify-between w-full">
+                    <h2 class="text-2xl font-semibold text-center w-full">
+                        {% trans "Déconnexion" %}
+                    </h2>
+                    <div class="relative w-16 h-16">
+                        <img 
+                            src="{% static 'img/logo.png' %}" 
+                            alt="Logo DRC Transactions" 
+                            class="object-cover w-full h-full rounded-full"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                        >
+                    </div>
                 </div>
-            </form>
+                <p class="text-center mt-4">{% trans "Êtes-vous sûr de vouloir vous déconnecter ?" %}</p>
+                <form id="logoutForm" class="mt-4 space-y-4" method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <div class="flex justify-center space-x-4">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            {% trans "Déconnexion" %}
+                        </button>
+                        <a href="#" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onclick="return goToPreviousPage();">
+                            {% trans "Annuler" %}
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

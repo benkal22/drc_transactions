@@ -20,7 +20,7 @@ from transactions.views.producers_view import (producers_list, create_producer_v
 from transactions.views.stocks_view import (stocks_list, create_stock_view,
                                                   stock_update, delete_stock, stock_detail,
                                                   )
-from transactions.views.dashboard_view import DashboardListView, reports_provinces
+from transactions.views.dashboard_view import DashboardListView, reports_provinces, reports_filter
 from transactions.views.dashboard_view import dashboard_view
 
 from django.conf import settings
@@ -76,7 +76,8 @@ urlpatterns = [
     path('404/', login_required(TemplateView.as_view(template_name='transactions/pages/settings.html')), name='settings'),  # Page 404 sécurisée
     
     path('dashboard/', DashboardListView.as_view(), name='dashboard'),  # Tableau de bord sécurisé
-    path('reports_provinces/', reports_provinces, name='reports_provinces'),  # Tableau de bord sécurisé    
+    path('reports_provinces/', reports_provinces, name='reports_provinces'),  # Tableau de bord sécurisé  
+    path('dashboard/reports_filter', reports_filter, name='reports_filter'),  
 ]
 
 if settings.DEBUG:
