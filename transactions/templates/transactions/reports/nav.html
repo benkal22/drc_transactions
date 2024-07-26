@@ -34,4 +34,16 @@
           Prédictions économiques
       </button>
   </div>
+
+  <div x-data="{ activeButton: localStorage.getItem('activeButton') }">
+    <button
+        x-on:click="activeButton = 'drc_map'; localStorage.setItem('activeButton', 'drc_map'); window.location.href = '{% url 'drc_map' %}'"
+        :class="{ 'bg-purple-600 text-white': activeButton === 'drc_map', 'bg-white text-purple-600': activeButton !== 'drc_map' }"
+        @keydown.escape="activeButton = null"
+        @click.away="activeButton = null"
+        class="px-10 py-4 font-medium leading-5 transition-colors duration-150 border rounded-lg border-transparent active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+    >
+        Carte interractive
+    </button>
+</div>
 </div>

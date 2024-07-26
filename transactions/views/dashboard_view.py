@@ -542,3 +542,6 @@ def reports_filter(self, request, *args, **kwargs):
 
         # return render(request, 'transactions/reports/partials/filtre.html', context)
         return render(request, 'transactions/reports/partials/filtre.html')
+    
+def drc_map(request):
+    return render(request, "transactions/reports/drc_map.html", )

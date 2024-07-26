@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from .views import CurrencyConversionView, home_redirect, redirect_view
-from transactions.views.dashboard_view import CorrelationMatrixView, EconomicsPredictionView
+from transactions.views.dashboard_view import CorrelationMatrixView, EconomicsPredictionView, drc_map
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -44,6 +44,7 @@ urlpatterns = [
     
     path('matrix/', CorrelationMatrixView.as_view(), name='correlation_matrix'),  # Tableau de bord sécurisé
     path('prediction/', EconomicsPredictionView.as_view(), name='economic_prediction'),  # Tableau de bord sécurisé
+    path('drc_map/', drc_map, name='drc_map'),  # Tableau de bord sécurisé
 
 ]
 

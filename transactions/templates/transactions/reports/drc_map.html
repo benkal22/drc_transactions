@@ -1,0 +1,68 @@
+{% extends 'transactions/base.html' %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load leaflet_tags %}
+
+
+{% leaflet_js %}
+{% leaflet_css %}
+
+{% block title %}
+Carte interractive - DRC Transactions
+{% endblock %}
+
+{% block content %}
+    {% include 'transactions/reports/nav.html' %}    
+
+    <div id="dashboard-block" class="container-fluid mt-4" x-data="sectorFilter()" x-init="fetchUniqueSectors()">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Carte interractive
+        </h2>
+
+    <style>
+        .map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+    <div class="map" id="map"></div>
+    <script>
+        const width = 800;
+        const height = 600;
+
+        const svg = d3.select("#map").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const projection = d3.geoMercator()
+            .scale(1500)
+            .translate([width / 2, height / 2]);
+
+        const path = d3.geoPath().projection(projection);
+
+        fetch('{% static "geojson/cd.json" %}')
+            .then(response => response.json())
+            .then(data => {
+                svg.selectAll("path")
+                    .data(data.features)
+                    .enter().append("path")
+                    .attr("d", path)
+                    .attr("fill", "lightblue")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 0.5)
+                    .on("mouseover", function(event, d) {
+                        d3.select(this).attr("fill", "orange");
+                    })
+                    .on("mouseout", function(event, d) {
+                        d3.select(this).attr("fill", "lightblue");
+                    });
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement des données GeoJSON :', error);
+            });
+    </script>
+
+    </div>
+{% endblock %}

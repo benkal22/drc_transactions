@@ -1,4 +1,6 @@
-
+#Capital initial au lieu de solde initial
+chiffre d'affaire
+Faire monter la ligne des etiquettes au dessus
 
 #Calcul Chiffre d'Affaire et TVA
 Pour calculer le Chiffre d'Affaires (CA) en utilisant les balances, les ventes et les achats, tout en incluant la TVA, vous devez suivre ces étapes :
